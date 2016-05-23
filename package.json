@@ -1,0 +1,25 @@
+{
+  "name": "testbot",
+  "version": "1.0.0",
+  "description": "a fb messenger test bot!!!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/annizhang/testBot.git"
+  },
+  "author": "Anni Zhang",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/annizhang/testBot/issues"
+  },
+  "homepage": "https://github.com/annizhang/testBot#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "request": "^2.72.0"
+  }
+}
