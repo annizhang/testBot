@@ -22,7 +22,7 @@ app.get('/webhook', function (req, res) {
 });
 
 // handler receiving messages
-app.post('/webhook', function (req, res) {
+/*app.post('/webhook', function (req, res) {
     console.log("HELLO IS ANYONE HERE???");
     var events = req.body.entry[0].messaging;
     for (i = 0; i < events.length; i++) {
@@ -51,4 +51,4 @@ function sendMessage(recipientId, message) {
             console.log('Error: ', response.body.error);
         }
     });
-}
+}*/
