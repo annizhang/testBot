@@ -69,12 +69,12 @@ function joineryMessage(recipientId, text) {
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Apartments in" + location,
+                            "title": "Apartments in " + location,
                             "subtitle": "From Joinery",
                             "image_url": imageUrl ,
                             "buttons": [{
                                 "type": "web_url",
-                                "url": imageUrl,
+                                "url": "https://joinery.nyc/search?utf8=%E2%9C%93&neighborhoods%5B%5D=13&bedrooms=Bedrooms&listing-type=Apartment+Type&price-low=Min+%24&price-high=Max+%24&date=",
                                 "title": "View results"
                                 }, {
                                 "type": "postback",
