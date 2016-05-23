@@ -74,7 +74,7 @@ function joineryMessage(recipientId, text) {
                             "image_url": imageUrl ,
                             "buttons": [{
                                 "type": "web_url",
-                                "url": "https://joinery.nyc/listing/698-west-end-ave",
+                                "url": "https://joinery.nyc/search?utf8=%E2%9C%93&neighborhoods%5B%5D=13&bedrooms=Bedrooms&listing-type=Apartment+Type&price-low=Min+%24&price-high=Max+%24&date=",
                                 "title": "View results"
                                 }, {
                                 "type": "postback",
