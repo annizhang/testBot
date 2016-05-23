@@ -46,7 +46,7 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text){
-           if (!kittenMessage(event.sender.id, event.message.text)){   
+           if (!joineryMessage(event.sender.id, event.message.text)){   
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
         }
       }
@@ -54,33 +54,31 @@ app.post('/webhook', function (req, res) {
     res.sendStatus(200);
 });
 
-// send rich message with kitten
-function kittenMessage(recipientId, text) {
+// send rich message with joinery search
+function joineryMessage(recipientId, text) {
     
     text = text || "";
     var values = text.split(' ');
-    
-    if (values.length === 3 && values[0] === 'kitten') {
-        if (Number(values[1]) > 0 && Number(values[2]) > 0) {
-            
-            var imageUrl = "https://placekitten.com/" + Number(values[1]) + "/" + Number(values[2]);
-            
+    //if length 3 and first word is "search"
+    if (values.length === 2 && values[0] === "search") {
+        location = values[1];
+        imageUrl = "https://scontent-iad3-1.xx.fbcdn.net/t31.0-8/10344292_421916781342262_7831247042188894229_o.jpg"
             message = {
                 "attachment": {
                     "type": "template",
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Kitten",
-                            "subtitle": "Cute kitten picture",
+                            "title": "Apartments in" + location,
+                            "subtitle": "From Joinery",
                             "image_url": imageUrl ,
                             "buttons": [{
                                 "type": "web_url",
                                 "url": imageUrl,
-                                "title": "Show kitten"
+                                "title": "View results"
                                 }, {
                                 "type": "postback",
-                                "title": "I like this",
+                                "title": "I like these",
                                 "payload": "User " + recipientId + " likes kitten " + imageUrl,
                             }]
                         }]
@@ -92,8 +90,6 @@ function kittenMessage(recipientId, text) {
             
             return true;
         }
-    }
-    
     return false;
     
 };
