@@ -53,7 +53,7 @@ app.post('/webhook', function (req, res) {
            }
         } else if (event.postback) {
             var text = JSON.stringify(event.postback);
-            sendMessage(sender, "Postback received")
+            sendMessage(event.sender.id, "Postback received")
             console.log("Postback received");
         }
     }
