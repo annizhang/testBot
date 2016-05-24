@@ -86,7 +86,7 @@ function joineryMessage(recipientId, text) {
                                 }, {
                                 "type": "postback",
                                 "title": "I like these",
-                                "payload": "User " + recipientId + " likes kitten " + imageUrl,
+                                "payload": "kitten",
                             }]
                         }]
                     }
