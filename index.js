@@ -52,8 +52,8 @@ app.post('/webhook', function (req, res) {
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
            }
         } if (event.postback) {
-            var text = JSON.stringify(event.postback);
-            message ={text: "blob"};
+            var theText = JSON.stringify(event.postback);
+            message ={text: "blob " + theText};
             sendMessage(event.sender.id, message);
             console.log("Postback received!!!!!!!");
         }
