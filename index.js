@@ -53,7 +53,8 @@ app.post('/webhook', function (req, res) {
            }
         } if (event.postback) {
             //if user clicked search
-            if (event.postback.payload === "search"){
+            var choice = JSON.stringify(event.postback.payload);
+            if (choice === "search"){
                 message = {
                     "attachment": {
                         "type": "template",
