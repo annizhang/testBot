@@ -91,7 +91,7 @@ app.post('/webhook', function (req, res) {
                             ]
                         }
                     }
-                }
+                };
                 sendMessage(event.sender.id, message);
                 console.log("location choesn");
             }
