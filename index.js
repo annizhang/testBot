@@ -51,7 +51,7 @@ app.post('/webhook', function (req, res) {
            if (!joineryMessage(event.sender.id, event.message.text)){   
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
            }
-        } else if (event.postback) {
+        } if (event.postback) {
             var text = JSON.stringify(event.postback);
             var message = "postback received";
             sendMessage(event.sender.id, message);
