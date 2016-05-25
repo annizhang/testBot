@@ -52,6 +52,47 @@ app.post('/webhook', function (req, res) {
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
            }
         } if (event.postback) {
+            //if user clicked search
+            if (event.postback.payload === "search"){
+                message = {
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type":"button",
+                            "text":"Where do you want to live?",
+                            "buttons":[
+                                {
+                                    "type":"postback",
+                                    "title":"Manhattan",
+                                    "payload":"manhattan"
+                                },
+                                {
+                                    "type":"postback",
+                                    "title":"Brooklyn",
+                                    "payload":"bklyn"
+                                },
+                                {
+                                    "type":"postback",
+                                    "title":"Queens",
+                                    "payload":"queens"
+                                },
+                                {
+                                    "type":"postback",
+                                    "title":"The Bronx",
+                                    "payload":"bronx"
+                                },
+                                {
+                                    "type":"postback",
+                                    "title":"Staten Island",
+                                    "payload":"statisl"
+                                }
+                            ]
+                        }
+                    }
+                }
+                sendMessage(event.sender.id, message);
+                console.log("location choesn");
+            }
             var theText = JSON.stringify(event.postback);
             message ={text: "blob " + theText};
             sendMessage(event.sender.id, message);
@@ -86,7 +127,7 @@ function joineryMessage(recipientId, text) {
                                 }, {
                                 "type": "postback",
                                 "title": "I like these",
-                                "payload": "kitten",
+                                "payload": "i like this",
                             }]
                         }]
                     }
