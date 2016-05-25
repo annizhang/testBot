@@ -53,9 +53,9 @@ app.post('/webhook', function (req, res) {
            }
         } if (event.postback) {
             var text = JSON.stringify(event.postback);
-            var message = "postback received";
-            sendMessage(event.sender.id, message);
-            console.log("Postback received");
+            message ={text: "blob"};
+            sendMessage(event.sender.id, "blob");
+            console.log("Postback received!!!!!!!");
         }
     }
     res.sendStatus(200);
