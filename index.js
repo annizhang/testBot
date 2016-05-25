@@ -78,16 +78,6 @@ app.post('/webhook', function (req, res) {
                                     "type":"postback",
                                     "title":"Queens",
                                     "payload":"queens"
-                                },
-                                {
-                                    "type":"postback",
-                                    "title":"The Bronx",
-                                    "payload":"bronx"
-                                },
-                                {
-                                    "type":"postback",
-                                    "title":"Staten Island",
-                                    "payload":"statisl"
                                 }
                             ]
                         }
