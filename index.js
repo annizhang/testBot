@@ -56,6 +56,7 @@ app.post('/webhook', function (req, res) {
             var choice = JSON.stringify(event.postback.payload);
             console.log(choice);
             if (choice === "\"search\""){
+                console.log("it is search!");
                 message = {
                     "attachment": {
                         "type": "template",
