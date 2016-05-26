@@ -51,9 +51,27 @@ function findLocation(text) {
     return result;
 }
 
+function findBeds(text) {
+    text = text || "";
+    var result = Number.MIN_VALUE;
+    if (Number(text) != NaN) {
+        result = Number(text);
+    }
+    return result;
+}
+
 // handler receiving messages
 app.post('/webhook', function (req, res) {
+    //need to create conversation thread
+    //create a list of 
     var events = req.body.entry[0].messaging;
+    var messageCount = 0; //the very beginning of the message
+    var locationFound = false;
+    var place = "";
+    var beds = Number.MAX_VALUE;
+    var minPrice = Number.MIN_VALUE;
+    var maxPrice = Number.MAX_VALUE;
+    var type = "";
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         var sender = event.sender.id;
@@ -62,13 +80,19 @@ app.post('/webhook', function (req, res) {
            if (!joineryMessage(event.sender.id, event.message.text)){   
             //sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
             //findLocation takes in the message and finds 
-            var location = findLocation(event.message.text);
-            if (location[0] === "none") {
-                sendMessage(event.sender.id, {"text": "Please input vaid location."});
-            } else {
-                console.log ("location = " + location[1]);
-                sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + " ?"});
-           }
+               if (!locationFound) {
+                   location = findLocation(event.message.text);
+                   if (location[0] === "none") {
+                       sendMessage(event.sender.id, {"text": "Please input vaid location."});
+                   } else {
+                       console.log ("location = " + location[1]);
+                       place = location[1];
+                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "?"});
+                   }
+               } if (beds ==== NUmber.MAX_VALUE) {
+                   beds = findBeds(event.message.text);
+                   message = {"text": "Nice! What is your price range? Please type in the form of \"low to high \""}
+               }
            }
         } if (event.postback) {
             //if user clicked search
