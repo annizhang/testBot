@@ -87,6 +87,7 @@ app.post('/webhook', function (req, res) {
                    } else {
                        console.log ("location = " + location[1]);
                        place = location[1];
+                       locationFound = true;
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "?"});
                    }
                } if (beds === Number.MAX_VALUE) {
