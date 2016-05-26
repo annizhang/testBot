@@ -79,14 +79,14 @@ app.post('/webhook', function (req, res) {
                 sendMessage(event.sender.id, message);
                 console.log("location choesn");
             } else {
-            /* var theText = JSON.stringify(event.postback);
+            var theText = JSON.stringify(event.postback);
             message ={text: "blob " + theText};
             sendMessage(event.sender.id, message);
-            console.log("Postback received!!!!!!!");*/
+            console.log("Postback received!!!!!!!");
         }
     }
     res.sendStatus(200);
-});
+}});
 
 // send rich message with joinery search
 function joineryMessage(recipientId, text) {
