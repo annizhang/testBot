@@ -54,7 +54,7 @@ function findLocation(text) {
 function findBeds(text) {
     text = text || "";
     var result = Number.MIN_VALUE;
-    if (Number(text) != NaN) {
+    if (Number(text) !== NaN) {
         result = Number(text);
     }
     return result;
@@ -81,7 +81,7 @@ app.post('/webhook', function (req, res) {
             //sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
             //findLocation takes in the message and finds 
                if (!locationFound) {
-                   location = findLocation(event.message.text);
+                   var location = findLocation(event.message.text);
                    if (location[0] === "none") {
                        sendMessage(event.sender.id, {"text": "Please input vaid location."});
                    } else {
@@ -89,7 +89,7 @@ app.post('/webhook', function (req, res) {
                        place = location[1];
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "?"});
                    }
-               } if (beds ==== NUmber.MAX_VALUE) {
+               } if (beds === Number.MAX_VALUE) {
                    beds = findBeds(event.message.text);
                    message = {"text": "Nice! What is your price range? Please type in the form of \"low to high \""}
                }
