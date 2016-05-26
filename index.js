@@ -40,6 +40,17 @@ function sendMessage(recipientId, message) {
     });
 };
 
+function findLocation(recipientId, text) {
+    text = text || "";
+    var result = ["none", ""];
+    var values = text.split(' ');
+    if (values.length < 3) {
+        result[0] = "some";
+        result[1] = text;
+    }
+    return result;
+}
+
 // handler receiving messages
 app.post('/webhook', function (req, res) {
     var events = req.body.entry[0].messaging;
@@ -49,7 +60,14 @@ app.post('/webhook', function (req, res) {
         if (event.message && event.message.text){
             //if user sends a text message
            if (!joineryMessage(event.sender.id, event.message.text)){   
-            sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+            //sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+            //findLocation takes in the message and finds 
+            var location = findLocation(event.message.text);
+            if (location[0] === "none") {
+                sendMessage(event.sender.id, {text: "Please input vaid location."});
+            } else {
+                sendMessage(event.sender.id, {text: "Great! How many bedrooms are you looking for in " + location[] + " ?"});
+           }
            }
         } if (event.postback) {
             //if user clicked search
@@ -57,39 +75,14 @@ app.post('/webhook', function (req, res) {
             console.log(choice);
             if (choice === "\"search\""){
                 console.log("it is search!");
-                message = {
-                    "attachment": {
-                        "type": "template",
-                        "payload": {
-                            "template_type":"button",
-                            "text":"Where do you want to live?",
-                            "buttons":[
-                                {
-                                    "type":"postback",
-                                    "title":"Manhattan",
-                                    "payload":"manhattan"
-                                },
-                                {
-                                    "type":"postback",
-                                    "title":"Brooklyn",
-                                    "payload":"bklyn"
-                                },
-                                {
-                                    "type":"postback",
-                                    "title":"Queens",
-                                    "payload":"queens"
-                                }
-                            ]
-                        }
-                    }
-                };
+                message = {"text":"Where would you like to live?"};
                 sendMessage(event.sender.id, message);
                 console.log("location choesn");
-            }
-            var theText = JSON.stringify(event.postback);
+            } else if (choice ===
+            /* var theText = JSON.stringify(event.postback);
             message ={text: "blob " + theText};
             sendMessage(event.sender.id, message);
-            console.log("Postback received!!!!!!!");
+            console.log("Postback received!!!!!!!");*/
         }
     }
     res.sendStatus(200);
@@ -134,3 +127,33 @@ function joineryMessage(recipientId, text) {
     return false;
     
 };
+        
+        
+/* message with buttons with boroughs
+   message = {
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type":"button",
+                            "text":"Where would you want to live?",
+                            "buttons":[
+                                {
+                                    "type":"postback",
+                                    "title":"Manhattan",
+                                    "payload":"loc-manhattan"
+                                },
+                                {
+                                    "type":"postback",
+                                    "title":"Brooklyn",
+                                    "payload":"loc-bklyn"
+                                },
+                                {
+                                    "type":"postback",
+                                    "title":"Queens",
+                                    "payload":"loc-queens"
+                                }
+                            ]
+                        }
+                    }
+                };
+*/
