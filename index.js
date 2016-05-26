@@ -40,7 +40,7 @@ function sendMessage(recipientId, message) {
     });
 };
 
-function findLocation(recipientId, text) {
+function findLocation(text) {
     text = text || "";
     var result = ["none", ""];
     var values = text.split(' ');
@@ -66,6 +66,7 @@ app.post('/webhook', function (req, res) {
             if (location[0] === "none") {
                 sendMessage(event.sender.id, {"text": "Please input vaid location."});
             } else {
+                console.log ("location = " + location[1]);
                 sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + " ?"});
            }
            }
