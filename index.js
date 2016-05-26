@@ -72,7 +72,10 @@ app.post('/webhook', function (req, res) {
     var minPrice = Number.MIN_VALUE;
     var maxPrice = Number.MAX_VALUE;
     var type = "";
+    var count = 0;
     for (i = 0; i < events.length; i++) {
+        count++;
+        console.log(count);
         var event = events[i];
         var sender = event.sender.id;
         if (event.message && event.message.text){
