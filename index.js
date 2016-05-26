@@ -60,18 +60,19 @@ function findBeds(text) {
     return result;
 }
 
+var messageCount = 0; //the very beginning of the message
+var locationFound = false;
+var place = "";
+var beds = Number.MAX_VALUE;
+var minPrice = Number.MIN_VALUE;
+var maxPrice = Number.MAX_VALUE;
+var type = "";
+
 // handler receiving messages
 app.post('/webhook', function (req, res) {
     //need to create conversation thread
     //create a list of 
     var events = req.body.entry[0].messaging;
-    var messageCount = 0; //the very beginning of the message
-    var locationFound = false;
-    var place = "";
-    var beds = Number.MAX_VALUE;
-    var minPrice = Number.MIN_VALUE;
-    var maxPrice = Number.MAX_VALUE;
-    var type = "";
     var count = 0;
     for (i = 0; i < events.length; i++) {
         count++;
