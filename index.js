@@ -66,7 +66,7 @@ app.post('/webhook', function (req, res) {
             if (location[0] === "none") {
                 sendMessage(event.sender.id, {"text": "Please input vaid location."});
             } else {
-                sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[0] + " ?"});
+                sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + " ?"});
            }
            }
         } if (event.postback) {
@@ -79,11 +79,11 @@ app.post('/webhook', function (req, res) {
                 sendMessage(event.sender.id, message);
                 console.log("location choesn");
             } else {
-            var theText = JSON.stringify(event.postback);
-            message ={text: "blob " + theText};
-            sendMessage(event.sender.id, message);
-            console.log("Postback received!!!!!!!");
-        }
+                var theText = JSON.stringify(event.postback);
+                message ={text: "blob " + theText};
+                sendMessage(event.sender.id, message);
+                console.log("Postback received!!!!!!!");
+            }
     }
     res.sendStatus(200);
 }});
