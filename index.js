@@ -64,9 +64,9 @@ app.post('/webhook', function (req, res) {
             //findLocation takes in the message and finds 
             var location = findLocation(event.message.text);
             if (location[0] === "none") {
-                sendMessage(event.sender.id, {text: "Please input vaid location."});
+                sendMessage(event.sender.id, {"text": "Please input vaid location."});
             } else {
-                sendMessage(event.sender.id, {text: "Great! How many bedrooms are you looking for in " + location[0] + " ?"});
+                sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[0] + " ?"});
            }
            }
         } if (event.postback) {
