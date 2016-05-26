@@ -78,7 +78,7 @@ app.post('/webhook', function (req, res) {
                 message = {"text":"Where would you like to live?"};
                 sendMessage(event.sender.id, message);
                 console.log("location choesn");
-            } else if (choice ===
+            } else {
             /* var theText = JSON.stringify(event.postback);
             message ={text: "blob " + theText};
             sendMessage(event.sender.id, message);
