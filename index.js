@@ -136,7 +136,14 @@ app.post('/webhook', function (req, res) {
             }
     }
     res.sendStatus(200);
-}});
+    }
+    locationFound = false;
+    place = "";
+    beds = Number.MAX_VALUE;
+    minPrice = Number.MIN_VALUE;
+    maxPrice = Number.MAX_VALUE;
+    type = "";
+});
 
 // send rich message with joinery search
 function joineryMessage(recipientId, text) {
