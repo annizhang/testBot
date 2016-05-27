@@ -117,7 +117,7 @@ app.post('/webhook', function (req, res) {
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
-               } else {sendMessage(event.sender.id, {"text": "waht now?"});}
+               } else {sendMessage(event.sender.id, {"text": "what now?"});}
            }
         } if (event.postback) {
             //if user clicked search
@@ -129,8 +129,8 @@ app.post('/webhook', function (req, res) {
                 sendMessage(event.sender.id, message);
                 console.log("location choesn");
             } else {
-                var theText = JSON.stringify(event.postback);
-                message ={text: "blob " + theText};
+                //var theText = JSON.stringify(event.postback);
+                message ={text: "hmm..lemme think about that"};
                 sendMessage(event.sender.id, message);
                 console.log("Postback received!!!!!!!");
             }
