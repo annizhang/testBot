@@ -141,12 +141,13 @@ app.post('/webhook', function (req, res) {
         }
     res.sendStatus(200);
     }
-    /*locationFound = false;
+    messageCount = 0; //the very beginning of the message
+    locationFound = false;
     place = "";
     beds = Number.MAX_VALUE;
     minPrice = Number.MIN_VALUE;
     maxPrice = Number.MAX_VALUE;
-    type = ""*/;
+    type = "";
 });
 
 // send rich message with joinery search
