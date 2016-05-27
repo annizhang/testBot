@@ -60,6 +60,17 @@ function findBeds(text) {
     return result;
 }
 
+function findPrices(text) {
+    text = text || "";
+    var results = [Number.MIN_VALUE, Number.MAX_VALUE];
+    var values = text.split(' ');
+    if (values.length === 3 && values[1] === "to" && Number(values[0]) >= 0 && Number(values[2]) < Number.MAX_VALUE){
+        results[0] = Number(values[0]);
+        results[1] = Number(values[1]);
+    }
+    return results;
+}
+
 var messageCount = 0; //the very beginning of the message
 var locationFound = false;
 var place = "";
@@ -93,14 +104,18 @@ app.post('/webhook', function (req, res) {
                        console.log ("location = " + location[1]);
                        place = location[1];
                        locationFound = true;
-                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "?"});
+                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
                    }
                } else if (beds === Number.MAX_VALUE) {
+                   //finding bedrooms
                    beds = findBeds(event.message.text);
-                   message = {"text": "Nice! What is your price range? Please type in the form of \"low to high \""};
+                   message = {"text": "Nice! What is your price range? Please type in the form of \"low to high\""};
                    sendMessage(event.sender.id, message);
-               } else {
-                   sendMessage(event.sender.id, {"text": "rooms?"});
+               } else if (minPrice === Number.MIN_VALUE) {
+                   var minMax = findPrices(event.message.text);
+                   minPrice = minMax[0];
+                   maxPrice = minMax[1];                   
+                   
                }
            }
         } if (event.postback) {
