@@ -92,7 +92,9 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!joineryMessage(event.sender.id, event.message.text)){   
+           if (!joineryMessage(event.sender.id, event.message.text)){
+               console.log("location?");
+               console.log(locationFound);
             //sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
             //findLocation takes in the message and finds 
                if (!locationFound) {
@@ -137,12 +139,12 @@ app.post('/webhook', function (req, res) {
     }
     res.sendStatus(200);
     }
-    locationFound = false;
+    /*locationFound = false;
     place = "";
     beds = Number.MAX_VALUE;
     minPrice = Number.MIN_VALUE;
     maxPrice = Number.MAX_VALUE;
-    type = "";
+    type = ""*/;
 });
 
 // send rich message with joinery search
