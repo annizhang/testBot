@@ -72,15 +72,16 @@ function findPrices(text) {
 }
 
 var messageCount = 0; //the very beginning of the message
-var locationFound = false;
-var place = "";
-var beds = Number.MAX_VALUE;
-var minPrice = Number.MIN_VALUE;
-var maxPrice = Number.MAX_VALUE;
-var type = "";
 
 // handler receiving messages
 app.post('/webhook', function (req, res) {
+    var locationFound = false;
+    var place = "";
+    var beds = Number.MAX_VALUE;
+    var minPrice = Number.MIN_VALUE;
+    var maxPrice = Number.MAX_VALUE;
+    var type = "";
+
     //need to create conversation thread
     //create a list of 
     var events = req.body.entry[0].messaging;
