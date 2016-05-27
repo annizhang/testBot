@@ -130,6 +130,12 @@ app.post('/webhook', function (req, res) {
             if (choice === "\"search\""){
                 console.log("it is search!");
                 message = {"text":"Where would you like to live?"};
+                locationFound = false;
+                place = "";
+                beds = Number.MAX_VALUE;
+                minPrice = Number.MIN_VALUE;
+                maxPrice = Number.MAX_VALUE;
+                type = "";
                 sendMessage(event.sender.id, message);
                 console.log("location choesn");
             } else {
