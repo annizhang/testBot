@@ -116,7 +116,7 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
-                   sendMessage(event.sender.id, {"text": "yay prices"});
+                   sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
                } else {sendMessage(event.sender.id, {"text": "waht now?"});}
            }
         } if (event.postback) {
