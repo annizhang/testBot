@@ -141,13 +141,7 @@ app.post('/webhook', function (req, res) {
         }
     res.sendStatus(200);
     }
-    messageCount = 0; //the very beginning of the message
-    locationFound = false;
-    place = "";
-    beds = Number.MAX_VALUE;
-    minPrice = Number.MIN_VALUE;
-    maxPrice = Number.MAX_VALUE;
-    type = "";
+    console.log("end of receive function");
 });
 
 // send rich message with joinery search
