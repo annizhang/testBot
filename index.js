@@ -95,9 +95,12 @@ app.post('/webhook', function (req, res) {
                        locationFound = true;
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "?"});
                    }
-               } if (beds === Number.MAX_VALUE) {
+               } else if (beds === Number.MAX_VALUE) {
                    beds = findBeds(event.message.text);
-                   message = {"text": "Nice! What is your price range? Please type in the form of \"low to high \""}
+                   message = {"text": "Nice! What is your price range? Please type in the form of \"low to high \""};
+                   sendMessage(event.sender.id, message);
+               } else {
+                   sendMessage(event.sender.id, {"text": "rooms?"});
                }
            }
         } if (event.postback) {
