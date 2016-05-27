@@ -130,7 +130,7 @@ app.post('/webhook', function (req, res) {
                 console.log("location choesn");
             } else {
                 //var theText = JSON.stringify(event.postback);
-                message ={text: "hmm..lemme think about that"};
+                message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
                 sendMessage(event.sender.id, message);
                 console.log("Postback received!!!!!!!");
             }
