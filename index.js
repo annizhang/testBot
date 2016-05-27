@@ -115,9 +115,9 @@ app.post('/webhook', function (req, res) {
                } else if (minPrice === Number.MIN_VALUE) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
-                   maxPrice = minMax[1];                   
-                   
-               }
+                   maxPrice = minMax[1];
+                   sendMessage(event.sender.id, {"text": "yay prices"});
+               } else {sendMessage(event.sender.id, {"text": "waht now?"});}
            }
         } if (event.postback) {
             //if user clicked search
