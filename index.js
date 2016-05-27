@@ -89,6 +89,7 @@ app.post('/webhook', function (req, res) {
                    if (location[0] === "none") {
                        sendMessage(event.sender.id, {"text": "Please input vaid location."});
                    } else {
+                       console.log("HERE!");
                        console.log ("location = " + location[1]);
                        place = location[1];
                        locationFound = true;
