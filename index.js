@@ -66,7 +66,7 @@ function findPrices(text) {
     var values = text.split(' ');
     if (values.length === 3 && values[1] === "to" && Number(values[0]) >= 0 && Number(values[2]) < Number.MAX_VALUE){
         results[0] = Number(values[0]);
-        results[1] = Number(values[1]);
+        results[1] = Number(values[2]);
     }
     return results;
 }
