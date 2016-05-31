@@ -84,9 +84,9 @@ function greetingMessage(recipientId, message) {
     //looking for hi or hello in the received message
     var lowerMess = message.toLowerCase();
     //using regex
-    var greet = \bhi\b;
-    var greet2 = \bhello\b;
-    var greet3 = \bhey\b;
+    var greet = /\bhi\b/;
+    var greet2 = /\bhello\b/;
+    var greet3 = /\bhey\b/;
     var res = lowerMess.match(greet);
     if (res.length !== 0) {
         var greetingInstruction = {"text": "Hi there! Please type \'joinery\' to get started!"};
