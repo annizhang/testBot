@@ -95,6 +95,48 @@ function greetingMessage(recipientId, message) {
     return false;
 }
 
+function joineryGreeting(recipientId, message) {
+    var lowerMess = message.toLowerCase();
+    var joinery = /\bjoinery\b/;
+    if (joiner.test(lowerMess)) {
+        joineryMess = {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":"Welcome to Joinery",
+                "item_url":"https://joinery.nyc",
+                "image_url":"https://scontent.fash1-1.fna.fbcdn.net/t31.0-8/10344292_421916781342262_7831247042188894229_o.jpg",
+                "subtitle":"Find a home from a fellow renter.",
+                "buttons":[
+                  {
+                    "type":"postback",
+                    "title":"I want to search for an apartment.",
+                    "payload":"search"
+                  },
+                  {
+                    "type":"postback",
+                    "title":"I want to list my apartment.",
+                    "payload":"list"
+                  },
+                  {
+                    "type":"web_url",
+                    "title":"Go to Joinery",
+                    "url":"https://joinery.nyc"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+        sendMessage(recipientId, joineryMess);
+        return true;
+    }
+    return false;   
+}
 
 // handler receiving messages
 app.post('/webhook', function (req, res) {
@@ -109,7 +151,8 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!joineryMessage(event.sender.id, event.message.text) && !greetingMessage(event.sender.id, event.message.text)){
+           if (!joineryMessage(event.sender.id, event.message.text) && !greetingMessage(event.sender.id, event.message.text) &&
+              !joineryGreeting(event.sender.id, event.message.text)){
                console.log("location?");
                console.log(locationFound);
             //sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
