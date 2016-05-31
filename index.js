@@ -99,7 +99,7 @@ function joineryGreeting(recipientId, message) {
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
     if (joiner.test(lowerMess)) {
-        joineryMess = {
+        joineryMess = {"message":{
         "attachment":{
           "type":"template",
           "payload":{
@@ -132,6 +132,7 @@ function joineryGreeting(recipientId, message) {
           }
         }
       }
+                      }
         sendMessage(recipientId, joineryMess);
         return true;
     }
