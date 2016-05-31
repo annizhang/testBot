@@ -98,7 +98,7 @@ function greetingMessage(recipientId, message) {
 function joineryGreeting(recipientId, message) {
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
-    if (joiner.test(lowerMess)) {
+    if (joinery.test(lowerMess)) {
         joineryMess = {"message":{
         "attachment":{
           "type":"template",
