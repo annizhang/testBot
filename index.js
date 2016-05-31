@@ -79,6 +79,24 @@ var minPrice = Number.MIN_VALUE;
 var maxPrice = Number.MAX_VALUE;
 var type = "";
 
+
+function greetingMessage(recipientId, message) {
+    //looking for hi or hello in the received message
+    var lowerMess = message.toLowerCase();
+    //using regex
+    var greet = \bhi\b;
+    var greet2 = \bhello\b;
+    var greet3 = \bhey\b;
+    var res = lowerMess.match(greet);
+    if (res.length !== 0) {
+        var greetingInstruction = {"text": "Hi there! Please type \'joinery\' to get started!"};
+        sendMessage(recipientId, greetingInstruction);
+        return true;
+    }
+    return false;
+}
+
+
 // handler receiving messages
 app.post('/webhook', function (req, res) {
     //need to create conversation thread
@@ -92,7 +110,7 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!joineryMessage(event.sender.id, event.message.text)){
+           if (!joineryMessage(event.sender.id, event.message.text) && !greetingMessage(event.sender.id, event.message.text)){
                console.log("location?");
                console.log(locationFound);
             //sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
@@ -152,7 +170,6 @@ app.post('/webhook', function (req, res) {
 
 // send rich message with joinery search
 function joineryMessage(recipientId, text) {
-    
     text = text || "";
     var values = text.split(' ');
     //if length 3 and first word is "search"
