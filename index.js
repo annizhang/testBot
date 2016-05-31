@@ -87,8 +87,7 @@ function greetingMessage(recipientId, message) {
     var greet = /\bhi\b/;
     var greet2 = /\bhello\b/;
     var greet3 = /\bhey\b/;
-    var res = lowerMess.match(greet);
-    if (res !== null) {
+    if ((lowerMess.match(greet) !== null) || (lowerMess.match(greet2) !== null) || (lowerMess.match(greet3) !== null)) {
         var greetingInstruction = {"text": "Hi there! Please type \'joinery\' to get started!"};
         sendMessage(recipientId, greetingInstruction);
         return true;
