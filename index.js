@@ -46,7 +46,7 @@ function findLocation(text) {
     text = text || "";
     var result = ["none", ""];
     var values = text.split(' ');
-    if (values.length < 4 && values[0].matches("[a-zA-Z]+")) {
+    if (values.length < 4) {
         result[0] = "some";
         result[1] = text;
     }
