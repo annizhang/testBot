@@ -40,11 +40,13 @@ function sendMessage(recipientId, message) {
     });
 };
 
+//gets user's location input
 function findLocation(text) {
+    //to do: check for valid address input
     text = text || "";
     var result = ["none", ""];
     var values = text.split(' ');
-    if (values.length < 3) {
+    if (values.length < 4 && values[0].matches("[a-zA-Z]+")) {
         result[0] = "some";
         result[1] = text;
     }
@@ -71,6 +73,7 @@ function findPrices(text) {
     return results;
 }
 
+//global vars:
 var messageCount = 0; //the very beginning of the message
 var locationFound = false;
 var place = "";
@@ -189,7 +192,7 @@ app.post('/webhook', function (req, res) {
             console.log(choice);
             if (choice === "\"search\""){
                 console.log("it is search!");
-                message = {"text":"Where would you like to live?"};
+                message = {"text":"I can help you search! Where would you like to live?"};
                 locationFound = false;
                 place = "";
                 beds = Number.MAX_VALUE;
