@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
+var tempJson;
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -20,6 +21,10 @@ app.get('/webhook', function (req, res) {
         res.send('Invalid verify token');
     }
 });
+
+app.get('joinery.nyc/api/v1/listings/available', function (req, res){
+        tempJson = res.json;
+        });
 
 // generic function sending messages
 function sendMessage(recipientId, message) {
@@ -148,7 +153,6 @@ app.post('/webhook', function (req, res) {
     var events = req.body.entry[0].messaging;
     var count = 0;
     for (i = 0; i < events.length; i++) {
-        count++;
         console.log(count);
         var event = events[i];
         var sender = event.sender.id;
@@ -183,7 +187,7 @@ app.post('/webhook', function (req, res) {
                    maxPrice = minMax[1];
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
                } else {
-                   sendMessage(event.sender.id, {"text": "what now?"});
+                   sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
                }
            }
         } if (event.postback) {
@@ -280,4 +284,18 @@ function joineryMessage(recipientId, text) {
                         }
                     }
                 };
+
+streeteasy url for west village price 1500 to 2000 with beds greater than 2 and 
+%7C is a pipe character
+
+http://streeteasy.com/for-rent/west-village/price:1500-2000%7Cbeds%3E=2%7Cbaths%3E=1%7Cno_fee:1
+
+
+streeteasy url for manhattan price 0 to 2000 with 1 bed and 
+http://streeteasy.com/for-rent/manhattan/price:0-2000%7Cbeds:1%7Cbaths%3E=1%7Cno_fee:1
+
+
 */
+
+
+
