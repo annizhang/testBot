@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
+
+//where the listings are in json form
 var tempJson;
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -23,8 +25,9 @@ app.get('/webhook', function (req, res) {
 });
 
 app.get('joinery.nyc/api/v1/listings/available', function (req, res){
-        tempJson = res.json;
-        });
+        tempJson = res;
+        console.log(JSON.stringify(tempJson));
+});
 
 // generic function sending messages
 function sendMessage(recipientId, message) {
