@@ -7,10 +7,8 @@ var https = require('https');
 
 //where the listings are in json form
 var listings = {
-    host: 'joinery.nyc',
-    port: 3000,
+    host: 'https://joinery.nyc',
     path: '/api/v1/listings/available',
-    method: 'GET',
     headers: {
         'Content-Type': 'application/json'
     }
