@@ -42,6 +42,10 @@ function sendMessage(recipientId, message) {
     });
 };
 
+$.getJSON('https://joinery.nyc/api/v1/listings/available', function(data) {
+    console.log(data);
+});
+
 //gets user's location input
 function findLocation(text) {
     //to do: check for valid address input
