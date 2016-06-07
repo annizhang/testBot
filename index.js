@@ -5,36 +5,6 @@ var app = express();
 var http = require('http');
 var https = require('https');
 
-//where the listings are in json form
-var listings = {
-    host: 'https://joinery.nyc',
-    path: '/api/v1/listings/available',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-
-};
-
-var req = http.request(listings, function(res) {
-    console.log('STATUS: ' + res.statusCode);
-    console.log('HEADERS: ' + JSON.stringify(res.headers));
-    
-    //Buffer the body entirely for processing as a whole
-    var bodyChunks = [];
-    res.on('data', function(chunk) {
-        // you can process streamed parts here...
-        bodyChunks.push(chunk);
-    }).on('end', function() {
-        var body = Buffer.concat(bodyChunks);
-        console.log('BODY: ' + body);
-        // ...and/or process the entire body here
-    })
-});
-
-req.on('error', function(e){
-    console.log('ERROR: ' + e.message);
-});
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
@@ -71,6 +41,24 @@ function sendMessage(recipientId, message) {
         }
     });
 };
+
+function getJSONP(url, success) {
+    var ud = '_' + +new Date,
+        script = document.createElement('script'),
+        head = document.getElementsByTagName('head')[0] || document.documentElement;
+    window[ud] = function(data) {
+        head.removeChild(script);
+        success && success(data);
+    };
+    
+    script.src = url.replace('callback=?', 'callback=' + ud);
+    head.appendChild(script);
+}
+
+getJSONP("https://joinery.nyc/api/v1/listing/available", function(data){
+    console.log(data);
+});
+
 
 //gets user's location input
 function findLocation(text) {
