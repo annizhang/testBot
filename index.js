@@ -2,9 +2,40 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
+var http = require('http');
+var https = require('https');
 
 //where the listings are in json form
-var tempJson;
+var listings = {
+    host: 'joinery.nyc',
+    port: 3000,
+    path: '/api/v1/listings/available',
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+
+};
+
+var req = http.request(listings, function(res) {
+    console.log('STATUS: ' + res.statusCode);
+    console.log('HEADERS: ' + JSON.stringify(res.headers));
+    
+    //Buffer the body entirely for processing as a whole
+    var bodyChunks = [];
+    res.on('data', function(chunk) {
+        // you can process streamed parts here...
+        bodyChunks.push(chunk);
+    }).on('end', function() {
+        var body = Buffer.concat(bodyChunks);
+        console.log('BODY: ' + body);
+        // ...and/or process the entire body here
+    })
+});
+
+req.on('error', function(e){
+    console.log('ERROR: ' + e.message);
+});
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -22,11 +53,6 @@ app.get('/webhook', function (req, res) {
     } else {
         res.send('Invalid verify token');
     }
-});
-
-app.get('joinery.nyc/api/v1/listings/available', function (req, res){
-        tempJson = res;
-        console.log(JSON.stringify(tempJson));
 });
 
 // generic function sending messages
