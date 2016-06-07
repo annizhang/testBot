@@ -46,7 +46,7 @@ function sendMessage(recipientId, message) {
     console.log(data);
 });*/
 
-
+//listings in json form
 var url = 'https://joinery.nyc/api/v1/listings/available';
 
 https.get(url, function(res){
@@ -58,11 +58,12 @@ https.get(url, function(res){
 
     res.on('end', function(){
         var fbResponse = JSON.parse(body);
-        console.log("Got a response: ", fbResponse.picture);
+        console.log("Got a response: ", fbResponse);
     });
 }).on('error', function(e){
       console.log("Got an error: ", e);
 });
+
 
 
 //gets user's location input
