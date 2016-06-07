@@ -47,7 +47,7 @@ function sendMessage(recipientId, message) {
 });*/
 
 
-var url = 'http://joinery.nyc/api/v1/listings/available';
+var url = 'https://joinery.nyc/api/v1/listings/available';
 
 https.get(url, function(res){
     var body = '';
