@@ -42,9 +42,28 @@ function sendMessage(recipientId, message) {
     });
 };
 
-$.getJSON('https://joinery.nyc/api/v1/listings/available', function(data) {
+/*$.getJSON('https://joinery.nyc/api/v1/listings/available', function(data) {
     console.log(data);
+});*/
+
+
+var url = 'http://joinery.nyc/api/v1/listings/available';
+
+https.get(url, function(res){
+    var body = '';
+
+    res.on('data', function(chunk){
+        body += chunk;
+    });
+
+    res.on('end', function(){
+        var fbResponse = JSON.parse(body);
+        console.log("Got a response: ", fbResponse.picture);
+    });
+}).on('error', function(e){
+      console.log("Got an error: ", e);
 });
+
 
 //gets user's location input
 function findLocation(text) {
