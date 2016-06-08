@@ -48,31 +48,30 @@ function sendMessage(recipientId, message) {
 
 //listings in json form
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
-var listings;
+var listings = [];
 
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
 
 
-function searchListings(neighborhood,beds,minPrice, maxPrice,sender){
+function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
     //listings in json form
-var url = 'https://joinery.nyc/api/v1/listings/available';
-var listings;
 
-//http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
-https.get(url, function(res){
-    var body = '';
+    /*http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
+    https.get(url, function(res){
+        var body = '';
 
-    res.on('data', function(chunk){
-        body += chunk;
-    });
+        res.on('data', function(chunk){
+            body += chunk;
+        });
 
-    res.on('end', function(){
-        //listings = JSON.parse(body);
-        console.log("Got listings");
-    });
-}).on('error', function(e){
-      console.log("Got an error: ", e);
-});
+        res.on('end', function(){
+            //listings = JSON.parse(body);
+            console.log("Got listings");
+        });
+    }).on('error', function(e){
+          console.log("Got an error: ", e);
+    });*/
+    
     
 }
 
@@ -177,6 +176,8 @@ function joineryGreeting(recipientId, message) {
     return false;   
 }
 
+function 
+
 // handler receiving messages
 app.post('/webhook', function (req, res) {
     //need to create conversation thread
@@ -191,8 +192,8 @@ app.post('/webhook', function (req, res) {
             //if user sends a text message
            if (!joineryMessage(event.sender.id, event.message.text) && !greetingMessage(event.sender.id, event.message.text) &&
               !joineryGreeting(event.sender.id, event.message.text)){
-               console.log("location?");
-               console.log(locationFound);
+               //console.log("location?");
+               //console.log(locationFound);
             //sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
             //findLocation takes in the message and finds 
                if (!locationFound) {
@@ -216,9 +217,10 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
-                   var getListings = https.get(fetchListingUrl, function(res){
+                   https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
+                           console.log(chunk);
                            body += chunk;
                        });
                        res.on('end', function(){
