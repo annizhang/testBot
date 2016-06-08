@@ -215,7 +215,7 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
-                   var getListings = https.get(fetchListingUrl, function(res){
+                   /*var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
                            //console.log(chunk);
@@ -227,7 +227,7 @@ app.post('/webhook', function (req, res) {
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
-                   });
+                   });*/
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
                } else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
