@@ -59,11 +59,9 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
     //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
     https.get(url, function(res){
         var body = '';
-
         res.on('data', function(chunk){
             body += chunk;
         });
-
         res.on('end', function(){
             //listings = JSON.parse(body);
             console.log("Got listings");
@@ -174,8 +172,6 @@ function joineryGreeting(recipientId, message) {
     return false;   
 }
 
-function 
-
 // handler receiving messages
 app.post('/webhook', function (req, res) {
     //need to create conversation thread
@@ -215,7 +211,7 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
-                   /*var getListings = https.get(fetchListingUrl, function(res){
+                   var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
                            //console.log(chunk);
@@ -227,7 +223,7 @@ app.post('/webhook', function (req, res) {
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
-                   });*/
+                   });
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
                } else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
@@ -297,7 +293,7 @@ function joineryMessage(recipientId, text) {
         }
     return false;
     
-};
+}
         
         
 /* message with buttons with boroughs
@@ -336,8 +332,6 @@ http://streeteasy.com/for-rent/west-village/price:1500-2000%7Cbeds%3E=2%7Cbaths%
 
 streeteasy url for manhattan price 0 to 2000 with 1 bed and 
 http://streeteasy.com/for-rent/manhattan/price:0-2000%7Cbeds:1%7Cbaths%3E=1%7Cno_fee:1
-
-        
 */
 
 
