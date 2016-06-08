@@ -81,7 +81,7 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
                 "elements": found }
         }
     };
-    var testMesage = {"text" :"got them!"};
+    var testMessage = {"text" :"got them!"};
     sendMessage(sender, testMessage);
     sendMessage(sender, newMessage);
 }
