@@ -58,13 +58,15 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
     var found = [];
     var newJSON;
     var listing;
+    var listingJson;
     for (listing in listings){
-        if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
-            newJSON = {"title": listing.title,
-                       "subtitle": listing.street_address,
+        listingJson = JSON.stringify(listing);
+        if (listingJson.bedrooms === beds && listingJson.price <= maxPrice && listingJson.price >= minPrice){
+            newJSON = {"title": listingJson.title,
+                       "subtitle": listingJson.street_address,
                        "buttons": [
                            {"type": "web_url",
-                           "url": "https://joinery.nyc/listing/" + listing.slug,
+                           "url": "https://joinery.nyc/listing/" + listingJson.slug,
                            "title": "View Apartment"}
                        ]
                       };
@@ -241,7 +243,7 @@ app.post('/webhook', function (req, res) {
                        console.log("Got an error: ", e);
                    });
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
-                   //searchListings(beds, minPrice, maxPrice, event.sender.id,listings);
+                   searchListings(beds, minPrice, maxPrice, event.sender.id,listings);
                } else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
                }
