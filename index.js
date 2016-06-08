@@ -217,7 +217,7 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
-                   https.get(fetchListingUrl, function(res){
+                   var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
                            console.log(chunk);
