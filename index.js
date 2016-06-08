@@ -229,7 +229,7 @@ app.post('/webhook', function (req, res) {
                            body += chunk;
                        });
                        res.on('end', function(){
-                           listings = JSON.parse(body);
+                           var listings = JSON.parse(body);
                            //console.log(listings);
                            //console.log(typeof listings);
                            console.log("Got listings");
@@ -238,7 +238,7 @@ app.post('/webhook', function (req, res) {
                        console.log("Got an error: ", e);
                    });
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
-                   searchListings(beds,minPrice, maxPrice,event.sender.id,listings);
+                   searchListings(beds, minPrice, maxPrice, event.sender.id,listings);
                } else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
                }
