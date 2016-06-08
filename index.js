@@ -47,8 +47,18 @@ function sendMessage(recipientId, message) {
 });*/
 
 //listings in json form
-var url = 'https://joinery.nyc/api/v1/listings/available';
+var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
+var listings;
 
+//http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
+
+
+function searchListings(neighborhood,beds,minPrice, maxPrice,sender){
+    //listings in json form
+var url = 'https://joinery.nyc/api/v1/listings/available';
+var listings;
+
+//http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
 https.get(url, function(res){
     var body = '';
 
@@ -57,14 +67,14 @@ https.get(url, function(res){
     });
 
     res.on('end', function(){
-        var fbResponse = JSON.parse(body);
-        console.log("Got a response: ", fbResponse);
+        //listings = JSON.parse(body);
+        console.log("Got listings");
     });
 }).on('error', function(e){
       console.log("Got an error: ", e);
 });
-
-
+    
+}
 
 //gets user's location input
 function findLocation(text) {
@@ -206,6 +216,18 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
+                   var getListings = https.get(fetchListingUrl, function(res){
+                       var body = '';
+                       res.on('data', function(chunk){
+                           body += chunk;
+                       });
+                       res.on('end', function(){
+                           //listings = JSON.parse(body);
+                           console.log("Got listings");
+                       });
+                   }).on('error', function(e){
+                       console.log("Got an error: ", e);
+                   });
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
                } else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
