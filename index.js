@@ -71,8 +71,8 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
                        ]
                       };
             found += newJSON;
-        }
-    }
+        };
+    };
     var newMessage = {
         "attachment":{
             "type":"template",
