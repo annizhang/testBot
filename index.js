@@ -56,7 +56,7 @@ var listings = [];
 function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
     //listings in json form
 
-    /*http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
+    //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
     https.get(url, function(res){
         var body = '';
 
@@ -70,7 +70,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         });
     }).on('error', function(e){
           console.log("Got an error: ", e);
-    });*/
+    });
     
     
 }
@@ -339,7 +339,7 @@ http://streeteasy.com/for-rent/west-village/price:1500-2000%7Cbeds%3E=2%7Cbaths%
 streeteasy url for manhattan price 0 to 2000 with 1 bed and 
 http://streeteasy.com/for-rent/manhattan/price:0-2000%7Cbeds:1%7Cbaths%3E=1%7Cno_fee:1
 
-
+        
 */
 
 
