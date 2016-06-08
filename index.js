@@ -53,23 +53,32 @@ var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
 
 
-function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
-    //listings in json form
-
-    //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
-    https.get(url, function(res){
-        var body = '';
-        res.on('data', function(chunk){
-            body += chunk;
-        });
-        res.on('end', function(){
-            //listings = JSON.parse(body);
-            console.log("Got listings");
-        });
-    }).on('error', function(e){
-          console.log("Got an error: ", e);
-    });    
+function searchListings(beds,minPrice, maxPrice,sender,listings){
+    var found = []
+    for (var listing in listings){
+        if (listing.bedrooms === beds && listing.price <== maxPrice && listing.price >== minPrice){
+            var newJSON = { "title": listing.title , 
+                           "subtitle": listing.street_address, 
+                           "buttons": [
+                               "type": "web_url",
+                               "url": "https://joinery.nyc/listing/" + listing.slug,
+                               "title": "View Apartment"
+                           ]
+                          }
+            found += newJSON;
+        }
+    }
+    var newMessage = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"generic",
+                "elements": found }
+        }
+    };
+    sendMessage(sender, newMessage);
 }
+
 
 //gets user's location input
 function findLocation(text) {
@@ -214,19 +223,20 @@ app.post('/webhook', function (req, res) {
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
-                           console.log(chunk);
+                           //console.log(chunk);
                            body += chunk;
                        });
                        res.on('end', function(){
                            listings = JSON.parse(body);
                            //console.log(listings);
-                           console.log(typeof listings);
+                           //console.log(typeof listings);
                            console.log("Got listings");
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
                    sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
+                   searchListings(beds,minPrice, maxPrice,event.sender.id,listings);
                } else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
                }
@@ -334,7 +344,73 @@ http://streeteasy.com/for-rent/west-village/price:1500-2000%7Cbeds%3E=2%7Cbaths%
 
 streeteasy url for manhattan price 0 to 2000 with 1 bed and 
 http://streeteasy.com/for-rent/manhattan/price:0-2000%7Cbeds:1%7Cbaths%3E=1%7Cno_fee:1
+
+!!!!!!!!!mutliple elements for a message!!!!!!!!!!!!!!!!!!!!
+curl -X POST -H "Content-Type: application/json" -d '{
+  "recipient":{
+    "id":"USER_ID"
+  },
+  "message":{
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"generic",
+        "elements":[
+          {
+            "title":"Classic White T-Shirt",
+            "image_url":"http://petersapparel.parseapp.com/img/item100-thumb.png",
+            "subtitle":"Soft white cotton t-shirt is back in style",
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
+                "title":"View Item"
+              },
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/buy_item?item_id=100",
+                "title":"Buy Item"
+              },
+              {
+                "type":"postback",
+                "title":"Bookmark Item",
+                "payload":"USER_DEFINED_PAYLOAD_FOR_ITEM100"
+              }              
+            ]
+          },
+          {
+            "title":"Classic Grey T-Shirt",
+            "image_url":"http://petersapparel.parseapp.com/img/item101-thumb.png",
+            "subtitle":"Soft gray cotton t-shirt is back in style",
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/view_item?item_id=101",
+                "title":"View Item"
+              },
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/buy_item?item_id=101",
+                "title":"Buy Item"
+              },
+              {
+                "type":"postback",
+                "title":"Bookmark Item",
+                "payload":"USER_DEFINED_PAYLOAD_FOR_ITEM101"
+              }              
+            ]
+          }
+        ]
+      }
+    }
+  }
+}' "https://graph.facebook.com/v2.6/me/messages?access_token=<PAGE_ACCESS_TOKEN>"
+Structured Message - Receipt Template
+
+
 */
+
+
 
 
 
