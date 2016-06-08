@@ -219,7 +219,8 @@ app.post('/webhook', function (req, res) {
                        });
                        res.on('end', function(){
                            listings = JSON.parse(body);
-                           console.log(listings);
+                           //console.log(listings);
+                           console.log(typeof listings);
                            console.log("Got listings");
                        });
                    }).on('error', function(e){
