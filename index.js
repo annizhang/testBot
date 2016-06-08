@@ -54,6 +54,7 @@ var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 
 
 function searchListings(beds,minPrice, maxPrice,sender,listings){
+    console.log("SEARCHING!!!");
     var found = [];
     var newJSON;
     var listing;
