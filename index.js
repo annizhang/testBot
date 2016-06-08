@@ -70,9 +70,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         });
     }).on('error', function(e){
           console.log("Got an error: ", e);
-    });
-    
-    
+    });    
 }
 
 //gets user's location input
@@ -220,7 +218,7 @@ app.post('/webhook', function (req, res) {
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
-                           console.log(chunk);
+                           //console.log(chunk);
                            body += chunk;
                        });
                        res.on('end', function(){
