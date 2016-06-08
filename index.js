@@ -59,14 +59,14 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
     var newJSON;
     var listing;
     var listingJson;
-    for (listing in listings){
-        listingJson = JSON.stringify(listing);
-        if (listingJson.bedrooms === beds && listingJson.price <= maxPrice && listingJson.price >= minPrice){
-            newJSON = {"title": listingJson.title,
-                       "subtitle": listingJson.street_address,
+    for (listing in JSON.stringify(listings)){
+        //listingJson = JSON.stringify(listing);
+        if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
+            newJSON = {"title": listing.title,
+                       "subtitle": listing.street_address,
                        "buttons": [
                            {"type": "web_url",
-                           "url": "https://joinery.nyc/listing/" + listingJson.slug,
+                           "url": "https://joinery.nyc/listing/" + listing.slug,
                            "title": "View Apartment"}
                        ]
                       };
