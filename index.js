@@ -48,7 +48,7 @@ function sendMessage(recipientId, message) {
 
 //listings in json form
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
-var listings = [];
+//var listings = [];
 
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
 
