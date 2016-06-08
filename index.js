@@ -227,6 +227,7 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
+                   var listings;
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -234,7 +235,7 @@ app.post('/webhook', function (req, res) {
                            body += chunk;
                        });
                        res.on('end', function(){
-                           var listings = JSON.parse(body);
+                           listings = JSON.parse(body);
                            //console.log(listings);
                            //console.log(typeof listings);
                            console.log("Got listings");
