@@ -31,7 +31,7 @@ function sendMessage(recipientId, message) {
         method: 'POST',
         json: {
             recipient: {id: recipientId},
-            message: message,
+            message: message
         }
     }, function(error, response, body) {
         if (error) {
@@ -54,17 +54,19 @@ var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 
 
 function searchListings(beds,minPrice, maxPrice,sender,listings){
-    var found = []
-    for (var listing in listings){
-        if (listing.bedrooms === beds && listing.price <== maxPrice && listing.price >== minPrice){
-            var newJSON = { "title": listing.title , 
-                           "subtitle": listing.street_address, 
-                           "buttons": [
-                               "type": "web_url",
-                               "url": "https://joinery.nyc/listing/" + listing.slug,
-                               "title": "View Apartment"
-                           ]
-                          }
+    var found = [];
+    var newJSON;
+    var listing;
+    for (listing in listings){
+        if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
+            newJSON = {"title": listing.title,
+                       "subtitle": listing.street_address,
+                       "buttons": [
+                           {"type": "web_url",
+                           "url": "https://joinery.nyc/listing/" + listing.slug,
+                           "title": "View Apartment"}
+                       ]
+                      };
             found += newJSON;
         }
     }
