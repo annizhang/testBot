@@ -68,8 +68,8 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
                 "elements": []}
         }
     };
-    for (var i = 0; i < stringOfListings.length; i++){
-        listing = stringOfListings[i];
+    for (var i = 0; i < listings.length; i++){
+        listing = listings[i];
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
@@ -244,7 +244,7 @@ app.post('/webhook', function (req, res) {
                        });
                        res.on('end', function(){
                            console.log("body is" + body);
-                           listings = JSON.parse(body);
+                           listings = JSON.parse("[" + body + "]");
                            //console.log(listings);
                            console.log("Got listings");
                        });
