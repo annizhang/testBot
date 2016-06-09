@@ -235,7 +235,8 @@ app.post('/webhook', function (req, res) {
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
-                           //console.log(chunk);
+                           console.log("the chunk is");
+                           console.log(typeof chunk);
                            body += chunk;
                        });
                        res.on('end', function(){
