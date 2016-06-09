@@ -60,6 +60,7 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
     var newJSON;
     var listing;
     var listingJson;
+    var found = false;
     var newMessage = {
         "attachment":{
             "type":"template",
@@ -73,6 +74,7 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
+            found = true;
             newMessage.attachment.payload.elements.push({"title": listing.title,
                        "image_url": "https://joinery.nyc/" + listing.image_url,
                        "subtitle": listing.street_address,
@@ -87,10 +89,15 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
                       });
         };
     };
-    
-    var testMessage = {"text" :"got them!"};
-    sendMessage(sender, testMessage);
-    sendMessage(sender, newMessage);
+    if (!found) {
+        testMessage = {"text" : "Sorry I came up empty!!"};
+        sendMessage(sender, testMessage);
+    }
+    else {
+        var confirmationMessage = {"text" :"Here are " + listings.length.toString() + " apartments I think you'll be interested in!"};
+        sendMessage(sender, confirmationMessage);
+        sendMessage(sender, newMessage);
+    }
 }
 
 
@@ -234,7 +241,6 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
-                   var listings;
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -244,7 +250,7 @@ app.post('/webhook', function (req, res) {
                        });
                        res.on('end', function(){
                            console.log("body is" + body);
-                           listings = JSON.parse(body);
+                           var listings = JSON.parse(body);
                            //console.log(listings);
                            searchListings(beds, minPrice, maxPrice, event.sender.id, listings);
                            console.log("Got listings" + listings.length);
@@ -252,7 +258,7 @@ app.post('/webhook', function (req, res) {
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
-                   sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
+                   sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
                    //console.log(typeof JSON.stringify(listings));
                    
                } else {
