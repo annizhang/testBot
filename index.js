@@ -63,11 +63,15 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
             newJSON = {"title": listing.title,
+                       "image_url": "https://joinery.nyc/" + listing.image_url,
                        "subtitle": listing.street_address,
                        "buttons": [
                            {"type": "web_url",
                            "url": "https://joinery.nyc/listing/" + listing.slug,
-                           "title": "View Apartment"}
+                           "title": "View Apartment"},
+                           {"type": "web_url",
+                           "url": "https://joinery.nyc",
+                           "title": "Go to Joinery"}
                        ]
                       };
             found += newJSON;
@@ -78,7 +82,7 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
             "type":"template",
             "payload":{
                 "template_type":"generic",
-                "elements": found }
+                "elements": JSON.stringify(found)}
         }
     };
     var testMessage = {"text" :"got them!"};
