@@ -246,14 +246,15 @@ app.post('/webhook', function (req, res) {
                            console.log("body is" + body);
                            listings = JSON.parse(body);
                            //console.log(listings);
+                           searchListings(beds, minPrice, maxPrice, event.sender.id, listings);
                            console.log("Got listings" + listings.length);
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
-                   //sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
+                   sendMessage(event.sender.id, {"text": "Thanks! Here are 5 apartments I think you will be interested in:"});
                    //console.log(typeof JSON.stringify(listings));
-                   searchListings(beds, minPrice, maxPrice, event.sender.id, listings);
+                   
                } else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
                }
