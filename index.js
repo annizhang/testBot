@@ -58,7 +58,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
     var newJSON;
     var listing;
     var listingJson;
-    var found = false;
+    var count = 0;
     var newMessage = {
         "attachment":{
             "type":"template",
@@ -68,6 +68,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         }
     };
     for (var i = 0; i < listings.length; i++){
+        count++;
         listing = listings[i];
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
@@ -87,12 +88,12 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
                       });
         };
     };
-    if (!found) {
+    if (count === 0) {
         testMessage = {"text" : "Sorry I came up empty!!"};
         sendMessage(sender, testMessage);
     }
     else {
-        var confirmationMessage = {"text" :"Here are " + listings.length.toString() + " apartments I think you'll be interested in!"};
+        var confirmationMessage = {"text" :"Here are " + count.toString() + " apartments I think you'll be interested in!"};
         sendMessage(sender, confirmationMessage);
         sendMessage(sender, newMessage);
     }
