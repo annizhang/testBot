@@ -175,12 +175,12 @@ function joineryGreeting(recipientId, message) {
                 "buttons":[
                   {
                     "type":"postback",
-                    "title":"search for an apartment.",
+                    "title":"Search apartments",
                     "payload":"search"
                   },
                   {
                     "type":"postback",
-                    "title":"slist my apartment.",
+                    "title":"List my apartment",
                     "payload":"list"
                   },
                   {
