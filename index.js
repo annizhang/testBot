@@ -54,7 +54,7 @@ var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 
 
 function searchListings(beds,minPrice, maxPrice,sender,listings){
-    console.log("SEARCHING!!!");
+    //console.log("SEARCHING!!!");
     var newJSON;
     var listing;
     var listingJson;
@@ -67,9 +67,10 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
         }
     };
     for (listing in JSON.stringify(listings)){
+        console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
-            newJSON = {"title": listing.title,
+            newMessage.attachment.payload.elements.push({"title": listing.title,
                        "image_url": "https://joinery.nyc/" + listing.image_url,
                        "subtitle": listing.street_address,
                        "buttons": [
@@ -80,8 +81,7 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
                            "url": "https://joinery.nyc",
                            "title": "Go to Joinery"}
                        ]
-                      };
-            newMessage.attachment.payload.elements.push(newJSON);
+                      });
         };
     };
     
