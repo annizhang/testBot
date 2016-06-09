@@ -75,9 +75,9 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
             found = true;
-            newMessage.attachment.payload.elements.push({"title": listing.title,
+            newMessage.attachment.payload.elements.push({"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
                        "image_url": "https://joinery.nyc/" + listing.image_url,
-                       "subtitle": listing.street_address,
+                       "subtitle": listing.full_address,
                        "buttons": [
                            {"type": "web_url",
                            "url": "https://joinery.nyc/listing/" + listing.slug,
@@ -258,7 +258,7 @@ app.post('/webhook', function (req, res) {
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
-                   sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
+                   //sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
                    //console.log(typeof JSON.stringify(listings));
                    
                } else {
