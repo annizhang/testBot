@@ -78,7 +78,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
                        "subtitle": listing.full_address,
                        "buttons": [
                            {"type": "web_url",
-                           "url": "https://joinery.nyc/listing/" + listing.slug,
+                           "url": "https://joinery.nyc/listing/" + listing.slug.replace("fit/250/120", "fill/400/400"),
                            "title": "View Apartment"},
                            {"type": "web_url",
                            "url": "https://joinery.nyc",
