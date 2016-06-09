@@ -66,7 +66,8 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
                 "elements": []}
         }
     };
-    for (listing in listings){
+    for (var i = 0; i < listings.length; i++){
+        listing = listings[i];
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
