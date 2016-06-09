@@ -68,12 +68,11 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         }
     };
     for (var i = 0; i < listings.length; i++){
-        count++;
         listing = listings[i];
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice, neighborhood === listing.neighborhood.toLowerCase()){
-            found = true;
+            count++;
             newMessage.attachment.payload.elements.push({"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
                        "image_url": "https://joinery.nyc/" + listing.image_url,
                        "subtitle": listing.full_address,
