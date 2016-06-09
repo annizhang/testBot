@@ -55,7 +55,7 @@ var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
 
 
-function searchListings(beds,minPrice, maxPrice,sender,listings){
+function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
     //console.log("SEARCHING!!!");
     var newJSON;
     var listing;
@@ -73,7 +73,7 @@ function searchListings(beds,minPrice, maxPrice,sender,listings){
         listing = listings[i];
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
-        if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice){
+        if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice, neighborhood === listing.neighborhood.toLowerCase()){
             found = true;
             newMessage.attachment.payload.elements.push({"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
                        "image_url": "https://joinery.nyc/" + listing.image_url,
@@ -227,7 +227,7 @@ app.post('/webhook', function (req, res) {
                    } else {
                        console.log("HERE!");
                        console.log ("location = " + location[1]);
-                       place = location[1];
+                       place = location[1].toLowerCase();
                        locationFound = true;
                        console.log(locationFound);
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
@@ -252,7 +252,7 @@ app.post('/webhook', function (req, res) {
                            console.log("body is" + body);
                            var listings = JSON.parse(body);
                            //console.log(listings);
-                           searchListings(beds, minPrice, maxPrice, event.sender.id, listings);
+                           searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings);
                            console.log("Got listings" + listings.length);
                        });
                    }).on('error', function(e){
