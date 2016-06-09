@@ -74,11 +74,11 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice, neighborhood === listing.neighborhood.toLowerCase()){
             count++;
             newMessage.attachment.payload.elements.push({"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
-                       "image_url": "https://joinery.nyc/" + listing.image_url,
+                       "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/400/400"),
                        "subtitle": listing.full_address,
                        "buttons": [
                            {"type": "web_url",
-                           "url": "https://joinery.nyc/listing/" + listing.slug.replace("fit/250/120", "fill/400/400"),
+                           "url": "https://joinery.nyc/listing/" + listing.slug,
                            "title": "View Apartment"},
                            {"type": "web_url",
                            "url": "https://joinery.nyc",
