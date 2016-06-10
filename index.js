@@ -84,7 +84,8 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
                       "url": "https://joinery.nyc",
                       "title": "Go to Joinery"},
                      {"type": "postback",
-                      "title": "Keep looking"
+                      "title": "Keep looking",
+                      "payload": "search"
                      }
                  ]
                 });
