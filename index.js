@@ -92,14 +92,14 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         sendMessage(sender, testMessage);
     }
     else {
-        var verb = "are";
+        var verb = " are ";
         var results = " apartments ";
         if (count === 1) {
-            verb = "is";
+            verb = " is ";
             results = " apartment ";
         }
         var confirmationMessage =
-            {"text" :"Here " + verb + count.toString() + results + "I think you'll be interested in!"};
+            {"text" :"Here" + verb + count.toString() + results + "I think you'll be interested in!"};
         sendMessage(sender, confirmationMessage);
         sendMessage(sender, newMessage);
     }
