@@ -48,11 +48,7 @@ function sendMessage(recipientId, message) {
 
 //listings in json form
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
-//var listings = [];
-
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
-
-
 function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
     //console.log("SEARCHING!!!");
     var newJSON;
@@ -71,33 +67,43 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         listing = listings[i];
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
-        if (listing.bedrooms === beds && listing.price <= maxPrice && listing.price >= minPrice, neighborhood === listing.neighborhood.toLowerCase()){
+        if (listing.bedrooms === beds && 
+            listing.price <= maxPrice && 
+            listing.price >= minPrice && 
+            neighborhood === listing.neighborhood.toLowerCase()){
             count++;
-            newMessage.attachment.payload.elements.push({"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
-                       "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/400/400"),
-                       "subtitle": listing.full_address,
-                       "buttons": [
-                           {"type": "web_url",
-                           "url": "https://joinery.nyc/listing/" + listing.slug,
-                           "title": "View Apartment"},
-                           {"type": "web_url",
-                           "url": "https://joinery.nyc",
-                           "title": "Go to Joinery"}
-                       ]
-                      });
+            newMessage.attachment.payload.elements.push(
+                {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
+                 "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/400/400"),
+                 "subtitle": listing.full_address,
+                 "buttons": [
+                     {"type": "web_url",
+                      "url": "https://joinery.nyc/listing/" + listing.slug,
+                      "title": "View Apartment"},
+                     {"type": "web_url",
+                      "url": "https://joinery.nyc",
+                      "title": "Go to Joinery"}
+                 ]
+                });
         };
     };
     if (count === 0) {
-        testMessage = {"text" : "Sorry I came up empty!!"};
+        testMessage = {"text" : "Sorry I came up empty!! Type joinery to search again!"};
         sendMessage(sender, testMessage);
     }
     else {
-        var confirmationMessage = {"text" :"Here are " + count.toString() + " apartments I think you'll be interested in!"};
+        var verb = "are";
+        var results = " apartments ";
+        if (count === 1) {
+            verb = "is";
+            results = " apartment ";
+        }
+        var confirmationMessage =
+            {"text" :"Here " + verb + count.toString() + results + "I think you'll be interested in!"};
         sendMessage(sender, confirmationMessage);
         sendMessage(sender, newMessage);
     }
 }
-
 
 //gets user's location input
 function findLocation(text) {
@@ -125,7 +131,10 @@ function findPrices(text) {
     text = text || "";
     var results = [Number.MIN_VALUE, Number.MAX_VALUE];
     var values = text.split(' ');
-    if (values.length === 3 && values[1] === "to" && Number(values[0]) >= 0 && Number(values[2]) < Number.MAX_VALUE){
+    if (values.length === 3 && 
+        values[1] === "to" && 
+        Number(values[0]) >= 0 && 
+        Number(values[2]) < Number.MAX_VALUE){
         results[0] = Number(values[0]);
         results[1] = Number(values[2]);
     }
@@ -149,8 +158,11 @@ function greetingMessage(recipientId, message) {
     var greet = /\bhi\b/;
     var greet2 = /\bhello\b/;
     var greet3 = /\bhey\b/;
-    if ((lowerMess.match(greet) !== null) || (lowerMess.match(greet2) !== null) || (lowerMess.match(greet3) !== null)) {
-        var greetingInstruction = {"text": "Hi there! Please type \'joinery\' to get started!"};
+    if ((lowerMess.match(greet) !== null) || 
+        (lowerMess.match(greet2) !== null) || 
+        (lowerMess.match(greet3) !== null)) {
+        var greetingInstruction = 
+            {"text": "Hi there! Please type \'joinery\' to get started!"};
         sendMessage(recipientId, greetingInstruction);
         return true;
     }
@@ -210,7 +222,8 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!joineryMessage(event.sender.id, event.message.text) && !greetingMessage(event.sender.id, event.message.text) &&
+           if (!joineryMessage(event.sender.id, event.message.text) && 
+               !greetingMessage(event.sender.id, event.message.text) &&
               !joineryGreeting(event.sender.id, event.message.text)){
                //findLocation takes in the message and finds 
                if (!locationFound) {
@@ -301,7 +314,7 @@ function joineryMessage(recipientId, text) {
                         "elements": [{
                             "title": "Apartments in " + location,
                             "subtitle": "From Joinery",
-                            "image_url": imageUrl ,
+                            "image_url": imageUrl,
                             "buttons": [{
                                 "type": "web_url",
                                 "url": "https://joinery.nyc/search?utf8=%E2%9C%93&neighborhoods%5B%5D=13&bedrooms=Bedrooms&listing-type=Apartment+Type&price-low=Min+%24&price-high=Max+%24&date=",
