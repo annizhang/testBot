@@ -82,7 +82,10 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
                       "title": "View Apartment"},
                      {"type": "web_url",
                       "url": "https://joinery.nyc",
-                      "title": "Go to Joinery"}
+                      "title": "Go to Joinery"},
+                     {"type": "postback",
+                      "title": "Keep looking"
+                     }
                  ]
                 });
         };
