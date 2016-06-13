@@ -7,7 +7,7 @@ var https = require('https');
 var redis = require('redis');
 
 //connecting to the server
-    var client = redis.createClient(process.env.PORT, 3000);
+    var client = redis.createClient();
     client.on('connect', function() {
         console.log("connected");
     });
