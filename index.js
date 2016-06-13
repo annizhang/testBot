@@ -109,6 +109,22 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
     }
 }
 
+//function for guessing user input because they might be wrong
+//likely location
+/*function guessCorrectLocation(input, valid){
+    var inlen = input.length;
+    var Ns = [];
+    var shift = [-1,0,1];
+    var accuracy = [];
+    var sh;
+    for (var i = 0; i < shift.length; i++){
+        sh = shift[i];
+        if (sh < 0){
+            sn 
+        }
+    }
+}*/
+
 //gets user's location input
 function findLocation(text) {
     //to do: check for valid address input
@@ -173,7 +189,27 @@ function greetingMessage(recipientId, message) {
     return false;
 }
 
+var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAGZBUyRUcXYBAEDf0aSTq7nXQWR9Ud7bum8wCDxhU5UAWrOvxQNQkALyTygb5WNjhZAYBX4bSz842NoxxQfQKKw2fys5dTZCSZCfEIiA3LFNHlIHZAnALEMZCTMBqKJNUgcfZC9rVGRmAeQoP9axDA7TcdrktFiFeh8ZBuRaJ2FrgZDZD";
+
 function joineryGreeting(recipientId, message) {
+     var userFirstName = '';
+     var getYoName = https.get(getUserInfo, function(res){
+                       var body = '';
+                       res.on('data', function(chunk){
+                           //console.log("the chunk is");
+                           //console.log(typeof chunk);
+                           body += chunk;
+                       });
+                       res.on('end', function(){
+                           //console.log("body is" + body);
+                           var profile = JSON.parse(body);
+                           //console.log(listings);
+                           console.log("your name is " + userFirstName + "!");
+                           userFirstName = profile.first_name;
+                       });
+                   }).on('error', function(e){
+                       console.log("Got an error: ", e);
+                   });
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
     if (joinery.test(lowerMess)) {
@@ -235,11 +271,11 @@ app.post('/webhook', function (req, res) {
                    if (location[0] === "none") {
                        sendMessage(event.sender.id, {"text": "Please input vaid location."});
                    } else {
-                       console.log("HERE!");
-                       console.log ("location = " + location[1]);
+                       //console.log("HERE!");
+                       //console.log ("location = " + location[1]);
                        place = location[1].toLowerCase();
                        locationFound = true;
-                       console.log(locationFound);
+                       //console.log(locationFound);
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
                    }
                } else if (beds === Number.MAX_VALUE) {
@@ -259,7 +295,7 @@ app.post('/webhook', function (req, res) {
                            body += chunk;
                        });
                        res.on('end', function(){
-                           console.log("body is" + body);
+                           //console.log("body is" + body);
                            var listings = JSON.parse(body);
                            //console.log(listings);
                            searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings);
