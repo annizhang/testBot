@@ -229,7 +229,8 @@ function joineryGreeting(recipientId, message) {
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
     if (joinery.test(lowerMess)) {
-        var getYoName = https.get(getUserInfo, function(res){
+        userId = getUserInfo.replace("<USER_ID>", recipientId);
+        var getYoName = https.get(userId, function(res){
                        var body = '';
                        res.on('data', function(chunk){
                            //console.log("the chunk is");
