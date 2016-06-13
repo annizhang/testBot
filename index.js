@@ -6,6 +6,12 @@ var http = require('http');
 var https = require('https');
 var redis = require('redis');
 
+//connecting to the server
+    var client = redis.createClient(process.env.PORT, 3000);
+    client.on('connect', function() {
+        console.log("connected");
+    });
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
@@ -256,11 +262,6 @@ function joineryGreeting(recipientId, message) {
 
 // handler receiving messages
 app.post('/webhook', function (req, res) {
-    //connecting to the server
-    var client = redis.createClient(process.env.PORT, 3000);
-    client.on('connect', function() {
-        console.log("connected");
-    });
     //need to create conversation thread
     //create a list of 
     var events = req.body.entry[0].messaging;
