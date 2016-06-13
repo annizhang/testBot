@@ -225,7 +225,7 @@ function welcomeMessage(firstName, senderId) {
 var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAGZBUyRUcXYBAEDf0aSTq7nXQWR9Ud7bum8wCDxhU5UAWrOvxQNQkALyTygb5WNjhZAYBX4bSz842NoxxQfQKKw2fys5dTZCSZCfEIiA3LFNHlIHZAnALEMZCTMBqKJNUgcfZC9rVGRmAeQoP9axDA7TcdrktFiFeh8ZBuRaJ2FrgZDZD";
 
 function joineryGreeting(recipientId, message) {
-     var userFirstName = '';
+    var userFirstName = '';
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
     if (joinery.test(lowerMess)) {
@@ -237,7 +237,7 @@ function joineryGreeting(recipientId, message) {
                            body += chunk;
                        });
                        res.on('end', function(){
-                           //console.log("body is" + body);
+                           console.log("body is" + body);
                            var profile = JSON.parse(body);
                            //console.log(listings);
                            userFirstName = profile.first_name;
