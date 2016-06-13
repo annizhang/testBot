@@ -189,11 +189,47 @@ function greetingMessage(recipientId, message) {
     return false;
 }
 
+function welcomeMessage(firstName, senderId) {
+    var joineryMess = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"generic",
+                "elements":[
+                    {"title":"Hi " + firstName + "! Welcome to Joinery",
+                     "item_url":"https://joinery.nyc",
+                     "image_url":"https://scontent.fash1-1.fna.fbcdn.net/t31.0-8/10344292_421916781342262_7831247042188894229_o.jpg",
+                     "subtitle":"Find a home from a fellow renter.",
+                     "buttons":[
+                         {"type":"postback",
+                          "title":"Search apartments",
+                          "payload":"search"
+                         },
+                         {"type":"postback",
+                          "title":"List my apartment",
+                          "payload":"list"
+                         },
+                         {"type":"web_url",
+                          "title":"Go to Joinery",
+                          "url":"https://joinery.nyc"
+                         }
+                     ]
+                    }
+                ]
+            }
+        }
+    };
+    sendMessage(senderId, joineryMess);
+}
+
 var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAGZBUyRUcXYBAEDf0aSTq7nXQWR9Ud7bum8wCDxhU5UAWrOvxQNQkALyTygb5WNjhZAYBX4bSz842NoxxQfQKKw2fys5dTZCSZCfEIiA3LFNHlIHZAnALEMZCTMBqKJNUgcfZC9rVGRmAeQoP9axDA7TcdrktFiFeh8ZBuRaJ2FrgZDZD";
 
 function joineryGreeting(recipientId, message) {
      var userFirstName = '';
-     var getYoName = https.get(getUserInfo, function(res){
+    var lowerMess = message.toLowerCase();
+    var joinery = /\bjoinery\b/;
+    if (joinery.test(lowerMess)) {
+        var getYoName = https.get(getUserInfo, function(res){
                        var body = '';
                        res.on('data', function(chunk){
                            //console.log("the chunk is");
@@ -206,47 +242,11 @@ function joineryGreeting(recipientId, message) {
                            //console.log(listings);
                            console.log("your name is " + userFirstName + "!");
                            userFirstName = profile.first_name;
+                           welcomeMessage(userFirstName, recipientId);
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
-    var lowerMess = message.toLowerCase();
-    var joinery = /\bjoinery\b/;
-    if (joinery.test(lowerMess)) {
-        var joineryMess = {
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"generic",
-            "elements":[
-              {
-                "title":"Welcome to Joinery",
-                "item_url":"https://joinery.nyc",
-                "image_url":"https://scontent.fash1-1.fna.fbcdn.net/t31.0-8/10344292_421916781342262_7831247042188894229_o.jpg",
-                "subtitle":"Find a home from a fellow renter.",
-                "buttons":[
-                  {
-                    "type":"postback",
-                    "title":"Search apartments",
-                    "payload":"search"
-                  },
-                  {
-                    "type":"postback",
-                    "title":"List my apartment",
-                    "payload":"list"
-                  },
-                  {
-                    "type":"web_url",
-                    "title":"Go to Joinery",
-                    "url":"https://joinery.nyc"
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      }
-        sendMessage(recipientId, joineryMess);
         return true;
     }
     return false;   
