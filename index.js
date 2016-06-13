@@ -202,12 +202,12 @@ function welcomeMessage(firstName, senderId) {
                      "subtitle":"Find a home from a fellow renter.",
                      "buttons":[
                          {"type":"postback",
-                          "title":"Search apartments",
-                          "payload":"search"
+                          "title":"Search Apartments",
+                          "payload":"full"
                          },
                          {"type":"postback",
-                          "title":"List my apartment",
-                          "payload":"list"
+                          "title":"Search Sublets",
+                          "payload":"sublet"
                          },
                          {"type":"web_url",
                           "title":"Go to Joinery",
@@ -316,23 +316,26 @@ app.post('/webhook', function (req, res) {
             //if user clicked search
             var choice = JSON.stringify(event.postback.payload);
             console.log(choice);
-            if (choice === "\"search\""){
-                console.log("it is search!");
+            locationFound = false;
+            place = "";
+            beds = Number.MAX_VALUE;
+            minPrice = Number.MIN_VALUE;
+            maxPrice = Number.MAX_VALUE;
+            if (choice === "\"full\""){
+                apartmentType = "full";
+                //console.log("it is search!");
                 message = {"text":"I can help you search! Where would you like to live?"};
-                locationFound = false;
-                place = "";
-                beds = Number.MAX_VALUE;
-                minPrice = Number.MIN_VALUE;
-                maxPrice = Number.MAX_VALUE;
-                type = "";
-                sendMessage(event.sender.id, message);
-                console.log("location choesn");
-            } else {
+                //console.log("location choesn");
+            } else if (choice === "\"sublet\""){
+                apartmentType = "sublet";
+                //console.log("it is search!");
+                message = {"text":"I can help you search! Where would you like to live?"};
+            }
+            else {
                 //var theText = JSON.stringify(event.postback);
                 message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
-                sendMessage(event.sender.id, message);
-                console.log("Postback received!!!!!!!");
             }
+            sendMessage(event.sender.id, message);
         }
     res.sendStatus(200);
     }
