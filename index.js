@@ -81,7 +81,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
             count++;
             newMessage.attachment.payload.elements.push(
                 {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
-                 "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/400/400"),
+                 "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/760/400"),
                  "subtitle": listing.full_address,
                  "buttons": [
                      {"type": "web_url",
