@@ -240,8 +240,8 @@ function joineryGreeting(recipientId, message) {
                            //console.log("body is" + body);
                            var profile = JSON.parse(body);
                            //console.log(listings);
-                           console.log("your name is " + userFirstName + "!");
                            userFirstName = profile.first_name;
+                           console.log("your name is " + userFirstName + "!");
                            welcomeMessage(userFirstName, recipientId);
                        });
                    }).on('error', function(e){
