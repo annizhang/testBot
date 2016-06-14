@@ -14,7 +14,7 @@ client.on('error', function(err){
 });
 
 client.on('connect', function() {
-    console.log("connected");
+    console.log("redis connected!");
 });
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -61,7 +61,7 @@ function sendMessage(recipientId, message) {
 //listings in json form
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
-function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
+function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,type){
     //console.log("SEARCHING!!!");
     var newJSON;
     var listing;
@@ -82,7 +82,8 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings){
         if (listing.bedrooms === beds && 
             listing.price <= maxPrice && 
             listing.price >= minPrice && 
-            neighborhood === listing.neighborhood.toLowerCase()){
+            neighborhood === listing.neighborhood.toLowerCase() &&
+            listing.listing_type_text === type){
             count++;
             newMessage.attachment.payload.elements.push(
                 {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
@@ -180,7 +181,7 @@ var place = "";
 var beds = Number.MAX_VALUE;
 var minPrice = Number.MIN_VALUE;
 var maxPrice = Number.MAX_VALUE;
-var type = "";
+var apartmentType = "";
 
 
 function greetingMessage(recipientId, message) {
@@ -215,11 +216,11 @@ function welcomeMessage(firstName, senderId) {
                      "buttons":[
                          {"type":"postback",
                           "title":"Search Apartments",
-                          "payload":"full"
+                          "payload":"Entire Apartment"
                          },
                          {"type":"postback",
                           "title":"Search Sublets",
-                          "payload":"sublet"
+                          "payload":"Share"
                          },
                          {"type":"web_url",
                           "title":"Go to Joinery",
@@ -311,7 +312,7 @@ app.post('/webhook', function (req, res) {
                            //console.log("body is" + body);
                            var listings = JSON.parse(body);
                            //console.log(listings);
-                           searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings);
+                           searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
                            console.log("Got listings" + listings.length);
                        });
                    }).on('error', function(e){
@@ -333,13 +334,13 @@ app.post('/webhook', function (req, res) {
             beds = Number.MAX_VALUE;
             minPrice = Number.MIN_VALUE;
             maxPrice = Number.MAX_VALUE;
-            if (choice === "\"full\""){
-                apartmentType = "full";
+            if (choice === "\"Entire Apartment\""){
+                apartmentType = "Entire Apartment";
                 //console.log("it is search!");
                 message = {"text":"I can help you search! Where would you like to live?"};
                 //console.log("location choesn");
-            } else if (choice === "\"sublet\""){
-                apartmentType = "sublet";
+            } else if (choice === "\"Share\""){
+                apartmentType = "Share";
                 //console.log("it is search!");
                 message = {"text":"I can help you search! Where would you like to live?"};
             }
