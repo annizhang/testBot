@@ -6,11 +6,11 @@ var http = require('http');
 var https = require('https');
 var redis = require('redis');
 
-/*connecting to the server
-    var client = redis.createClient();
-    client.on('connect', function() {
-        console.log("connected");
-    });*/
+//connecting to the server
+var client = redis.createClient();
+client.on('connect', function() {
+    console.log("connected");
+});
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
