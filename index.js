@@ -8,6 +8,11 @@ var redis = require('redis');
 
 //connecting to the server
 var client = redis.createClient();
+
+client.on('error', function(err){
+    console.log('Error ' + err);
+});
+
 client.on('connect', function() {
     console.log("connected");
 });
