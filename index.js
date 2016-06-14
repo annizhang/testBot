@@ -98,7 +98,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                       "title": "Go to Joinery"},
                      {"type": "postback",
                       "title": "Keep looking",
-                      "payload": "search"
+                      "payload": "search" //need to fix this to go back to joinery welcome message
                      }
                  ]
                 });
@@ -339,16 +339,21 @@ app.post('/webhook', function (req, res) {
                 //console.log("it is search!");
                 message = {"text":"I can help you search! Where would you like to live?"};
                 //console.log("location choesn");
+                sendMessage(event.sender.id, message);
             } else if (choice === "\"Share\""){
                 apartmentType = "Share";
                 //console.log("it is search!");
                 message = {"text":"I can help you search! Where would you like to live?"};
+                sendMessage(event.sender.id, message);
+            } else if (choice === "\"search\""){
+                joineryGreeting(event.sender.id, "joinery");
             }
             else {
                 //var theText = JSON.stringify(event.postback);
                 message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
+                sendMessage(event.sender.id, message);
             }
-            sendMessage(event.sender.id, message);
+            
         }
     res.sendStatus(200);
     }
