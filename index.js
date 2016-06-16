@@ -297,6 +297,39 @@ function joineryGreeting(recipientId, message) {
     //bedrooms, location, price range, move out date (tentative)
 }*/
 
+function onButton(senderId, postback){
+    //if user clicked a button
+    var choice = JSON.stringify(posback);
+    console.log(choice);
+    locationFound = false;
+    place = "";
+    beds = Number.MAX_VALUE;
+    minPrice = Number.MIN_VALUE;
+    maxPrice = Number.MAX_VALUE;
+    if (choice === "\"Entire Apartment\""){
+        apartmentType = "Entire Apartment";
+        //console.log("it is search!");
+        message = {"text":"I can help you search for a full apartment! Where would you like to live?"};
+        //console.log("location choesn");
+        sendMessage(senderId, message);
+    } else if (choice === "\"Share\""){
+        apartmentType = "Share";
+        //console.log("it is search!");
+        message = {"text":"I can help you search for sublets! Where would you like to live?"};
+        sendMessage(senderId, message);
+    } else if (choice === "\"search\""){
+        joineryGreeting(senderId, "joinery");
+    } /*else if (choice === "\"alert\""){
+        alertMe(event.sender.id);
+    }*/
+    else {
+        //var theText = JSON.stringify(event.postback);
+        message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
+        sendMessage(senderId, message);
+    }
+
+}
+
 // handler receiving messages
 app.post('/webhook', function (req, res) {
     //need to create conversation thread
@@ -369,8 +402,9 @@ app.post('/webhook', function (req, res) {
                }
            }
         } if (event.postback) {
-            //if user clicked search
-            var choice = JSON.stringify(event.postback.payload);
+            //if user clicked a button
+            onButton(event.sender.id, event.postback);
+            /*var choice = JSON.stringify(event.postback.payload);
             console.log(choice);
             locationFound = false;
             place = "";
@@ -392,12 +426,12 @@ app.post('/webhook', function (req, res) {
                 joineryGreeting(event.sender.id, "joinery");
             } /*else if (choice === "\"alert\""){
                 alertMe(event.sender.id);
-            }*/
+            }
             else {
                 //var theText = JSON.stringify(event.postback);
                 message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
                 sendMessage(event.sender.id, message);
-            }
+            }*/
         }
     res.sendStatus(200);
     }
