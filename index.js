@@ -45,7 +45,7 @@ var maxPrice = Number.MAX_VALUE;
 var apartmentType = "";
 var criteriaFound = false;
 var ascii = /^[ -~\t\n\r]+$/;
-var letters = /^[a-zA-Z]+$/;
+var letters = /^[ a-zA-Z]+$/;
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
