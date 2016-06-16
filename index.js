@@ -4,10 +4,10 @@ var request = require('request');
 var app = express();
 var http = require('http');
 var https = require('https');
-var redis = require('redis');
+//var redis = require('redis');
 
 //connecting to the server
-var client = redis.createClient(process.env.REDIS_URL);
+/*var client = redis.createClient(process.env.REDIS_URL);
 
 client.on('error', function(err){
     console.log('Error ' + err);
@@ -15,7 +15,7 @@ client.on('error', function(err){
 
 client.on('connect', function() {
     console.log("redis connected!");
-});
+});*/
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -329,13 +329,17 @@ app.post('/webhook', function (req, res) {
                    if (beds === Number.MAX_VALUE) {
                        message = {"text":"What was that? Please enter a valid number like 1,2,3."};
                    } else {
-                       message = {"text": "Nice! What is your price range? Please type in the form of \"low to high\""};
+                       message = {"text": "Nice! What is your price range? Please type in the form of 'low to high'};
                    }
                    sendMessage(event.sender.id, message);
                } else if (minPrice === Number.MIN_VALUE) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
+                   if (minPrice === Number.MIN_VALUE || maxPrice === Number.MAX_VALUE){
+                       message = {"text":"Hm...I didn't get that, can you please input your price range in the form of 'low to high'?"};
+                       sendMessage(event.sender.id, message);
+                   }
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -347,6 +351,7 @@ app.post('/webhook', function (req, res) {
                            //console.log("body is" + body);
                            var listings = JSON.parse(body);
                            //console.log(listings);
+                           sendMessage(event.sender.id, {"text":"I'm searching!"});
                            searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
                            console.log("Got listings" + listings.length);
                        });
