@@ -35,7 +35,7 @@ app.get('/webhook', function (req, res) {
     }
 });
 
-// generic function sending messages
+// generic function sending messages to user
 function sendMessage(recipientId, message) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -105,7 +105,27 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         };
     };
     if (count === 0) {
-        testMessage = {"text" : "Sorry I came up empty!! Type joinery to search again!"};
+        testMessage = {
+            "attachment":{
+                "type": "template",
+                "payload":{
+                    "template_type":"button",
+                    "text": "Sorry! I came up empty! Would you like to keep searching?",
+                    "buttons": [
+                        /*{
+                            "type":"postback",
+                            "title":"Alert Me",
+                            "payload":"alert"
+                        },*/
+                        {
+                            "type":"postback",
+                            "title":"Keep Searching",
+                            "payload":"search"
+                        }
+                    ]
+                }
+            }
+        }
         sendMessage(sender, testMessage);
     }
     else {
@@ -156,6 +176,8 @@ function findBeds(text) {
     var result = Number.MIN_VALUE;
     if (Number(text) !== NaN) {
         result = Number(text);
+    } else {
+        result = Number.MIN_VALUE;
     }
     return result;
 }
@@ -266,6 +288,13 @@ function joineryGreeting(recipientId, message) {
     return false;   
 }
 
+//alert function
+/*function alertMe(recipientId) {
+    client.hset alerts recipientId
+    //add the stored search criteria to the hash set
+    //bedrooms, location, price range, move out date (tentative)
+}*/
+
 // handler receiving messages
 app.post('/webhook', function (req, res) {
     //need to create conversation thread
@@ -283,7 +312,7 @@ app.post('/webhook', function (req, res) {
                if (!locationFound) {
                    var location = findLocation(event.message.text);
                    if (location[0] === "none") {
-                       sendMessage(event.sender.id, {"text": "Please input vaid location."});
+                       sendMessage(event.sender.id, {"text": "Please input valid location."});
                    } else {
                        //console.log("HERE!");
                        //console.log ("location = " + location[1]);
@@ -295,7 +324,11 @@ app.post('/webhook', function (req, res) {
                } else if (beds === Number.MAX_VALUE) {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
-                   message = {"text": "Nice! What is your price range? Please type in the form of \"low to high\""};
+                   if (beds === Number.MAX_VALUE) {
+                       message = {"text":"What was that? Please enter a valid number like 1,2,3."};
+                   } else {
+                       message = {"text": "Nice! What is your price range? Please type in the form of \"low to high\""};
+                   }
                    sendMessage(event.sender.id, message);
                } else if (minPrice === Number.MIN_VALUE) {
                    var minMax = findPrices(event.message.text);
@@ -337,23 +370,24 @@ app.post('/webhook', function (req, res) {
             if (choice === "\"Entire Apartment\""){
                 apartmentType = "Entire Apartment";
                 //console.log("it is search!");
-                message = {"text":"I can help you search! Where would you like to live?"};
+                message = {"text":"I can help you search for a full apartment! Where would you like to live?"};
                 //console.log("location choesn");
                 sendMessage(event.sender.id, message);
             } else if (choice === "\"Share\""){
                 apartmentType = "Share";
                 //console.log("it is search!");
-                message = {"text":"I can help you search! Where would you like to live?"};
+                message = {"text":"I can help you search for sublets! Where would you like to live?"};
                 sendMessage(event.sender.id, message);
             } else if (choice === "\"search\""){
                 joineryGreeting(event.sender.id, "joinery");
-            }
+            } /*else if (choice === "\"alert\""){
+                alertMe(event.sender.id);
+            }*/
             else {
                 //var theText = JSON.stringify(event.postback);
                 message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
                 sendMessage(event.sender.id, message);
             }
-            
         }
     res.sendStatus(200);
     }
