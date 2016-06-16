@@ -175,7 +175,7 @@ function findBeds(text) {
     text = text || "";
     var result = Number.MAX_VALUE;
     if (!isNaN(Number(text))) {
-        console.log("it's a nan");
+        console.log("it's not a nan");
         result = Number(text);
     } else {
         return result;
@@ -374,8 +374,7 @@ app.post('/webhook', function (req, res) {
                        message = {"text":"Hm...I didn't get that, can you please input your price range in the form of 'low to high'?"};
                        sendMessage(event.sender.id, message);
                        criteriaFound = false;
-                   } else {criteriaFound = true;}
-               } else if(criteriaFound){
+                   } else {criteriaFound = true;
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -397,41 +396,13 @@ app.post('/webhook', function (req, res) {
                    //sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
                    //console.log(typeof JSON.stringify(listings));
                    
-               } else {
+               }} else {
                    sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
                }
            }
         } if (event.postback) {
             //if user clicked a button
             onButton(event.sender.id, event.postback);
-            /*var choice = JSON.stringify(event.postback.payload);
-            console.log(choice);
-            locationFound = false;
-            place = "";
-            beds = Number.MAX_VALUE;
-            minPrice = Number.MIN_VALUE;
-            maxPrice = Number.MAX_VALUE;
-            if (choice === "\"Entire Apartment\""){
-                apartmentType = "Entire Apartment";
-                //console.log("it is search!");
-                message = {"text":"I can help you search for a full apartment! Where would you like to live?"};
-                //console.log("location choesn");
-                sendMessage(event.sender.id, message);
-            } else if (choice === "\"Share\""){
-                apartmentType = "Share";
-                //console.log("it is search!");
-                message = {"text":"I can help you search for sublets! Where would you like to live?"};
-                sendMessage(event.sender.id, message);
-            } else if (choice === "\"search\""){
-                joineryGreeting(event.sender.id, "joinery");
-            } /*else if (choice === "\"alert\""){
-                alertMe(event.sender.id);
-            }
-            else {
-                //var theText = JSON.stringify(event.postback);
-                message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
-                sendMessage(event.sender.id, message);
-            }*/
         }
     res.sendStatus(200);
     }
