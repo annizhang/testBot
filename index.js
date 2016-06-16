@@ -329,7 +329,7 @@ app.post('/webhook', function (req, res) {
                    if (beds === Number.MAX_VALUE) {
                        message = {"text":"What was that? Please enter a valid number like 1,2,3."};
                    } else {
-                       message = {"text": "Nice! What is your price range? Please type in the form of 'low to high'};
+                       message = {"text": "Nice! What is your price range? Please type in the form of 'low to high'"};
                    }
                    sendMessage(event.sender.id, message);
                } else if (minPrice === Number.MIN_VALUE) {
