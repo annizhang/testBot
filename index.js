@@ -340,9 +340,9 @@ app.post('/webhook', function (req, res) {
                    if (minPrice === Number.MIN_VALUE || maxPrice === Number.MAX_VALUE){
                        message = {"text":"Hm...I didn't get that, can you please input your price range in the form of 'low to high'?"};
                        sendMessage(event.sender.id, message);
-                   }
-                   criteriaFound = true;
-               } else if(!criteriaFound){
+                       criteriaFound = false;
+                   } else {criteriaFound = true;}
+               } else if(criteriaFound){
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
