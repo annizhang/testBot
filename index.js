@@ -93,11 +93,8 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                      {"type": "web_url",
                       "url": "https://joinery.nyc/listing/" + listing.slug,
                       "title": "View Apartment"},
-                     {"type": "web_url",
-                      "url": "https://joinery.nyc",
-                      "title": "Go to Joinery"},
                      {"type": "postback",
-                      "title": "Keep looking",
+                      "title": "Keep Searching",
                       "payload": "search" //need to fix this to go back to joinery welcome message
                      }
                  ]
@@ -164,7 +161,7 @@ function findLocation(text) {
     text = text || "";
     var result = ["none", ""];
     var values = text.split(' ');
-    if (values.length < 4) {
+    if (values.length < 4 && !ascii.test(text)) {
         result[0] = "some";
         result[1] = text;
     }
@@ -174,7 +171,7 @@ function findLocation(text) {
 function findBeds(text) {
     text = text || "";
     var result = Number.MAX_VALUE;
-    if (!isNaN(Number(text))) {
+    if (!isNaN(Number(text)) && !ascii.test(text)) {
         console.log("it's not a nan");
         result = Number(text);
     } else {
@@ -206,6 +203,7 @@ var minPrice = Number.MIN_VALUE;
 var maxPrice = Number.MAX_VALUE;
 var apartmentType = "";
 var criteriaFound = false;
+var ascii = /^[ -~\t\n\r]+$/;
 
 
 function greetingMessage(recipientId, message) {
