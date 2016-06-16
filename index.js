@@ -35,6 +35,18 @@ app.get('/webhook', function (req, res) {
     }
 });
 
+//global vars:
+var messageCount = 0; //the very beginning of the message
+var locationFound = false;
+var place = "";
+var beds = Number.MAX_VALUE;
+var minPrice = Number.MIN_VALUE;
+var maxPrice = Number.MAX_VALUE;
+var apartmentType = "";
+var criteriaFound = false;
+var ascii = /^[ -~\t\n\r]+$/;
+var letters = /^[a-zA-Z]+$/;
+
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
     request({
@@ -161,7 +173,7 @@ function findLocation(text) {
     text = text || "";
     var result = ["none", ""];
     var values = text.split(' ');
-    if (values.length < 4 && ascii.test(text)) {
+    if (values.length < 4 && ascii.test(text) && letters.test(text)) {
         result[0] = "some";
         result[1] = text;
     }
@@ -171,7 +183,7 @@ function findLocation(text) {
 function findBeds(text) {
     text = text || "";
     var result = Number.MAX_VALUE;
-    if (!isNaN(Number(text)) && ascii.test(text)) {
+    if (!isNaN(Number(text)) && ascii.test(text) && letters.test(text)) {
         console.log("it's not a nan");
         result = Number(text);
     } else {
@@ -193,17 +205,6 @@ function findPrices(text) {
     }
     return results;
 }
-
-//global vars:
-var messageCount = 0; //the very beginning of the message
-var locationFound = false;
-var place = "";
-var beds = Number.MAX_VALUE;
-var minPrice = Number.MIN_VALUE;
-var maxPrice = Number.MAX_VALUE;
-var apartmentType = "";
-var criteriaFound = false;
-var ascii = /^[ -~\t\n\r]+$/;
 
 
 function greetingMessage(recipientId, message) {
