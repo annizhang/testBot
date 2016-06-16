@@ -77,7 +77,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     };
     for (var i = 0; i < listings.length; i++){
         listing = listings[i];
-        console.log("SEARCHING LOOP!");
+        //console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
         if (listing.bedrooms === beds && 
             listing.price <= maxPrice && 
@@ -324,6 +324,7 @@ app.post('/webhook', function (req, res) {
                } else if (beds === Number.MAX_VALUE) {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
+                   console.log("beds is" + beds);
                    if (beds === Number.MAX_VALUE) {
                        message = {"text":"What was that? Please enter a valid number like 1,2,3."};
                    } else {
