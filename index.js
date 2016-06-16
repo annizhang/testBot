@@ -161,7 +161,7 @@ function findLocation(text) {
     text = text || "";
     var result = ["none", ""];
     var values = text.split(' ');
-    if (values.length < 4 && !ascii.test(text)) {
+    if (values.length < 4 && ascii.test(text)) {
         result[0] = "some";
         result[1] = text;
     }
@@ -171,7 +171,7 @@ function findLocation(text) {
 function findBeds(text) {
     text = text || "";
     var result = Number.MAX_VALUE;
-    if (!isNaN(Number(text)) && !ascii.test(text)) {
+    if (!isNaN(Number(text)) && ascii.test(text)) {
         console.log("it's not a nan");
         result = Number(text);
     } else {
