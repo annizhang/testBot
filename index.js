@@ -173,7 +173,7 @@ function findLocation(text) {
 
 function findBeds(text) {
     text = text || "";
-    var result = Number.MIN_VALUE;
+    var result = Number.MAX_VALUE;
     if (!isNaN(Number(text))) {
         console.log("it's a nan");
         result = Number(text);
@@ -326,7 +326,7 @@ app.post('/webhook', function (req, res) {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
                    console.log("beds is" + beds);
-                   if (beds === Number.MIN_VALUE) {
+                   if (beds === Number.MAX_VALUE) {
                        message = {"text":"What was that? Please enter a valid number like 1,2,3."};
                    } else {
                        message = {"text": "Nice! What is your price range? Please type in the form of \"low to high\""};
