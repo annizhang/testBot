@@ -177,7 +177,7 @@ function findBeds(text) {
     if (Number(text) !== NaN) {
         result = Number(text);
     } else {
-        result = Number.MIN_VALUE;
+        return result;
     }
     return result;
 }
