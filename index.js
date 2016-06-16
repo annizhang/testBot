@@ -174,7 +174,7 @@ function findLocation(text) {
 function findBeds(text) {
     text = text || "";
     var result = Number.MIN_VALUE;
-    if (Number(text) !== NaN) {
+    if (!isNan(Number(text))) {
         console.log("it's a nan");
         result = Number(text);
     } else {
