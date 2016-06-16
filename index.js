@@ -299,7 +299,7 @@ function joineryGreeting(recipientId, message) {
 
 function onButton(senderId, postback){
     //if user clicked a button
-    var choice = JSON.stringify(posback);
+    var choice = JSON.stringify(postback);
     console.log(choice);
     locationFound = false;
     place = "";
