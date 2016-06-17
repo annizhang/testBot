@@ -91,7 +91,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         listing = listings[i];
         //console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
-        if ((listing.bedrooms === beds || type ==="Share") && 
+        if ((listing.bedrooms === beds || type === "Share") && 
             listing.price <= maxPrice && 
             listing.price >= minPrice && 
             neighborhood === listing.neighborhood.toLowerCase() &&
@@ -354,7 +354,10 @@ app.post('/webhook', function (req, res) {
                        locationFound = true;
                        //console.log(locationFound);
                        if (apartmentType === "Entire Apartment"){
-                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});}
+                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
+                       }else {
+                           sendMessage(event.sender.id,{"text": "Nice! What is your price range? Please type in the form of 'low to high'"});
+                       }
                    }
                } else if (beds === Number.MAX_VALUE && apartmentType === "Entire Apartment") {
                    //finding bedrooms
