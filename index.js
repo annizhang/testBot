@@ -388,7 +388,7 @@ app.post('/webhook', function (req, res) {
                            //console.log("body is" + body);
                            var listings = JSON.parse(body);
                            //console.log(listings);
-                           sendMessage(event.sender.id, {"text":"I'm searching!"});
+                           //sendMessage(event.sender.id, {"text":"I'm searching!"});
                            searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
                            console.log("Got listings" + listings.length);
                        });
