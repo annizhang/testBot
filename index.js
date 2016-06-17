@@ -198,7 +198,7 @@ function findPrices(text) {
     var results = [Number.MIN_VALUE, Number.MAX_VALUE];
     if (numbers.length === 2){
         results[0] = Number(numbers[0]);
-        results[1] = Number(numbers[1])''
+        results[1] = Number(numbers[1]);
     }
     return results;
     /*text = text || "";
