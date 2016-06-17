@@ -356,8 +356,7 @@ app.post('/webhook', function (req, res) {
                        if (apartmentType === "Entire Apartment"){
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
                        }else {
-                           sendMessage(event.sender.id,{"text": "Nice! What is your price range? Please type in the form of 'low to high'"});
-                       }
+                           sendMessage(event.sender.id,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
                    }
                } else if (beds === Number.MAX_VALUE && apartmentType === "Entire Apartment") {
                    //finding bedrooms
