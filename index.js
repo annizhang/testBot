@@ -53,8 +53,8 @@ function sendMessage(recipientId, message) {
     console.log(process.env);
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-        qs: {access_token: "EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD"},
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        /*qs: {access_token: "EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD"},*/
         method: 'POST',
         json: {
             recipient: {id: recipientId},
