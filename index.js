@@ -321,7 +321,7 @@ function onButton(senderId, postback){
     } else if (choice === "\"search\""){
         joineryGreeting(senderId, "joinery");
     } else if (choice === "\"done\""){
-        sendMessage("text":"Aw okay. Type 'joinery' when you want to search again!");
+        sendMessage(senderId,{"text":"Aw okay. Type 'joinery' when you want to search again!"});
     }
     else {
         //var theText = JSON.stringify(event.postback);
