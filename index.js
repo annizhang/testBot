@@ -244,7 +244,7 @@ function welcomeMessage(firstName, senderId) {
                           "payload":"Entire Apartment"
                          },
                          {"type":"postback",
-                          "title":"Search Sublets",
+                          "title":"Search Rooms",
                           "payload":"Share"
                          },
                          {"type":"web_url",
@@ -316,7 +316,7 @@ function onButton(senderId, postback){
     } else if (choice === "\"Share\""){
         apartmentType = "Share";
         //console.log("it is search!");
-        message = {"text":"I can help you search for sublets! Where would you like to live?"};
+        message = {"text":"I can help you search for rooms! Where would you like to live?"};
         sendMessage(senderId, message);
     } else if (choice === "\"search\""){
         joineryGreeting(senderId, "joinery");
