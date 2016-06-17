@@ -49,7 +49,7 @@ var letters = /^[ a-zA-Z]+$/;
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
-    console.log(process.env);
+    //console.log(process.env);
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
@@ -90,6 +90,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         }
     };
     for (var i = 0; i < listings.length; i++){
+        if count === 10 {break;}
         listing = listings[i];
         //console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
