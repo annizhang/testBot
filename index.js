@@ -46,6 +46,7 @@ var apartmentType = "";
 var criteriaFound = false;
 var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
+var buttonClicked = false;
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
@@ -148,10 +149,18 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     }
     else {
         var verb = " are ";
-        var results = " apartments ";
+        if (apartmentType === "Entire Apartment"){
+            var results = " apartments ";
+        }else{
+            results = " rooms ";
+        }
         if (count === 1) {
             verb = " is ";
-            results = " apartment ";
+            if (apartmentType === "Entire Apartment"){
+                var results = " apartment ";
+            }else{
+                results = " room ";
+            }
         }
         var confirmationMessage =
             {"text" :"Here" + verb + count.toString() + results + "I think you'll be interested in!"};
@@ -304,6 +313,7 @@ function joineryGreeting(recipientId, message) {
 
 function onButton(senderId, postback){
     //if user clicked a button
+    buttonClicked = true;
     var choice = JSON.stringify(postback.payload);
     console.log(choice);
     locationFound = false;
