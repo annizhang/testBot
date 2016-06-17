@@ -50,6 +50,7 @@ var letters = /^[ a-zA-Z]+$/;
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
     console.log("in sendMessage");
+    console.log(process.env);
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
