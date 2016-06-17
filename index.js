@@ -365,7 +365,7 @@ app.post('/webhook', function (req, res) {
                    if (beds === Number.MAX_VALUE) {
                        message = {"text":"What was that? Please enter a valid number like 1,2,3."};
                    } else {
-                       message = {"text": "Nice! What is your price range? Please type in the form of 'low to high'"};
+                       message = {"text": "Nice! What is your price range? For example, '1500 to 3000'"};
                    }
                    sendMessage(event.sender.id, message);
                } else if (minPrice === Number.MIN_VALUE) {
@@ -373,7 +373,7 @@ app.post('/webhook', function (req, res) {
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
                    if (minPrice === Number.MIN_VALUE || maxPrice === Number.MAX_VALUE){
-                       message = {"text":"Hm...I didn't get that, can you please input your price range in the form of 'low to high'?"};
+                       message = {"text":"Hm...I didn't get that, can you please input your price range in the form of 'minimum to maximum'?"};
                        sendMessage(event.sender.id, message);
                        criteriaFound = false;
                    } else {criteriaFound = true;
