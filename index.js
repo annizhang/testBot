@@ -370,9 +370,6 @@ app.post('/webhook', function (req, res) {
                    }
                    sendMessage(event.sender.id, message);
                } else if (minPrice === Number.MIN_VALUE) {
-                   if (apartmentType === "Share"){
-                       sendMessage(event.sender.id,{"text": "Nice! What is your price range? Please type in the form of 'low to high'"});
-                   }
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
