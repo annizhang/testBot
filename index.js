@@ -130,6 +130,11 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                             "type":"postback",
                             "title":"Keep Searching",
                             "payload":"search"
+                        },
+                        {
+                            "type":"postback",
+                            "title":"Give up",
+                            "payload":"done"
                         }
                     ]
                 }
@@ -201,17 +206,6 @@ function findPrices(text) {
         results[1] = Number(numbers[1]);
     }
     return results;
-    /*text = text || "";
-    var results = [Number.MIN_VALUE, Number.MAX_VALUE];
-    var values = text.split(' ');
-    if (values.length === 3 && 
-        values[1] === "to" && 
-        Number(values[0]) >= 0 && 
-        Number(values[2]) < Number.MAX_VALUE){
-        results[0] = Number(values[0]);
-        results[1] = Number(values[2]);
-    }
-    return results;*/
 }
 
 
@@ -326,9 +320,9 @@ function onButton(senderId, postback){
         sendMessage(senderId, message);
     } else if (choice === "\"search\""){
         joineryGreeting(senderId, "joinery");
-    } /*else if (choice === "\"alert\""){
-        alertMe(event.sender.id);
-    }*/
+    } else if (choice === "\"done\""){
+        sendMessage("text":"Aw okay. Type 'joinery' when you want to search again!");
+    }
     else {
         //var theText = JSON.stringify(event.postback);
         message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
