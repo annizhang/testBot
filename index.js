@@ -49,7 +49,6 @@ var letters = /^[ a-zA-Z]+$/;
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
-    console.log("in sendMessage");
     console.log(process.env);
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -67,7 +66,6 @@ function sendMessage(recipientId, message) {
             console.log('Error: ', response.body.error);
         }
     });
-    console.log("out of sendMessage");
 };
 
 /*$.getJSON('https://joinery.nyc/api/v1/listings/available', function(data) {
@@ -99,7 +97,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
             listing.price <= maxPrice && 
             listing.price >= minPrice && 
             (neighborhood === listing.neighborhood.toLowerCase() || 
-             neighborhood === listing.neighborhood.parent_neighborhood.slug) &&
+             neighborhood === listing.parent_neighborhood.slug) &&
             listing.listing_type_text === type){
             count++;
             newMessage.attachment.payload.elements.push(
