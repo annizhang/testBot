@@ -183,7 +183,7 @@ function findLocation(text) {
 function findBeds(text) {
     text = text || "";
     var result = Number.MAX_VALUE;
-    if (!isNaN(Number(text)) && ascii.test(text) && letters.test(text)) {
+    if (!isNaN(Number(text)) && ascii.test(text)) {
         console.log("it's not a nan");
         result = Number(text);
     } else {
@@ -346,7 +346,7 @@ app.post('/webhook', function (req, res) {
                if (!locationFound) {
                    var location = findLocation(event.message.text);
                    if (location[0] === "none") {
-                       sendMessage(event.sender.id, {"text": "Please input valid location."});
+                       sendMessage(event.sender.id, {"text": "That doesn't seem like a place. Please give me a real neighborhood."});
                    } else {
                        //console.log("HERE!");
                        //console.log ("location = " + location[1]);
