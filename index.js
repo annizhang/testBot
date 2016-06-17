@@ -91,7 +91,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         listing = listings[i];
         //console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
-        if ((listing.bedrooms === beds || type ="Share") && 
+        if ((listing.bedrooms === beds || type ==="Share") && 
             listing.price <= maxPrice && 
             listing.price >= minPrice && 
             neighborhood === listing.neighborhood.toLowerCase() &&
