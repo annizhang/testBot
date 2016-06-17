@@ -404,7 +404,7 @@ app.post('/webhook', function (req, res) {
                    //console.log(typeof JSON.stringify(listings));
                    
                }} else {
-                   sendMessage(event.sender.id, {"text": "hahah what? type 'joinery' to get started finding some no fee apartments or to list your apartment :\)"});
+                   sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :\)"});
                }
            }
         } if (event.postback) {
