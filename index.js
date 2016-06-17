@@ -260,7 +260,7 @@ function welcomeMessage(firstName, senderId) {
     sendMessage(senderId, joineryMess);
 }
 
-var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAGZBUyRUcXYBAEDf0aSTq7nXQWR9Ud7bum8wCDxhU5UAWrOvxQNQkALyTygb5WNjhZAYBX4bSz842NoxxQfQKKw2fys5dTZCSZCfEIiA3LFNHlIHZAnALEMZCTMBqKJNUgcfZC9rVGRmAeQoP9axDA7TcdrktFiFeh8ZBuRaJ2FrgZDZD";
+var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD";
 
 function joineryGreeting(recipientId, message) {
     var userFirstName = '';
