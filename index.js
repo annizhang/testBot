@@ -90,7 +90,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         }
     };
     for (var i = 0; i < listings.length; i++){
-        if count === 10 {break;}
+        if (count === 10) {break;}
         listing = listings[i];
         //console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
