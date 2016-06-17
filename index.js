@@ -91,7 +91,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         listing = listings[i];
         //console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
-        if (listing.bedrooms === beds && 
+        if ((listing.bedrooms === beds || type ="Share") && 
             listing.price <= maxPrice && 
             listing.price >= minPrice && 
             neighborhood === listing.neighborhood.toLowerCase() &&
@@ -235,7 +235,7 @@ function welcomeMessage(firstName, senderId) {
                     {"title":"Hi " + firstName + "! Welcome to Joinery",
                      "item_url":"https://joinery.nyc",
                      "image_url":"https://scontent.fash1-1.fna.fbcdn.net/t31.0-8/10344292_421916781342262_7831247042188894229_o.jpg",
-                     "subtitle":"Find a home from a fellow renter.",
+                     "subtitle":"Find a home in NYC from a fellow renter.",
                      "buttons":[
                          {"type":"postback",
                           "title":"Search Apartments",
@@ -346,16 +346,17 @@ app.post('/webhook', function (req, res) {
                if (!locationFound) {
                    var location = findLocation(event.message.text);
                    if (location[0] === "none") {
-                       sendMessage(event.sender.id, {"text": "That doesn't seem like a place. Please give me a real neighborhood."});
+                       sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhoods."});
                    } else {
                        //console.log("HERE!");
                        //console.log ("location = " + location[1]);
                        place = location[1].toLowerCase();
                        locationFound = true;
                        //console.log(locationFound);
-                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
+                       if (apartmentType === "Entire Apartment"){
+                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});}
                    }
-               } else if (beds === Number.MAX_VALUE) {
+               } else if (beds === Number.MAX_VALUE && apartmentType === "Entire Apartment") {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
                    console.log("beds is" + beds);
@@ -366,6 +367,9 @@ app.post('/webhook', function (req, res) {
                    }
                    sendMessage(event.sender.id, message);
                } else if (minPrice === Number.MIN_VALUE) {
+                   if (apartmentType === "Share"){
+                       sendMessage(event.sender.id,{"text": "Nice! What is your price range? Please type in the form of 'low to high'"});
+                   }
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
