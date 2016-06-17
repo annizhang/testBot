@@ -49,9 +49,11 @@ var letters = /^[ a-zA-Z]+$/;
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
+    console.log("in sendMessage");
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        qs: {access_token: EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD},
         method: 'POST',
         json: {
             recipient: {id: recipientId},
@@ -64,6 +66,7 @@ function sendMessage(recipientId, message) {
             console.log('Error: ', response.body.error);
         }
     });
+    console.log("out of sendMessage");
 };
 
 /*$.getJSON('https://joinery.nyc/api/v1/listings/available', function(data) {
