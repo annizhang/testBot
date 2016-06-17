@@ -98,7 +98,8 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         if ((listing.bedrooms === beds || type === "Share") && 
             listing.price <= maxPrice && 
             listing.price >= minPrice && 
-            neighborhood === listing.neighborhood.toLowerCase() &&
+            (neighborhood === listing.neighborhood.toLowerCase() || 
+             neighborhood === listing.neighborhood.parent_neighborhood.slug) &&
             listing.listing_type_text === type){
             count++;
             newMessage.attachment.payload.elements.push(
