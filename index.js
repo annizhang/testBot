@@ -211,12 +211,12 @@ function findBeds(text) {
 }
 
 function findPrices(text) {
-    var numberPattern = /\d+/g;
+    var numberPattern = /\d,\d+/g;
     var numbers = text.match(numberPattern);
     var results = [Number.MIN_VALUE, Number.MAX_VALUE];
     if (numbers.length === 2){
-        results[0] = Number(numbers[0].replace(/,/g,''));
-        results[1] = Number(numbers[1].replace(/,/g,''));
+        results[0] = Number(numbers[0].replace(',',''));
+        results[1] = Number(numbers[1].replace(',',''));
     }
     return results;
 }
