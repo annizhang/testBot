@@ -218,8 +218,8 @@ function findPrices(text) {
     } else {
     	numbers = text.match(commaPattern);
     }
-    console.log(numbers[0]);
-    console.log(numbers[1]);
+    /*console.log(numbers[0]);
+    console.log(numbers[1]);*/
     var results = [Number.MIN_VALUE, Number.MAX_VALUE];
     if (numbers.length === 2){
         results[0] = Number(numbers[0].replace(',',''));
