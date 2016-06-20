@@ -215,8 +215,8 @@ function findPrices(text) {
     var numbers = text.match(numberPattern);
     var results = [Number.MIN_VALUE, Number.MAX_VALUE];
     if (numbers.length === 2){
-        results[0] = Number(numbers[0]);
-        results[1] = Number(numbers[1]);
+        results[0] = Number(numbers[0].replace(/,/g,''));
+        results[1] = Number(numbers[1].replace(/,/g,''));
     }
     return results;
 }
