@@ -211,8 +211,15 @@ function findBeds(text) {
 }
 
 function findPrices(text) {
-    var numberPattern = /\d,\d+/g;
-    var numbers = text.match(numberPattern);
+    var commaPattern = /\d,\d+/g;
+    var numberPattern = /\d+/g;
+    if (text.match(commaPattern) === null) {
+    	numbers = text.match(numberPattern);
+    } else {
+    	numbers = text.match(commaPattern);
+    }
+    console.log(numbers[0]);
+    console.log(numbers[1]);
     var results = [Number.MIN_VALUE, Number.MAX_VALUE];
     if (numbers.length === 2){
         results[0] = Number(numbers[0].replace(',',''));
