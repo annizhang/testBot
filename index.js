@@ -302,7 +302,7 @@ function joineryGreeting(recipientId, message) {
                            userFirstName = profile.first_name;
                            console.log("your name is " + userFirstName + "!");
                            welcomeMessage(userFirstName, recipientId);
-                           buttonPressed = false;
+                           //buttonPressed = false;
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
