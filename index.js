@@ -369,7 +369,7 @@ app.post('/webhook', function (req, res) {
                if (!locationFound) {
                    var location = findLocation(event.message.text);
                    if (location[0] === "none") {
-                       sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhoods."});
+                       sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                    } else {
                        //console.log("HERE!");
                        //console.log ("location = " + location[1]);
@@ -422,7 +422,7 @@ app.post('/webhook', function (req, res) {
                    //console.log(typeof JSON.stringify(listings));
                    
                }} else {
-                   sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :\)"});
+                   sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            }
         } if (event.postback) {
