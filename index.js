@@ -364,7 +364,10 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!joineryMessage(event.sender.id, event.message.text) && 
+           if (!buttonPressed){
+               sendMessage(sender, {"text": "Wanna use one of the buttons? Are you searching for a full apartment or for a room?"});
+           }
+           else if (!joineryMessage(event.sender.id, event.message.text) && 
                !greetingMessage(event.sender.id, event.message.text) &&
               !joineryGreeting(event.sender.id, event.message.text) && buttonPressed){
                //findLocation takes in the message and finds 
