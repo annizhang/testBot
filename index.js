@@ -46,7 +46,7 @@ var apartmentType = "";
 var criteriaFound = false;
 var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
-var buttonClicked = false;
+var buttonPressed = false;
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
@@ -320,7 +320,7 @@ function joineryGreeting(recipientId, message) {
 
 function onButton(senderId, postback){
     //if user clicked a button
-    buttonClicked = true;
+    buttonPressed = true;
     var choice = JSON.stringify(postback.payload);
     console.log(choice);
     locationFound = false;
@@ -364,7 +364,7 @@ app.post('/webhook', function (req, res) {
             //if user sends a text message
            if (!joineryMessage(event.sender.id, event.message.text) && 
                !greetingMessage(event.sender.id, event.message.text) &&
-              !joineryGreeting(event.sender.id, event.message.text)){
+              !joineryGreeting(event.sender.id, event.message.text) && buttonPressed){
                //findLocation takes in the message and finds 
                if (!locationFound) {
                    var location = findLocation(event.message.text);
