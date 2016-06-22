@@ -283,7 +283,6 @@ function welcomeMessage(firstName, senderId) {
 var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD";
 
 function joineryGreeting(recipientId, message) {
-    searchOn = false;
     var userFirstName = '';
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
@@ -368,12 +367,12 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-         
            if (!joineryMessage(event.sender.id, event.message.text) && 
                !greetingMessage(event.sender.id, event.message.text) &&
               !joineryGreeting(event.sender.id, event.message.text) && searchOn){
                //findLocation takes in the message and finds 
                if (!locationFound) {
+                   console.log("looking at location");
                    var location = findLocation(event.message.text);
                    if (location[0] === "none") {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
