@@ -46,7 +46,7 @@ var apartmentType = "";
 var criteriaFound = false;
 var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
-var buttonPressed = false;
+var searchOn = false;
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
@@ -283,7 +283,7 @@ function welcomeMessage(firstName, senderId) {
 var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD";
 
 function joineryGreeting(recipientId, message) {
-    buttonPressed = false;
+    searchOn = false;
     var userFirstName = '';
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
@@ -303,7 +303,6 @@ function joineryGreeting(recipientId, message) {
                            userFirstName = profile.first_name;
                            console.log("your name is " + userFirstName + "!");
                            welcomeMessage(userFirstName, recipientId);
-                           //buttonPressed = false;
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
@@ -322,7 +321,6 @@ function joineryGreeting(recipientId, message) {
 
 function onButton(senderId, postback){
     //if user clicked a button
-    buttonPressed = true;
     var choice = JSON.stringify(postback.payload);
     console.log(choice);
     locationFound = false;
@@ -331,22 +329,27 @@ function onButton(senderId, postback){
     minPrice = Number.MIN_VALUE;
     maxPrice = Number.MAX_VALUE;
     if (choice === "\"Entire Apartment\""){
+        searchOn = true;
         apartmentType = "Entire Apartment";
         //console.log("it is search!");
         message = {"text":"I can help you search for a full apartment! Where would you like to live?"};
         //console.log("location choesn");
         sendMessage(senderId, message);
     } else if (choice === "\"Share\""){
+        searchOn = true;
         apartmentType = "Share";
         //console.log("it is search!");
         message = {"text":"I can help you search for rooms! Where would you like to live?"};
         sendMessage(senderId, message);
     } else if (choice === "\"search\""){
+        searchOn = true;
         joineryGreeting(senderId, "joinery");
     } else if (choice === "\"done\""){
+        searchOn = false;
         sendMessage(senderId,{"text":"Aw okay. Type 'joinery' when you want to search again!"});
     }
     else {
+        searchOn = false;
         //var theText = JSON.stringify(event.postback);
         message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
         sendMessage(senderId, message);
@@ -364,12 +367,10 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!buttonPressed){
-               sendMessage(sender, {"text": "Wanna use one of the buttons? Are you searching for a full apartment or for a room?"});
-           }
-           else if (!joineryMessage(event.sender.id, event.message.text) && 
+         
+           if (!joineryMessage(event.sender.id, event.message.text) && 
                !greetingMessage(event.sender.id, event.message.text) &&
-              !joineryGreeting(event.sender.id, event.message.text) && buttonPressed){
+              !joineryGreeting(event.sender.id, event.message.text) && searchOn){
                //findLocation takes in the message and finds 
                if (!locationFound) {
                    var location = findLocation(event.message.text);
