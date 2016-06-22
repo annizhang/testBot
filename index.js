@@ -342,14 +342,14 @@ function onButton(senderId, postback){
     minPrice = Number.MIN_VALUE;
     maxPrice = Number.MAX_VALUE;
     if (choice === "\"Entire Apartment\""){
-        fromButton = true;
+        fromButton = false;
         apartmentType = "Entire Apartment";
         //console.log("it is search!");
         message = {"text":"I can help you search for a full apartment! Where would you like to live?"};
         //console.log("location choesn");
         sendMessage(senderId, message);
     } else if (choice === "\"Share\""){
-        fromButton = true;
+        fromButton = false;
         apartmentType = "Share";
         //console.log("it is search!");
         message = {"text":"I can help you search for rooms! Where would you like to live?"};
