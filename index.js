@@ -446,14 +446,12 @@ app.post('/webhook', function (req, res) {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            }
-        }else if (event.postback) {
+        }if (event.postback) {
                 //if user clicked a button
                 onButton(event.sender.id, event.postback);
-        } else {
-            sendMessage(sender, {"text":"use a button!!"});
-        }
     }
     res.sendStatus(200);
+    }
     console.log("end of receive function");
 });
 
