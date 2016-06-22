@@ -384,7 +384,7 @@ app.post('/webhook', function (req, res) {
             //if user sends a text message
            if (!joineryMessage(event.sender.id, event.message.text) && 
                !greetingMessage(event.sender.id, event.message.text) &&
-              !joineryGreeting(event.sender.id, event.message.text)){
+              !joineryGreeting(event.sender.id, event.message.text) && searchOn){
                //findLocation takes in the message and finds 
                if (!locationFound) {
                    console.log("looking at location");
@@ -445,7 +445,12 @@ app.post('/webhook', function (req, res) {
                }} else {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
+           } else {
+               if (!searchOn){
+                   sendMessage(sender, {"text":"Hiya use the button plz"});
+               }
            }
+            
         }if (event.postback) {
                 //if user clicked a button
                 onButton(event.sender.id, event.postback);
