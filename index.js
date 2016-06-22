@@ -48,7 +48,7 @@ var minPrice = Number.MIN_VALUE;
 var maxPrice = Number.MAX_VALUE;
 var apartmentType = "";
 var criteriaFound = false;
-var fromButton = false;
+var fromButton = true;
 
 function resetGlobals(){
     locationFound = false;
