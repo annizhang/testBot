@@ -433,7 +433,8 @@ app.post('/webhook', function (req, res) {
                }
            }
         } else if (!searchOn){
-            sendMessage(sender, {"text":"wanna use one of those buttons?"});
+            //sendMessage(sender, {"text":"wanna use one of those buttons?"});
+            console.log('ugh');
         } else { 
             if (event.postback) {
                 //if user clicked a button
