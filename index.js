@@ -452,9 +452,8 @@ app.post('/webhook', function (req, res) {
         } else {
             sendMessage(sender, {"text":"use a button!!"});
         }
-        }
-    res.sendStatus(200);
     }
+    res.sendStatus(200);
     console.log("end of receive function");
 });
 
