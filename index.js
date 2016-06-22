@@ -384,7 +384,7 @@ app.post('/webhook', function (req, res) {
             //if user sends a text message
            if (!joineryMessage(event.sender.id, event.message.text) && 
                !greetingMessage(event.sender.id, event.message.text) &&
-              !joineryGreeting(event.sender.id, event.message.text) && searchOn){
+              !joineryGreeting(event.sender.id, event.message.text)){
                //findLocation takes in the message and finds 
                if (!locationFound) {
                    console.log("looking at location");
