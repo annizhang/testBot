@@ -234,7 +234,7 @@ function findPrices(text) {
     /*console.log(numbers[0]);
     console.log(numbers[1]);*/
     var results = [Number.MIN_VALUE, Number.MAX_VALUE];
-    if (numbers.length === 2){
+    if (numbers != null && numbers.length === 2){
         results[0] = Number(numbers[0].replace(',',''));
         results[1] = Number(numbers[1].replace(',',''));
     }
