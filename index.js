@@ -35,6 +35,10 @@ app.get('/webhook', function (req, res) {
     }
 });
 
+//regex rules
+var ascii = /^[ -~\t\n\r]+$/;
+var letters = /^[ a-zA-Z]+$/;
+
 //global vars:
 var messageCount = 0; //the very beginning of the message
 var locationFound = false;
@@ -44,9 +48,18 @@ var minPrice = Number.MIN_VALUE;
 var maxPrice = Number.MAX_VALUE;
 var apartmentType = "";
 var criteriaFound = false;
-var ascii = /^[ -~\t\n\r]+$/;
-var letters = /^[ a-zA-Z]+$/;
 var searchOn = false;
+
+function resetGlobals(){
+    locationFound = false;
+    place = "";
+    beds = Number.MAX_VALUE;
+    minPrice = Number.MIN_VALUE;
+    maxPrice = Number.MAX_VALUE;
+    apartmentType = "";
+    criteriaFound = false;
+    searchOn = false;
+}
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
@@ -248,6 +261,7 @@ function greetingMessage(recipientId, message) {
 }
 
 function welcomeMessage(firstName, senderId) {
+    resetGlobals();
     var joineryMess = {
         "attachment":{
             "type":"template",
@@ -432,14 +446,12 @@ app.post('/webhook', function (req, res) {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            }
-        } else if (!searchOn){
-            //sendMessage(sender, {"text":"wanna use one of those buttons?"});
-            console.log('ugh');
-        } else { 
-            if (event.postback) {
+        }else if (event.postback) {
                 //if user clicked a button
                 onButton(event.sender.id, event.postback);
-            }
+        } else {
+            sendMessage(sender, {"text":"use a button!!"});
+        }
         }
     res.sendStatus(200);
     }
