@@ -48,7 +48,7 @@ var minPrice = Number.MIN_VALUE;
 var maxPrice = Number.MAX_VALUE;
 var apartmentType = "";
 var criteriaFound = false;
-var searchOn = false;
+var fromButton = false;
 
 function resetGlobals(){
     locationFound = false;
@@ -297,12 +297,10 @@ function welcomeMessage(firstName, senderId) {
 var getUserInfo = "https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD";
 
 function joineryGreeting(recipientId, message) {
-    searchOn = false;
     var userFirstName = '';
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
     if (joinery.test(lowerMess)) {
-        //searchOn = true;
         userId = getUserInfo.replace("<USER_ID>", recipientId);
         var getYoName = https.get(userId, function(res){
                        var body = '';
@@ -344,23 +342,23 @@ function onButton(senderId, postback){
     minPrice = Number.MIN_VALUE;
     maxPrice = Number.MAX_VALUE;
     if (choice === "\"Entire Apartment\""){
-        searchOn = true;
+        fromButton = true;
         apartmentType = "Entire Apartment";
         //console.log("it is search!");
         message = {"text":"I can help you search for a full apartment! Where would you like to live?"};
         //console.log("location choesn");
         sendMessage(senderId, message);
     } else if (choice === "\"Share\""){
-        searchOn = true;
+        fromButton = true;
         apartmentType = "Share";
         //console.log("it is search!");
         message = {"text":"I can help you search for rooms! Where would you like to live?"};
         sendMessage(senderId, message);
     } else if (choice === "\"search\""){
-        searchOn = true;
+        fromButton = true;
         joineryGreeting(senderId, "joinery");
     } else if (choice === "\"done\""){
-        searchOn = false;
+        fromButton = false;
         sendMessage(senderId,{"text":"Aw okay. Type 'joinery' when you want to search again!"});
     }
     else {
@@ -384,7 +382,7 @@ app.post('/webhook', function (req, res) {
             //if user sends a text message
            if (!joineryMessage(event.sender.id, event.message.text) && 
                !greetingMessage(event.sender.id, event.message.text) &&
-              !joineryGreeting(event.sender.id, event.message.text) && searchOn){
+              !joineryGreeting(event.sender.id, event.message.text) && !fromButton){
                //findLocation takes in the message and finds 
                if (!locationFound) {
                    console.log("looking at location");
@@ -446,7 +444,7 @@ app.post('/webhook', function (req, res) {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            } else {
-               if (!searchOn){
+               if (fromButton){
                    sendMessage(sender, {"text":"Hiya use the button plz"});
                }
            }
