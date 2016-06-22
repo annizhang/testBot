@@ -445,7 +445,7 @@ app.post('/webhook', function (req, res) {
                }
            } else {
                if (fromButton){
-                   sendMessage(sender, {"text":"Hiya use the button plz"});
+                   sendMessage(sender, {"text":"Hey there! To find a NYC apartment on Joinery please use the buttons or type 'joinery' to start over! :)"});
                }
            }
             
