@@ -40,6 +40,7 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
+var isGreeting = false;
 var messageCount = 0; //the very beginning of the message
 var locationFound = false;
 var place = "";
@@ -67,7 +68,6 @@ function sendMessage(recipientId, message) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-        /*qs: {access_token: "EAAD6wZAASe5MBANH0PswPqWYFundOw29RPmLZAqYp9UX60FQpb3PA5Bq9Od5qGGBZBqZBWxIDaZBb5WdXgbLUrAiS6XF54fBI2n5dRWuac6dA2BpuldGsTLHTGtU0o1NTfp18ZCpiKkdgHzqT28hfOKhlKM6CfZCxcbDSaCUCLNMAZDZD"},*/
         method: 'POST',
         json: {
             recipient: {id: recipientId},
@@ -242,7 +242,7 @@ function findPrices(text) {
 }
 
 
-function greetingMessage(recipientId, message) {
+function greetingMessage(recipientId, message) 
     //looking for hi or hello in the received message
     var lowerMess = message.toLowerCase();
     //using regex
@@ -252,6 +252,7 @@ function greetingMessage(recipientId, message) {
     if ((lowerMess.match(greet) !== null) || 
         (lowerMess.match(greet2) !== null) || 
         (lowerMess.match(greet3) !== null)) {
+        isGreeting = true;
         var greetingInstruction = 
             {"text": "Hi there! Please type \'joinery\' to get started!"};
         sendMessage(recipientId, greetingInstruction);
@@ -370,19 +371,18 @@ function onButton(senderId, postback){
 
 }
 
-// handler receiving messages
+// handler receiving messages, sending messages
+// conversation flow
 app.post('/webhook', function (req, res) {
-    //need to create conversation thread
-    //create a list of 
     var events = req.body.entry[0].messaging;
     for (var i = 0; i < events.length; i++) {
         var event = events[i];
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!joineryMessage(event.sender.id, event.message.text) && 
-               /*!greetingMessage(event.sender.id, event.message.text) &&*/
-              !joineryGreeting(event.sender.id, event.message.text) && !fromButton){
+           if (!joineryMessage(sender, event.message.text) && 
+               !greetingMessage(sender, event.message.text) &&
+              !joineryGreeting(sender, event.message.text) && !fromButton){
                //findLocation takes in the message and finds 
                if (!locationFound) {
                    console.log("looking at location");
@@ -444,7 +444,7 @@ app.post('/webhook', function (req, res) {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            } else {
-               if (fromButton){
+               if (fromButton && !isGreeting){
                    sendMessage(sender, {"text":"Hey there! To find a NYC apartment on Joinery please use the buttons or type 'joinery' to start over! :)"});
                }
            }
