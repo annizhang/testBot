@@ -242,7 +242,7 @@ function findPrices(text) {
 }
 
 
-function greetingMessage(recipientId, message) 
+function greetingMessage(recipientId, message){
     //looking for hi or hello in the received message
     var lowerMess = message.toLowerCase();
     //using regex
