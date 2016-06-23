@@ -302,6 +302,7 @@ function joineryGreeting(recipientId, message) {
     var lowerMess = message.toLowerCase();
     var joinery = /\bjoinery\b/;
     if (joinery.test(lowerMess)) {
+        isGreeting = false;
         userId = getUserInfo.replace("<USER_ID>", recipientId);
         var getYoName = https.get(userId, function(res){
                        var body = '';
