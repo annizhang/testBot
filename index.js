@@ -450,7 +450,7 @@ app.post('/webhook', function (req, res) {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            } else {
-               if ((fromButton && !isGreeting) || fromButton && !isJoinery){
+               if (fromButton && !isGreeting && isJoinery){
                    sendMessage(sender, {"text":"Hey there! To find a NYC apartment on Joinery please use the buttons or type 'joinery' to start over! :)"});
                }
            }
