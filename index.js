@@ -40,6 +40,7 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
+var isJoinery = false;
 var isGreeting = false;
 var messageCount = 0; //the very beginning of the message
 var locationFound = false;
@@ -303,6 +304,7 @@ function joineryGreeting(recipientId, message) {
     var joinery = /\bjoinery\b/;
     if (joinery.test(lowerMess)) {
         isGreeting = false;
+        isJoinery = true;
         userId = getUserInfo.replace("<USER_ID>", recipientId);
         var getYoName = https.get(userId, function(res){
                        var body = '';
