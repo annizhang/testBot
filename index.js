@@ -53,6 +53,8 @@ var criteriaFound = false;
 var fromButton = true;
 
 function resetGlobals(){
+    isJoinery = false;
+    isGreeting = false;
     locationFound = false;
     place = "";
     beds = Number.MAX_VALUE;
