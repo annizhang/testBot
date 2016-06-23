@@ -322,6 +322,7 @@ function joineryGreeting(recipientId, message) {
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
+        onButton = true;
         return true;
     }
     return false;   
