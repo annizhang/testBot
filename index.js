@@ -268,7 +268,7 @@ function greetingMessage(recipientId, message){
 }
 
 function welcomeMessage(firstName, senderId) {
-    resetGlobals();
+    //resetGlobals();
     var joineryMess = {
         "attachment":{
             "type":"template",
@@ -433,14 +433,10 @@ app.post('/webhook', function (req, res) {
                    var getListings = https.get(fetchListingUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
-                           //console.log("the chunk is");
-                           //console.log(typeof chunk);
                            body += chunk;
                        });
                        res.on('end', function(){
-                           //console.log("body is" + body);
                            var listings = JSON.parse(body);
-                           //console.log(listings);
                            //sendMessage(event.sender.id, {"text":"I'm searching!"});
                            searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
                            console.log("Got listings" + listings.length);
@@ -449,7 +445,6 @@ app.post('/webhook', function (req, res) {
                        console.log("Got an error: ", e);
                    });
                    //sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
-                   //console.log(typeof JSON.stringify(listings));
                           }
                } else {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
