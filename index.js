@@ -40,6 +40,7 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
+var isBeginning = true;
 var isJoinery = true;
 var isGreeting = true;
 var messageCount = 0; //the very beginning of the message
@@ -451,14 +452,15 @@ app.post('/webhook', function (req, res) {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            } else {
-               if (fromButton && !isGreeting && !isJoinery){
+               if ((fromButton && !isGreeting && !isJoinery) || (fromButton && isBeginning)){
                    sendMessage(sender, {"text":"Hey there! To find a NYC apartment on Joinery please use the buttons or type 'joinery' to start over! :)"});
                }
            }
             
         }if (event.postback) {
-                //if user clicked a button
-                onButton(event.sender.id, event.postback);
+            isBeginning = false;
+            //if user clicked a button
+            onButton(event.sender.id, event.postback);
     }
     res.sendStatus(200);
     }
