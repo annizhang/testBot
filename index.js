@@ -222,6 +222,7 @@ function locationExists(place,locations) {
 //gets user's location input
 var locationUrl = "https://joinery.nyc/api/v1/neighborhoods";
 function findLocation(place){
+    var locations = "nothing here";
     var getLocations = https.get(locationUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -231,13 +232,13 @@ function findLocation(place){
                        });
                        res.on('end', function(){
                            //console.log("body is" + body);
-                           var locations = JSON.parse(body);
+                           locations = JSON.parse(body);
                            //console.log(listings);
-                           locationExists(place, locations);
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
+    locationExists(place, locations);
 }
 
 function findBeds(text) {
