@@ -203,17 +203,41 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     }
 }*/
 
-//gets user's location input
-function findLocation(text) {
+function locationExists(place,locations) {
     //to do: check for valid address input
     text = text || "";
     var result = ["none", ""];
-    var values = text.split(' ');
-    if (values.length < 4 && ascii.test(text) && letters.test(text)) {
-        result[0] = "some";
-        result[1] = text;
+    for (var i = 0; i < locations.length; i++){
+        var location = locations[i];
+        if (location.name.toLowerCase() === place || 
+            (location.parent_neighborhood !== null && location.parent_neighborhood.toLowerCase() === place)){
+            result[0] = "some"
+            result[1] = place;
+            return result;
+        }
     }
     return result;
+}
+
+//gets user's location input
+var locationUrl = "https://joinery.nyc/api/v1/neighborhoods";
+function findLocation(place){
+    var getLocations = https.get(locationUrl, function(res){
+                       var body = '';
+                       res.on('data', function(chunk){
+                           //console.log("the chunk is");
+                           //console.log(typeof chunk);
+                           body += chunk;
+                       });
+                       res.on('end', function(){
+                           console.log("body is" + body);
+                           var locations = JSON.parse(body);
+                           //console.log(listings);
+                           locationExists(place, locations);
+                       });
+                   }).on('error', function(e){
+                       console.log("Got an error: ", e);
+                   });
 }
 
 function findBeds(text) {
@@ -393,7 +417,7 @@ app.post('/webhook', function (req, res) {
            if (!joineryMessage(sender, event.message.text) && 
                !greetingMessage(sender, event.message.text) &&
               !joineryGreeting(sender, event.message.text) && !fromButton){
-               //findLocation takes in the message and finds 
+               //findLocation takes in the message and finds location 
                if (!locationFound) {
                    //console.log("looking at location");
                    var location = findLocation(event.message.text);
