@@ -238,6 +238,7 @@ function findLocation(place){
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
+    console.log(locations);
     locationExists(place, locations);
 }
 
