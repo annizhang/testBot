@@ -184,6 +184,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         sendMessage(sender, confirmationMessage);
         sendMessage(sender, newMessage);
     }
+    count = 0;
 }
 
 //function for guessing user input because they might be wrong
