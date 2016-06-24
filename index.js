@@ -41,8 +41,8 @@ var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
 var isBeginning = true;
-var isJoinery = true;
-var isGreeting = true;
+var isJoinery = false;
+var isGreeting = false;
 var messageCount = 0; //the very beginning of the message
 var locationFound = false;
 var place = "";
@@ -456,7 +456,6 @@ app.post('/webhook', function (req, res) {
                    sendMessage(sender, {"text":"Hey there! To find a NYC apartment on Joinery please use the buttons or type 'joinery' to start over! :)"});
                }
            }
-            
         }if (event.postback) {
             isBeginning = false;
             //if user clicked a button
