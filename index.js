@@ -230,7 +230,7 @@ function findLocation(place){
                            body += chunk;
                        });
                        res.on('end', function(){
-                           console.log("body is" + body);
+                           //console.log("body is" + body);
                            var locations = JSON.parse(body);
                            //console.log(listings);
                            locationExists(place, locations);
