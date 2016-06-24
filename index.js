@@ -404,7 +404,7 @@ app.post('/webhook', function (req, res) {
                        //console.log ("location = " + location[1]);
                        place = location[1].toLowerCase();
                        locationFound = true;
-                       //console.log(locationFound);
+                       console.log("place: " + place);
                        if (apartmentType === "Entire Apartment"){
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
                        }else {
@@ -414,7 +414,7 @@ app.post('/webhook', function (req, res) {
                } else if (beds === Number.MAX_VALUE && apartmentType === "Entire Apartment") {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
-                   console.log("beds is" + beds);
+                   console.log("beds: " + beds);
                    if (beds === Number.MAX_VALUE) {
                        message = {"text":"What was that? Please enter a valid number like 1,2,3."};
                    } else {
@@ -425,27 +425,29 @@ app.post('/webhook', function (req, res) {
                    var minMax = findPrices(event.message.text);
                    minPrice = minMax[0];
                    maxPrice = minMax[1];
+                   console.log("prices: " + minPrice + "-" + maxPrice);
                    if (minPrice === Number.MIN_VALUE || maxPrice === Number.MAX_VALUE){
                        message = {"text":"Hm...I didn't get that, can you please input your price range in the form of 'minimum to maximum'?"};
                        sendMessage(event.sender.id, message);
                        criteriaFound = false;
-                   } else {criteriaFound = true;
-                   var getListings = https.get(fetchListingUrl, function(res){
-                       var body = '';
-                       res.on('data', function(chunk){
+                   } else {
+                       criteriaFound = true;
+                       var getListings = https.get(fetchListingUrl, function(res){
+                           var body = '';
+                           res.on('data', function(chunk){
                            body += chunk;
+                           });
+                           res.on('end', function(){
+                               var listings = JSON.parse(body);
+                               //sendMessage(event.sender.id, {"text":"I'm searching!"});
+                               searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
+                               console.log("Got listings" + listings.length);
+                           });
+                       }).on('error', function(e){
+                           console.log("Got an error: ", e);
                        });
-                       res.on('end', function(){
-                           var listings = JSON.parse(body);
-                           //sendMessage(event.sender.id, {"text":"I'm searching!"});
-                           searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
-                           console.log("Got listings" + listings.length);
-                       });
-                   }).on('error', function(e){
-                       console.log("Got an error: ", e);
-                   });
-                   //sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
-                          }
+                       //sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
+                   }
                } else {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
