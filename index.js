@@ -52,6 +52,7 @@ var maxPrice = Number.MAX_VALUE;
 var apartmentType = "";
 var criteriaFound = false;
 var fromButton = true;
+var result = ["none", ""];
 
 function resetGlobals(){
     isJoinery = false;
@@ -206,7 +207,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
 function locationExists(place,locations) {
     //to do: check for valid address input
     place = place || "";
-    var result = ["none", ""];
+    //var result = ["none", ""];
     for (var i = 0; i < locations.length; i++){
         var location = locations[i];
         if (location.name.toLowerCase() === place || 
@@ -235,6 +236,7 @@ function findLocation(place, locationExists){
                            locations = JSON.parse(body);
                            //console.log(listings);
                            locationExists(place, locations);
+                           
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
