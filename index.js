@@ -221,8 +221,7 @@ function locationExists(place,locations) {
 
 //gets user's location input
 var locationUrl = "https://joinery.nyc/api/v1/neighborhoods";
-function findLocation(place){
-    var locations = "nothing here";
+function findLocation(place, locationExists){
     var getLocations = https.get(locationUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -231,15 +230,16 @@ function findLocation(place){
                            body += chunk;
                        });
                        res.on('end', function(){
+                           var locations = "nothing here";
                            //console.log("body is" + body);
                            locations = JSON.parse(body);
                            //console.log(listings);
+                           locationExists(place, locations);
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
-    console.log(locations);
-    locationExists(place, locations);
+    
 }
 
 function findBeds(text) {
@@ -422,7 +422,7 @@ app.post('/webhook', function (req, res) {
                //findLocation takes in the message and finds location 
                if (!locationFound) {
                    //console.log("looking at location");
-                   var location = findLocation(event.message.text);
+                   var location = findLocation(event.message.text, locationExists);
                    if (location[0] === "none") {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                    } else {
