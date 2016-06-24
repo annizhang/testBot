@@ -257,6 +257,7 @@ function greetingMessage(recipientId, message){
         (lowerMess.match(greet2) !== null) || 
         (lowerMess.match(greet3) !== null)) {
         isGreeting = true;
+        isBeginning = false;
         var greetingInstruction = 
             {"text": "Hi there! Please type \'joinery\' to get started!"};
         sendMessage(recipientId, greetingInstruction);
@@ -308,6 +309,7 @@ function joineryGreeting(recipientId, message) {
     if (joinery.test(lowerMess)) {
         isGreeting = false;
         isJoinery = true;
+        isBeginning = false;
         userId = getUserInfo.replace("<USER_ID>", recipientId);
         var getYoName = https.get(userId, function(res){
                        var body = '';
