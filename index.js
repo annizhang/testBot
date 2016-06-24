@@ -110,7 +110,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     for (var i = 0; i < listings.length; i++){
         if (count === 10) {break;}
         listing = listings[i];
-        //console.log("SEARCHING LOOP!");
+        console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
         if ((listing.bedrooms === beds || type === "Share") && 
             listing.price <= maxPrice && 
@@ -395,7 +395,7 @@ app.post('/webhook', function (req, res) {
               !joineryGreeting(sender, event.message.text) && !fromButton){
                //findLocation takes in the message and finds 
                if (!locationFound) {
-                   console.log("looking at location");
+                   //console.log("looking at location");
                    var location = findLocation(event.message.text);
                    if (location[0] === "none") {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
