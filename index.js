@@ -222,7 +222,7 @@ function locationExists(place,locations) {
 //gets user's location input
 var locationUrl = "https://joinery.nyc/api/v1/neighborhoods";
 function findLocation(place, locationExists){
-    var getLocations = https.get(locationUrl, function(res){
+    https.get(locationUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
                            //console.log("the chunk is");
