@@ -36,7 +36,7 @@ app.get('/webhook', function (req, res) {
 });
 
 //regex rules
-var ascii = /^[ -~\t\n\r]+$/;
+var ascii = /^[ -'~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
