@@ -212,6 +212,7 @@ function locationExists(place,locations) {
         var location = locations[i];
         if (location.name.toLowerCase() === place || 
             (location.parent_neighborhood !== null && location.parent_neighborhood.toLowerCase() === place)){
+            console.log(place);
             result[0] = "some"
             result[1] = place;
             return result;
