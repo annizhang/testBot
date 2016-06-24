@@ -40,8 +40,8 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
-var isJoinery = false;
-var isGreeting = false;
+var isJoinery = true;
+var isGreeting = true;
 var messageCount = 0; //the very beginning of the message
 var locationFound = false;
 var place = "";
@@ -405,7 +405,8 @@ app.post('/webhook', function (req, res) {
                        sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
                        }else {
                            sendMessage(event.sender.id,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
-                   }}
+                       }
+                   }
                } else if (beds === Number.MAX_VALUE && apartmentType === "Entire Apartment") {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
@@ -445,8 +446,8 @@ app.post('/webhook', function (req, res) {
                    });
                    //sendMessage(event.sender.id, {"text": "Thanks! Here are some apartments I think you will be interested in:"});
                    //console.log(typeof JSON.stringify(listings));
-                   
-               }} else {
+                          }
+               } else {
                    sendMessage(event.sender.id, {"text": "Type 'joinery' to get started finding some no fee apartments or rooms in New York City :)"});
                }
            } else {
