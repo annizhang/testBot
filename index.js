@@ -419,13 +419,12 @@ app.post('/webhook', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text){
             //if user sends a text message
-           if (!joineryMessage(sender, event.message.text) && 
-               !greetingMessage(sender, event.message.text) &&
+           if (!greetingMessage(sender, event.message.text) &&
               !joineryGreeting(sender, event.message.text) && !fromButton){
                //findLocation takes in the message and finds location 
                if (!locationFound) {
                    //console.log("looking at location");
-                   findLocation(event.message.text, locationExists);
+                   findLocation(event.message.text.toLowerCase(), locationExists);
                    var location = result;
                    if (location[0] === "none") {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
@@ -496,7 +495,7 @@ app.post('/webhook', function (req, res) {
     console.log("end of receive function");
 });
 
-// send rich message with joinery search
+/* send rich message with joinery search
 function joineryMessage(recipientId, text) {
     text = text || "";
     var values = text.split(' ');
@@ -534,3 +533,4 @@ function joineryMessage(recipientId, text) {
     return false;
     
 }
+*/
