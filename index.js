@@ -236,7 +236,7 @@ function findLocation(text, locationExists){
                            //console.log("body is" + body);
                            locations = JSON.parse(body);
                            //console.log(listings);
-                           locationExists(text, locations);
+                           locationExists(text.toLowerCase(), locations);
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
