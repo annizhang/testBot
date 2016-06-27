@@ -373,9 +373,9 @@ function alertMe(senderId) {
         'maxPrice' : maxPrice,
         'beds' : beds });
     if (apartmentType === "Share"){
-        sendMessage(senderId, {"text": "Cool! I will alert you when a room listing in " + location +" between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!"});
+        sendMessage(senderId, {"text": "Cool! I will alert you when a room listing in " + place +" between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!"});
     } else {
-        sendMessage(senderId, {"text": "Cool! I will alert you when a " + beds.toString() + " apartment in " + location + " between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!"});
+        sendMessage(senderId, {"text": "Cool! I will alert you when a " + beds.toString() + " apartment in " + place + " between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!"});
     }
     //console.log(client.hmget senderId);
     //add the stored search criteria to the hash set
