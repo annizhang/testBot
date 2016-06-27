@@ -236,7 +236,7 @@ function findLocation(place, locationExists){
                            //console.log("body is" + body);
                            locations = JSON.parse(body);
                            //console.log(listings);
-                           locationExists(place, locations);
+                           locationExists(place.toLowerCase(), locations);
                            
                        });
                    }).on('error', function(e){
@@ -372,6 +372,11 @@ function alertMe(senderId) {
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
         'beds' : beds });
+    if (apartmentType === "Share"){
+        sendMessage(senderId, {"text": "Cool! I will alert you when a room listing in " + location +" between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!"});
+    } else {
+        sendMessage(senderId, {"text": "Cool! I will alert you when a " + beds.toString() + " apartment in " + location + " between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!"});
+    }
     //console.log(client.hmget senderId);
     //add the stored search criteria to the hash set
     //bedrooms, location, price range, move out date (tentative)
