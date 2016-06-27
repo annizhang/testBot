@@ -4,10 +4,10 @@ var request = require('request');
 var app = express();
 var http = require('http');
 var https = require('https');
-//var redis = require('redis');
+var redis = require('redis');
 
 //connecting to the server
-/*var client = redis.createClient(process.env.REDIS_URL);
+var client = redis.createClient(process.env.REDIS_URL);
 
 client.on('error', function(err){
     console.log('Error ' + err);
@@ -15,7 +15,7 @@ client.on('error', function(err){
 
 client.on('connect', function() {
     console.log("redis connected!");
-});*/
+});
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -142,13 +142,13 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                 "type": "template",
                 "payload":{
                     "template_type":"button",
-                    "text": "Sorry! I came up empty! Would you like to keep searching?",
+                    "text": "Sorry! I came up empty! Would you like to keep searching? Or would you like to set an alert for new listings matching your description?",
                     "buttons": [
-                        /*{
+                        {
                             "type":"postback",
                             "title":"Alert Me",
                             "payload":"alert"
-                        },*/
+                        },
                         {
                             "type":"postback",
                             "title":"Keep Searching",
@@ -366,11 +366,18 @@ function joineryGreeting(recipientId, message) {
 }
 
 //alert function
-/*function alertMe(recipientId) {
-    client.hset alerts recipientId
+function alertMe(senderId) {
+    client.hmset userAlerts senderId {
+        'type' : apartmentType,
+        'location' : place,
+        'minPrice' : minPrice,
+        'maxPrice' : maxPrice,
+        'beds' : beds
+    };
+    client.log(client.hmget senderId);
     //add the stored search criteria to the hash set
     //bedrooms, location, price range, move out date (tentative)
-}*/
+}
 
 function onButton(senderId, postback){
     //if user clicked a button
@@ -400,6 +407,8 @@ function onButton(senderId, postback){
     } else if (choice === "\"done\""){
         fromButton = false;
         sendMessage(senderId,{"text":"Aw okay. Type 'joinery' when you want to search again!"});
+    } else if (choice === "\"alert\""){
+        alertMe(senderId);
     }
     else {
         searchOn = false;
@@ -407,7 +416,6 @@ function onButton(senderId, postback){
         message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
         sendMessage(senderId, message);
     }
-
 }
 
 // handler receiving messages, sending messages
