@@ -438,8 +438,7 @@ app.post('/webhook', function (req, res) {
                if (!locationFound) {
                    //console.log("looking at location");
                    findLocation(event.message.text, locationExists);
-                   var location = result;
-                   if (location[0] === "none") {
+                   if (result[0] === "none") {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                    } else {
                        //console.log("HERE!");
