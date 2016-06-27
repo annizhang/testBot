@@ -373,10 +373,10 @@ function alertMe(senderId) {
         'maxPrice' : maxPrice,
         'beds' : beds });
     if (apartmentType === "Share"){
-        message = "Cool! I will alert you when a room listing in " + place +" between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!";
+        message = "Cool! I will alert you when a room listing in " + place +" between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
     } else {
-        message = "Cool! I will alert you when a " + beds.toString() + " apartment in " + place + " between " + minPrice.toString() " and " + maxPrice.toString() +  " pops up!";
+        message = "Cool! I will alert you when a " + beds.toString() + " apartment in " + place + " between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
     }
     //console.log(client.hmget senderId);
