@@ -371,9 +371,8 @@ function alertMe(senderId) {
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
-        'beds' : beds
-    });
-    console.log(client.hmget senderId);
+        'beds' : beds });
+    //console.log(client.hmget senderId);
     //add the stored search criteria to the hash set
     //bedrooms, location, price range, move out date (tentative)
 }
