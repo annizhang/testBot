@@ -367,13 +367,12 @@ function joineryGreeting(recipientId, message) {
 
 //alert function
 function alertMe(senderId) {
-    client.hmset userAlerts senderId {
-        'type' : apartmentType,
+    client.hmset userAlerts senderId JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
         'beds' : beds
-    };
+    });
     console.log(client.hmget userAlerts senderId);
     //add the stored search criteria to the hash set
     //bedrooms, location, price range, move out date (tentative)
