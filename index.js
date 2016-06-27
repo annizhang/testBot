@@ -211,15 +211,14 @@ function locationExists(text,locations) {
     //var result = ["none", ""];
     for (var i = 0; i < locations.length; i++){
         var location = locations[i];
-        if (location.name.toLowerCase() === text || 
-            (location.parent_neighborhood !== null && location.parent_neighborhood.toLowerCase() === text)){
+        if (location.name.toLowerCase() === text){
             console.log(text);
-            result[0] = "some"
+            result[0] = "some";
             result[1] = text;
-            return result;
+            return;
         }
     }
-    return result;
+    //return result;
 }
 
 //gets user's location input
