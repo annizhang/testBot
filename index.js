@@ -367,7 +367,7 @@ function joineryGreeting(recipientId, message) {
 
 //alert function
 function alertMe(senderId) {
-    client.hmset userAlerts senderId JSON.stringify({'type':apartmentType,
+    client.hmset(senderId, {'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
