@@ -443,7 +443,7 @@ app.post('/webhook', function (req, res) {
                    } else {
                        //console.log("HERE!");
                        //console.log ("location = " + location[1]);
-                       place = location[1].toLowerCase();
+                       place = location[1];
                        locationFound = true;
                        console.log("place: " + place);
                        if (apartmentType === "Entire Apartment"){
