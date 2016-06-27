@@ -206,7 +206,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
 
 function locationExists(place,locations) {
     //to do: check for valid address input
-    place = place || "";
+    place = place.toLowerCase() || "";
     //var result = ["none", ""];
     for (var i = 0; i < locations.length; i++){
         var location = locations[i];
