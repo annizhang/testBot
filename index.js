@@ -374,7 +374,7 @@ function alertMe(senderId) {
         'maxPrice' : maxPrice,
         'beds' : beds
     };
-    client.log(client.hmget senderId);
+    client.log(client.hmget userAlerts senderId);
     //add the stored search criteria to the hash set
     //bedrooms, location, price range, move out date (tentative)
 }
