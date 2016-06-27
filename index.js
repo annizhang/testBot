@@ -215,6 +215,7 @@ function locationExists(text,locations) {
             console.log(text);
             result[0] = "some";
             result[1] = text;
+            place = text;
             return;
         }
     }
@@ -375,7 +376,7 @@ function alertMe(senderId) {
         message = "Cool! I will alert you when a room listing in " + place +" between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
     } else {
-        message = "Cool! I will alert you when a " + beds.toString() + " apartment in " + place + " between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
+        message = "Cool! I will alert you when a " + beds.toString() + " bedroom apartment in " + place + " between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
     }
     //console.log(client.hmget senderId);
@@ -443,11 +444,11 @@ app.post('/webhook', function (req, res) {
                    } else {
                        //console.log("HERE!");
                        //console.log ("location = " + location[1]);
-                       place = location[1];
+                       //place = location[1];
                        locationFound = true;
                        console.log("place: " + place);
                        if (apartmentType === "Entire Apartment"){
-                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + location[1] + "? Please enter a number."});
+                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
                        }else {
                            sendMessage(event.sender.id,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
                        }
