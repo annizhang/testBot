@@ -204,17 +204,17 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     }
 }*/
 
-function locationExists(place,locations) {
+function locationExists(text,locations) {
     //to do: check for valid address input
-    place = place.toLowerCase() || "";
+    text = text || "";
     //var result = ["none", ""];
     for (var i = 0; i < locations.length; i++){
         var location = locations[i];
-        if (location.name.toLowerCase() === place || 
-            (location.parent_neighborhood !== null && location.parent_neighborhood.toLowerCase() === place)){
-            console.log(place);
+        if (location.name.toLowerCase() === text || 
+            (location.parent_neighborhood !== null && location.parent_neighborhood.toLowerCase() === text)){
+            console.log(text);
             result[0] = "some"
-            result[1] = place;
+            result[1] = text;
             return result;
         }
     }
@@ -223,7 +223,7 @@ function locationExists(place,locations) {
 
 //gets user's location input
 var locationUrl = "https://joinery.nyc/api/v1/neighborhoods";
-function findLocation(place, locationExists){
+function findLocation(text, locationExists){
     https.get(locationUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -236,8 +236,7 @@ function findLocation(place, locationExists){
                            //console.log("body is" + body);
                            locations = JSON.parse(body);
                            //console.log(listings);
-                           locationExists(place.toLowerCase(), locations);
-                           
+                           locationExists(text, locations);
                        });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
