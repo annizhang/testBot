@@ -213,7 +213,7 @@ function locationExists(text,locations,validLoc, sender) {
     for (var i = 0; i < locations.length; i++){
         var location = locations[i];
         if (location.name.toLowerCase() === text.toLowerCase()){
-            console.log(text);
+            //console.log(text);
             result[0] = "some";
             result[1] = text;
             place = text;
@@ -221,6 +221,7 @@ function locationExists(text,locations,validLoc, sender) {
             return;
         }
     }
+    console.log("search thru apartments": validLoc);
     if (!validLoc) {
         sendMessage(sender, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
     } else {
@@ -259,7 +260,6 @@ function findLocation(text, locationExists, sender, validLoc){
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
-    console.log(validLoc);
     
 }
 
