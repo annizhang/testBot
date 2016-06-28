@@ -232,6 +232,7 @@ function locationExists(text,locations,validLoc) {
         if (apartmentType === "Entire Apartment"){
         sendMessage(sender, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
         }else {
+            console.log("sending message to sender!");
             sendMessage(sender,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
         }
     }
