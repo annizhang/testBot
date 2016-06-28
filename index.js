@@ -40,7 +40,6 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
-var validLoc = false;
 var isBeginning = true;
 var isJoinery = false;
 var isGreeting = false;
@@ -206,7 +205,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     }
 }*/
 
-function locationExists(text,locations) {
+function locationExists(text,locations,validLoc) {
     //to do: check for valid address input
     text = text || "";
     //console.log(text);
@@ -226,7 +225,7 @@ function locationExists(text,locations) {
 
 //gets user's location input
 var locationUrl = "https://joinery.nyc/api/v1/neighborhoods";
-function findLocation(text, locationExists, sender){
+function findLocation(text, locationExists, sender, validLoc){
     https.get(locationUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -239,7 +238,7 @@ function findLocation(text, locationExists, sender){
                            //console.log("body is" + body);
                            locations = JSON.parse(body);
                            //console.log(listings);
-                           locationExists(text, locations);
+                           locationExists(text, locations,validLoc);
                            if (!validLoc) {
                                sendMessage(sender, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                            } else {
@@ -455,8 +454,9 @@ app.post('/webhook', function (req, res) {
               !joineryGreeting(sender, event.message.text) && !fromButton){
                //findLocation takes in the message and finds location 
                if (!locationFound) {
+                   var validLoc = false;
                    //console.log("looking at location");
-                   findLocation(event.message.text, locationExists, sender);
+                   findLocation(event.message.text, locationExists, sender, validLoc);
                    /*if (!validLoc) {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                    } else {
