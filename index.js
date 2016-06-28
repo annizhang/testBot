@@ -205,7 +205,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     }
 }*/
 
-function locationExists(text,locations,validLoc) {
+function locationExists(text,locations,validLoc, sender) {
     //to do: check for valid address input
     text = text || "";
     //console.log(text);
@@ -253,7 +253,7 @@ function findLocation(text, locationExists, sender, validLoc){
                            //console.log("body is" + body);
                            locations = JSON.parse(body);
                            //console.log(listings);
-                           locationExists(text, locations,validLoc);
+                           locationExists(text,locations,validLoc, sender);
                            //console.log(validLoc);
                                });
                    }).on('error', function(e){
