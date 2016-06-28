@@ -244,7 +244,7 @@ function findLocation(text, locationExists){
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
-    console.log(validloc);
+    console.log(validLoc);
     
 }
 
