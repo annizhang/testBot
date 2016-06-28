@@ -225,7 +225,7 @@ function locationExists(text,locations) {
 
 //gets user's location input
 var locationUrl = "https://joinery.nyc/api/v1/neighborhoods";
-function findLocation(text, locationExists){
+function findLocation(text, locationExists, sender){
     https.get(locationUrl, function(res){
                        var body = '';
                        res.on('data', function(chunk){
@@ -240,7 +240,7 @@ function findLocation(text, locationExists){
                            //console.log(listings);
                            locationExists(text, locations);
                            if (!validLoc) {
-                               sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
+                               sendMessage(sender, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                            } else {
                                //console.log("HERE!");
                                //console.log ("location = " + location[1]);
@@ -248,9 +248,9 @@ function findLocation(text, locationExists){
                                locationFound = true;
                                console.log("place: " + place);
                                if (apartmentType === "Entire Apartment"){
-                               sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
+                               sendMessage(sender, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
                                }else {
-                                   sendMessage(event.sender.id,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
+                                   sendMessage(sender,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
                                }
                            }
                            
@@ -455,7 +455,7 @@ app.post('/webhook', function (req, res) {
                //findLocation takes in the message and finds location 
                if (!locationFound) {
                    //console.log("looking at location");
-                   findLocation(event.message.text, locationExists);
+                   findLocation(event.message.text, locationExists, sender);
                    /*if (!validLoc) {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                    } else {
