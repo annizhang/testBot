@@ -221,6 +221,20 @@ function locationExists(text,locations,validLoc) {
             return;
         }
     }
+    if (!validLoc) {
+        sendMessage(sender, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
+    } else {
+        //console.log("HERE!");
+        //console.log ("location = " + location[1]);
+        //place = location[1];
+        locationFound = true;
+        console.log("place: " + place);
+        if (apartmentType === "Entire Apartment"){
+        sendMessage(sender, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
+        }else {
+            sendMessage(sender,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
+        }
+    }
 }
 
 //gets user's location input
@@ -239,21 +253,6 @@ function findLocation(text, locationExists, sender, validLoc){
                            locations = JSON.parse(body);
                            //console.log(listings);
                            locationExists(text, locations,validLoc);
-                           if (!validLoc) {
-                               sendMessage(sender, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
-                           } else {
-                               //console.log("HERE!");
-                               //console.log ("location = " + location[1]);
-                               //place = location[1];
-                               locationFound = true;
-                               console.log("place: " + place);
-                               if (apartmentType === "Entire Apartment"){
-                               sendMessage(sender, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
-                               }else {
-                                   sendMessage(sender,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
-                               }
-                           }
-                           
                            //console.log(validLoc);
                                });
                    }).on('error', function(e){
