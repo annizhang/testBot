@@ -219,9 +219,9 @@ function locationExists(text,locations,validLoc, sender) {
             result[1] = text;
             place = text;
             validLoc = true;
-            return;
+            //return;
         }
-    }
+    }3
     console.log("search thru apartments: " + validLoc);
     if (!validLoc) {
         sendMessage(sender, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
