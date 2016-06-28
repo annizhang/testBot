@@ -40,6 +40,7 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
+var validLoc = false;
 var isBeginning = true;
 var isJoinery = false;
 var isGreeting = false;
@@ -216,24 +217,10 @@ function locationExists(text,locations) {
             result[0] = "some";
             result[1] = text;
             place = text;
+            validLoc = true;
             return;
         }
     }
-    if (result[0] === "none") {
-        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
-    } else {
-       //console.log("HERE!");
-       //console.log ("location = " + location[1]);
-       //place = location[1];
-       locationFound = true;
-       console.log("place: " + place);
-       if (apartmentType === "Entire Apartment"){
-       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
-       }else {
-           sendMessage(event.sender.id,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
-       }
-   }
-    //return result;
 }
 
 //gets user's location input
@@ -452,7 +439,7 @@ app.post('/webhook', function (req, res) {
                if (!locationFound) {
                    //console.log("looking at location");
                    findLocation(event.message.text, locationExists);
-                   /*if (result[0] === "none") {
+                   if (!validLoc) {
                        sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
                    } else {
                        //console.log("HERE!");
@@ -465,7 +452,7 @@ app.post('/webhook', function (req, res) {
                        }else {
                            sendMessage(event.sender.id,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
                        }
-                   }*/
+                   }
                } else if (beds === Number.MAX_VALUE && apartmentType === "Entire Apartment") {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
