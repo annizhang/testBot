@@ -214,7 +214,7 @@ function locationExists(text,locations,validLoc, sender) {
     for (var i = 0; i < locations.length; i++){
         var location = locations[i];
         if (location.name.toLowerCase() === text.toLowerCase()){
-            //console.log(text);
+            console.log("found neighborhood: " + text);
             result[0] = "some";
             result[1] = text;
             place = text;
