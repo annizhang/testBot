@@ -97,6 +97,7 @@ var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
 function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,type){
     //console.log("SEARCHING!!!");
+    neighborhood = neighborhood.toLowerCase();
     var newJSON;
     var listing;
     var listingJson;
