@@ -239,11 +239,12 @@ function findLocation(text, locationExists){
                            locations = JSON.parse(body);
                            //console.log(listings);
                            locationExists(text, locations);
-                           console.log(validLoc);
+                           //console.log(validLoc);
                                });
                    }).on('error', function(e){
                        console.log("Got an error: ", e);
                    });
+    console.log(validloc);
     
 }
 
