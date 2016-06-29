@@ -132,7 +132,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                       "title": "View Apartment"},
                      {"type": "postback",
                       "title": "Keep Searching",
-                      "payload": "search" //need to fix this to go back to joinery welcome message
+                      "payload": "keepsearch" //need to fix this to go back to joinery welcome message
                      }
                  ]
                 });
@@ -295,7 +295,6 @@ function findPrices(text) {
     return results;
 }
 
-
 function greetingMessage(recipientId, message){
     //looking for hi or hello in the received message
     var lowerMess = message.toLowerCase();
@@ -316,8 +315,10 @@ function greetingMessage(recipientId, message){
     return false;
 }
 
-//modifying search instead of starting over
-//change one search critera at a time
+/*modifying search instead of starting over
+change one search critera at a time
+toBeChanged can be 0,1,2,3 so it sends the appropriate continuous change 
+so users can keep changing */
 function modifySearch(senderId){
     modify = true;
     if (apartmentType === "Entire Apartment"){ 
@@ -350,7 +351,7 @@ function modifySearch(senderId){
                 "type":"template",
                 "payload":{
                     "template_type":"button",
-                    "text":"What would you like to change?",
+                    "text":"Do you want to modify your search? What would you like to change?",
                     "buttons":[
                         {"type":"postback",
                          "title":"Change Location",
@@ -366,10 +367,51 @@ function modifySearch(senderId){
        };
     }
     //sendMessage(senderId, "What would you like to change?");
-    sendMessage(senderId, modMess);
-    
+    sendMessage(senderId, modMess);   
 }
 
+function modifySearchLoc(senderId){
+    if (apartmentType === "Entire Apartment"){ 
+        var modMess = {
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"button",
+                    "text":"Would you like to change anything in addition to location?",
+                    "buttons":[
+                         {"type":"postback",
+                          "title":"Change Price",
+                          "payload":"newprice"
+                         },
+                         {"type":"postback",
+                          "title":"Change Beds",
+                          "payload":"newbeds"
+                         }
+                    ]
+                }
+            }
+        };
+    } else {
+       var modMess = {
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"button",
+                    "text":"Do you want to modify your search? What would you like to change?",
+                    "buttons":[
+                        {"type":"postback",
+                         "title":"Change Price",
+                         "payload":"newprice"
+                        }
+                    ]
+                }
+            }
+       };
+    }
+    //sendMessage(senderId, "What would you like to change?");
+    sendMessage(senderId, modMess); 
+    
+}
 
 //message with buttons to search apartments/rooms
 //restarts the search process from blank slate
@@ -493,7 +535,10 @@ function onButton(senderId, postback){
         alertMe(senderId);
     } else if (choice === "\"keepsearch\""){
         modifySearch(senderId);
-    }
+    } else if (choice === "\"newloc\""){
+        place = "newloc";
+        modifySearchLoc(senderId);
+    } else if (choice === "\"newprice)
     else {
         searchOn = false;
         //var theText = JSON.stringify(event.postback);
