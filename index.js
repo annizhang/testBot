@@ -325,7 +325,7 @@ function modifySearch(senderId){
             "attachment":{
                 "type":"template",
                 "payload":{
-                    "template_type":"generic",
+                    "template_type":"button",
                     "elements":[
                         {
                             "buttons":[
@@ -352,7 +352,7 @@ function modifySearch(senderId){
             "attachment":{
                 "type":"template",
                 "payload":{
-                    "template_type":"generic",
+                    "template_type":"button",
                     "elements":[
                         {
                             "buttons":[
