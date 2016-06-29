@@ -372,7 +372,7 @@ function modifySearch(senderId){
         };
     }
     sendMessage(senderId, "What would you like to change?");
-    sendMessage(senderId, message);
+    sendMessage(senderId, modMess);
     
 }
 
