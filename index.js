@@ -327,20 +327,20 @@ function modifySearch(senderId){
                 "payload":{
                     "template_type":"button",
                     "text":"What would you like to change?",
-                            "buttons":[
-                             {"type":"postback",
-                              "title":"Change Location",
-                              "payload":"newloc"
-                             },
-                             {"type":"postback",
-                              "title":"Change Price",
-                              "payload":"Share"
-                             },
-                             {"type":"postback",
-                              "title":"Change Beds",
-                              "url":"https://joinery.nyc"
-                             }
-                            ]
+                    "buttons":[
+                         {"type":"postback",
+                          "title":"Change Location",
+                          "payload":"newloc"
+                         },
+                         {"type":"postback",
+                          "title":"Change Price",
+                          "payload":"newprice"
+                         },
+                         {"type":"postback",
+                          "title":"Change Beds",
+                          "payload":"newbeds"
+                         }
+                    ]
                 }
             }
         };
@@ -358,7 +358,7 @@ function modifySearch(senderId){
                         },
                         {"type":"postback",
                          "title":"Change Price",
-                         "payload":"Share"
+                         "payload":"newprice"
                         }
                     ]
                 }
