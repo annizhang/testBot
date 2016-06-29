@@ -40,6 +40,7 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
+var modify = false;
 var isBeginning = true;
 var isJoinery = false;
 var isGreeting = false;
@@ -153,7 +154,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                         {
                             "type":"postback",
                             "title":"Keep Searching",
-                            "payload":"search"
+                            "payload":"keepsearch"
                         },
                         {
                             "type":"postback",
@@ -315,6 +316,69 @@ function greetingMessage(recipientId, message){
     return false;
 }
 
+//modifying search instead of starting over
+//change one search critera at a time
+function modifySearch(senderId){
+    modify = true;
+    if (apartmentType === "Entire Apartment"){ 
+        var modMess = {
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"generic",
+                    "elements":[
+                        {
+                            "buttons":[
+                             {"type":"postback",
+                              "title":"Change Location",
+                              "payload":"newloc"
+                             },
+                             {"type":"postback",
+                              "title":"Change Price",
+                              "payload":"Share"
+                             },
+                             {"type":"postback",
+                              "title":"Change",
+                              "url":"https://joinery.nyc"
+                             }
+                         ]
+                        }
+                    ]
+                }
+            }
+        };
+    } else {
+        var modMess = {
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"generic",
+                    "elements":[
+                        {
+                            "buttons":[
+                             {"type":"postback",
+                              "title":"Change Location",
+                              "payload":"newloc"
+                             },
+                             {"type":"postback",
+                              "title":"Change Price",
+                              "payload":"Share"
+                             }
+                         ]
+                        }
+                    ]
+                }
+            }
+        };
+    }
+    sendMessage(senderId, "What would you like to change?");
+    sendMessage(senderId, message);
+    
+}
+
+
+//message with buttons to search apartments/rooms
+//restarts the search process from blank slate
 function welcomeMessage(firstName, senderId) {
     //resetGlobals();
     var joineryMess = {
@@ -433,6 +497,8 @@ function onButton(senderId, postback){
         sendMessage(senderId,{"text":"Aw okay. Type 'joinery' when you want to search again!"});
     } else if (choice === "\"alert\""){
         alertMe(senderId);
+    } else if (choice === "\"keepsearch\""){
+        modifySearch(senderId);
     }
     else {
         searchOn = false;
