@@ -326,8 +326,7 @@ function modifySearch(senderId){
                 "type":"template",
                 "payload":{
                     "template_type":"button",
-                    "elements":[
-                        {
+                    "text":"What would you like to change?",
                             "buttons":[
                              {"type":"postback",
                               "title":"Change Location",
@@ -338,40 +337,35 @@ function modifySearch(senderId){
                               "payload":"Share"
                              },
                              {"type":"postback",
-                              "title":"Change",
+                              "title":"Change Beds",
                               "url":"https://joinery.nyc"
                              }
-                         ]
-                        }
-                    ]
+                            ]
                 }
             }
         };
     } else {
-        var modMess = {
+       var modMess = {
             "attachment":{
                 "type":"template",
                 "payload":{
                     "template_type":"button",
-                    "elements":[
-                        {
-                            "buttons":[
-                             {"type":"postback",
-                              "title":"Change Location",
-                              "payload":"newloc"
-                             },
-                             {"type":"postback",
-                              "title":"Change Price",
-                              "payload":"Share"
-                             }
-                         ]
+                    "text":"What would you like to change?",
+                    "buttons":[
+                        {"type":"postback",
+                         "title":"Change Location",
+                         "payload":"newloc"
+                        },
+                        {"type":"postback",
+                         "title":"Change Price",
+                         "payload":"Share"
                         }
                     ]
                 }
             }
-        };
+       };
     }
-    sendMessage(senderId, "What would you like to change?");
+    //sendMessage(senderId, "What would you like to change?");
     sendMessage(senderId, modMess);
     
 }
