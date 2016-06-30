@@ -538,7 +538,9 @@ function onButton(senderId, postback){
     } else if (choice === "\"newloc\""){
         place = "newloc";
         //modifySearchLoc(senderId);
-    } else if (choice === "\"newprice)
+    } else if (choice === "\"newprice\""){
+        return;
+    }
     else {
         searchOn = false;
         //var theText = JSON.stringify(event.postback);
