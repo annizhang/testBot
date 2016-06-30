@@ -537,7 +537,7 @@ function onButton(senderId, postback){
         modifySearch(senderId);
     } else if (choice === "\"newloc\""){
         place = "newloc";
-        modifySearchLoc(senderId);
+        //modifySearchLoc(senderId);
     } else if (choice === "\"newprice)
     else {
         searchOn = false;
