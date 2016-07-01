@@ -41,6 +41,8 @@ var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
 var modify = false;
+var modifyloc = false;
+var modifyprice = false;
 var isBeginning = true;
 var isJoinery = false;
 var isGreeting = false;
@@ -231,13 +233,19 @@ function locationExists(text,locations,validLoc, sender) {
         //console.log ("location = " + location[1]);
         //place = location[1];
         locationFound = true;
+        modifyloc = false;
         console.log("place: " + place);
-        if (apartmentType === "Entire Apartment"){
-        sendMessage(sender, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
+        if (modifyloc) {
+            modifySearchLoc(sender);
         }else {
-            console.log("sending message to sender!");
-            sendMessage(sender,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
+            if (apartmentType === "Entire Apartment"){
+            sendMessage(sender, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
+            }else {
+                console.log("sending message to sender!");
+                sendMessage(sender,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
+            }
         }
+        
     }
 }
 
@@ -370,6 +378,7 @@ function modifySearch(senderId){
     sendMessage(senderId, modMess);   
 }
 
+//modify search after location is changed
 function modifySearchLoc(senderId){
     if (apartmentType === "Entire Apartment"){ 
         var modMess = {
@@ -386,7 +395,11 @@ function modifySearchLoc(senderId){
                          {"type":"postback",
                           "title":"Change Beds",
                           "payload":"newbeds"
-                         }
+                         },
+                        {"type":"postback",
+                         "title":"Nope",
+                         "payload":"nomorechange"
+                        }
                     ]
                 }
             }
@@ -536,12 +549,16 @@ function onButton(senderId, postback){
     } else if (choice === "\"keepsearch\""){
         modifySearch(senderId);
     } else if (choice === "\"newloc\""){
-        place = "newloc";
-        modifySearchLoc(senderId);
+        modifyloc = true;
+        sendMessage(senderId, {"text":"Where would you like to live?"});
+        //modifySearchLoc(senderId);
     } else if (choice === "\"newprice\""){
+        modifyprice = true;
+        sendMessage(senderId, {"text":"What is your price range? For example, '1500 to 3000'"});
         return;
     }
     else {
+        //backup for when button does not work
         searchOn = false;
         //var theText = JSON.stringify(event.postback);
         message ={text: "hmm...choose a different button because I'm not fully functional yet :) "};
@@ -561,24 +578,54 @@ app.post('/webhook', function (req, res) {
            if (!greetingMessage(sender, event.message.text) &&
               !joineryGreeting(sender, event.message.text) && !fromButton){
                //findLocation takes in the message and finds location 
+               /*if (modifyloc){
+                   var validLoc = false;
+                   findLocation(event.message.text, locationExists, sender, validLoc);
+               } else if (modifybeds){
+                   beds = Number.MAX_VALUE
+                   beds = findBeds(event.message.text);
+                   if (beds === Number.MAX_VALUE) {
+                       message = {"text":"What was that? Please enter a valid number like 1,2,3."};
+                   } else {
+                       message = {
+                           "attachment":{
+                               "type":"template",
+                               "payload":{
+                                   "template_type":"button",
+                                   "text":"Would you like to change your price range?",
+                                   "buttons":[
+                                       {"type":"postback",
+                                        "title":"Yes",
+                                        "payload":"newprice"
+                                       },
+                                       {"type":"postback",
+                                        "title":"No",
+                                        "payload":"nomorechange"
+                                       }
+                                   ]
+                               }
+                           }
+                       };
+                       sendMessage(senderId, message);
+                   }
+               } else if (modifyprice){
+                   minPrice = Number.MIN_VALUE;
+                   maxPrice = Number.MAX_VALUE;
+                   var minMax = findPrices(event.message.text);
+                   minPrice = minMax[0];
+                   maxPrice = minMax[1];
+                   console.log("prices: " + minPrice + "-" + maxPrice);
+                   if (minPrice === Number.MIN_VALUE || maxPrice === Number.MAX_VALUE){
+                       message = {"text":"Hm...I didn't get that, can you please input your price range in the form of 'minimum to maximum'?"};
+                       sendMessage(event.sender.id, message);
+                   } else {
+                       modifySearch
+                   }
+               }*/
                if (!locationFound) {
                    var validLoc = false;
                    //console.log("looking at location");
                    findLocation(event.message.text, locationExists, sender, validLoc);
-                   /*if (!validLoc) {
-                       sendMessage(event.sender.id, {"text": "That's not a place I recognize. Please give me a NYC neighborhood."});
-                   } else {
-                       //console.log("HERE!");
-                       //console.log ("location = " + location[1]);
-                       //place = location[1];
-                       locationFound = true;
-                       console.log("place: " + place);
-                       if (apartmentType === "Entire Apartment"){
-                       sendMessage(event.sender.id, {"text": "Great! How many bedrooms are you looking for in " + place + "? Please enter a number."});
-                       }else {
-                           sendMessage(event.sender.id,{"text": "Nice! What is your price range? For example, '1500 to 3000'"});
-                       }
-                   }*/
                } else if (beds === Number.MAX_VALUE && apartmentType === "Entire Apartment") {
                    //finding bedrooms
                    beds = findBeds(event.message.text);
@@ -633,43 +680,3 @@ app.post('/webhook', function (req, res) {
     }
     console.log("end of receive function");
 });
-
-/* send rich message with joinery search
-function joineryMessage(recipientId, text) {
-    text = text || "";
-    var values = text.split(' ');
-    //if length 3 and first word is "search"
-    if (values.length === 2 && values[0] === "search") {
-        location = values[1];
-        imageUrl = "https://scontent-iad3-1.xx.fbcdn.net/t31.0-8/10344292_421916781342262_7831247042188894229_o.jpg"
-            message = {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "Apartments in " + location,
-                            "subtitle": "From Joinery",
-                            "image_url": imageUrl,
-                            "buttons": [{
-                                "type": "web_url",
-                                "url": "https://joinery.nyc/search?utf8=%E2%9C%93&neighborhoods%5B%5D=13&bedrooms=Bedrooms&listing-type=Apartment+Type&price-low=Min+%24&price-high=Max+%24&date=",
-                                "title": "View results"
-                                }, {
-                                "type": "postback",
-                                "title": "I like these",
-                                "payload": "i like this",
-                            }]
-                        }]
-                    }
-                }
-            };
-    
-            sendMessage(recipientId, message);
-            
-            return true;
-        }
-    return false;
-    
-}
-*/
