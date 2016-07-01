@@ -499,11 +499,12 @@ function joineryGreeting(recipientId, message) {
 
 //alert function
 function alertMe(senderId) {
-    client.hmset(senderId, {'type':apartmentType,
+    //only for 
+    client.sadd senderId {'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
-        'beds' : beds });
+        'beds' : beds };
     if (apartmentType === "Share"){
         message = "Cool! I will alert you when a room listing in " + place +" between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
