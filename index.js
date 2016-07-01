@@ -500,11 +500,11 @@ function joineryGreeting(recipientId, message) {
 //alert function
 function alertMe(senderId) {
     //only for 
-    client.sadd senderId JSON.stringify({'type':apartmentType,
+    client.sadd(senderId,JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
-        'beds' : beds });
+        'beds' : beds }));
     if (apartmentType === "Share"){
         message = "Cool! I will alert you when a room listing in " + place +" between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
