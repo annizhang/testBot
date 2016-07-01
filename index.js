@@ -141,6 +141,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         };
     };
     if (count === 0) {
+        console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
         testMessage = {
             "attachment":{
                 "type": "template",
