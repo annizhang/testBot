@@ -500,6 +500,7 @@ function joineryGreeting(recipientId, message) {
 //alert function
 function alertMe(senderId) {
     //only for 
+    console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
     client.sadd(senderId,JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
