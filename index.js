@@ -523,12 +523,12 @@ function alertMe(senderId) {
 function onButton(senderId, postback){
     //if user clicked a button
     var choice = JSON.stringify(postback.payload);
-    console.log(choice);
+    /*console.log(choice);
     locationFound = false;
     place = "";
     beds = Number.MAX_VALUE;
     minPrice = Number.MIN_VALUE;
-    maxPrice = Number.MAX_VALUE;
+    maxPrice = Number.MAX_VALUE;*/
     if (choice === "\"Entire Apartment\""){
         fromButton = false;
         apartmentType = "Entire Apartment";
