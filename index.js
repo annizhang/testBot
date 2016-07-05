@@ -509,7 +509,7 @@ function alertMe(senderId) {
         'maxPrice' : maxPrice,
         'beds' : beds });
     console.log("set alert, what is alert:");
-    client.hmget(senderId, function(err, reply) {
+    client.get(senderId, function(err, reply) {
         console.log(reply);
     });
     if (apartmentType === "Share"){
