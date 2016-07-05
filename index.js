@@ -118,18 +118,16 @@ function topFive(listings){
         }
     };
     for (var i in listings){
-            if (listings[i]['price'] >= minPrice){
-                L_ID = listings[i]['id'];
-                L_priceDiffs = listings[i]['price'] - minPrice;
-                L_views = listings[i]['views'];
-                L_messages = listings[i]['messages'];
-                L_images = listings[i]['images'];
-                priceDiffs[L_ID] = L_priceDiffs;
-                views[L_ID] = L_views;
-                messages[L_ID] = L_messages;
-                images[L_ID] = L_images;
-            }
-        };
+        L_ID = listings[i]['id'];
+        L_priceDiffs = listings[i]['price'] - minPrice;
+        L_views = listings[i]['views'];
+        L_messages = listings[i]['messages'];
+        L_images = listings[i]['images'];
+        priceDiffs[L_ID] = L_priceDiffs;
+        views[L_ID] = L_views;
+        messages[L_ID] = L_messages;
+        images[L_ID] = L_images;
+    };
         //Sorts all the lists. Only gives back ids
         sortpriceDiff = Object.keys(priceDiffs).sort(function(a, b) {return (priceDiffs[a] - priceDiffs[b])});
         sortviews = (Object.keys(views).sort(function(a, b) {return (views[a] - views[b])})).reverse();
@@ -143,6 +141,7 @@ function topFive(listings){
             }
         }
         actualRanking = Object.keys(scoring).sort(function(a, b) {return (scoring[a] - scoring[b])});
+        console.log(actualRanking);
         for (var j = 0; j < 5; i ++){
             listing = actualRanking[j];
             message.attachment.payload.elements.push(
