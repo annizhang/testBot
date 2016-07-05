@@ -144,7 +144,7 @@ function topFive(listings){
         }
         actualRanking = Object.keys(scoring).sort(function(a, b) {return (scoring[a] - scoring[b])});
         for (var j = 0; j < 5; i ++){
-            listing = actualRanking[i];
+            listing = actualRanking[j];
             message.attachment.payload.elements.push(
                 {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
                  "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/955/500"),
