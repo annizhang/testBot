@@ -503,13 +503,13 @@ function alertMe(senderId) {
     //only for 
     //console.log(senderId);
     //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-    client.set(senderId, JSON.stringify({'type':apartmentType,
+    client.sadd([senderId, JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
-        'beds' : beds }));
+        'beds' : beds })]);
     console.log("set alert, what is alert:");
-    client.get(senderId, function(err, reply) {
+    client.smembers(senderId, function(err, reply) {
         console.log(reply.toString());
     });
     if (apartmentType === "Share"){
