@@ -94,6 +94,68 @@ function sendMessage(recipientId, message) {
     console.log(data);
 });*/
 
+function topFive(listings){
+    var priceDiffs = {};
+    var views = {};
+    var messages = {};
+    var images = {};
+    var scoring = {};
+    var message = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"generic",
+                "elements": []}
+        }
+    };
+    for (var i in listings){
+            if (listings[i]['price'] >= minPrice){
+                L_ID = listings[i]['id'];
+                L_priceDiffs = listings[i]['price'] - minPrice;
+                L_views = listings[i]['views'];
+                L_messages = listings[i]['messages'];
+                L_images = listings[i]['images'];
+                priceDiffs[L_ID] = L_priceDiffs;
+                views[L_ID] = L_views;
+                messages[L_ID] = L_messages;
+                images[L_ID] = L_images;
+            }
+        };
+        //Sorts all the lists. Only gives back ids
+        sortpriceDiff = Object.keys(priceDiffs).sort(function(a, b) {return (priceDiffs[a] - priceDiffs[b])});
+        sortviews = (Object.keys(views).sort(function(a, b) {return (views[a] - views[b])})).reverse();
+        sortimages = (Object.keys(images).sort(function(a, b) {return (images[a] - images[b])})).reverse();
+        sortmessages = (Object.keys(messages).sort(function(a, b) {return (messages[a] - messages[b])})).reverse();
+        //Makes ID
+        for (var i in listings){
+            if (listings[i]['price'] >= minPrice){
+                L_ID = listings[i]['id'];
+                scoring[L_ID] = score(L_ID);
+            }
+        }
+        actualRanking = Object.keys(scoring).sort(function(a, b) {return (scoring[a] - scoring[b])});
+        for (var j = 0; j < 5; i ++){
+            listing = actualRanking[i];
+            message.attachment.payload.elements.push(
+                {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
+                 "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/955/500"),
+                 "subtitle": listing.full_address,
+                 "buttons": [
+                     {"type": "web_url",
+                      "url": "https://joinery.nyc/listing/" + listing.slug,
+                      "title": "View Apartment"},
+                     {"type": "postback",
+                      "title": "Keep Searching",
+                      "payload": "search" //need to fix this to go back to joinery welcome message
+                     }
+                 ]
+                });
+            
+        }
+        return message;
+}
+
+
 //listings in json form
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
@@ -112,6 +174,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                 "elements": []}
         }
     };
+    var matchedListings;
     for (var i = 0; i < listings.length; i++){
         if (count === 10) {break;}
         listing = listings[i];
@@ -124,6 +187,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
              (listing.parent_neighborhood != null && neighborhood === listing.parent_neighborhood.name.toLowerCase())) &&
             listing.listing_type_text === type){
             count++;
+            matchedListings.push(listing);
             newMessage.attachment.payload.elements.push(
                 {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
                  "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/955/500"),
@@ -171,6 +235,9 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         sendMessage(sender, testMessage);
     }
     else {
+        if (count > 5){
+            newMessage = topFive(matchedListings);
+        }
         var verb = " are ";
         if (apartmentType === "Entire Apartment"){
             var results = " apartments ";
