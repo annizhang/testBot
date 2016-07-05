@@ -503,7 +503,7 @@ function alertMe(senderId) {
     //only for 
     console.log(senderId);
     console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-    client.sadd(senderId, {'type':apartmentType,
+    client.hmset(senderId, {'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
