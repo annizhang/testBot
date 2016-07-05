@@ -174,7 +174,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                 "elements": []}
         }
     };
-    var matchedListings;
+    var matchedListings = [];
     for (var i = 0; i < listings.length; i++){
         //if (count === 10) {break;}
         listing = listings[i];
