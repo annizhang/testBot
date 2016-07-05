@@ -503,16 +503,16 @@ function alertMe(senderId) {
     //only for 
     console.log(senderId);
     console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-    client.sadd(senderId,JSON.stringify({'type':apartmentType,
+    client.sadd(senderId, {'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
-        'beds' : beds }));
+        'beds' : beds });
     if (apartmentType === "Share"){
-        message = "Cool! I will alert you when a room listing in " + place +" between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
+        message = "Cool! I will alert you when a room listing in " + place +" between " + "$" + minPrice.toString() + " and " + "$" + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
     } else {
-        message = "Cool! I will alert you when a " + beds.toString() + " bedroom apartment in " + place + " between " + minPrice.toString() + " and " + maxPrice.toString() +  " pops up!";
+        message = "Cool! I will alert you when a " + beds.toString() + " bedroom apartment in " + place + " between " + "$" + minPrice.toString() + " and " + "$" + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
     }
     //console.log(client.hmget senderId);
