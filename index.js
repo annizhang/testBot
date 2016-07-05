@@ -501,14 +501,15 @@ function joineryGreeting(recipientId, message) {
 //alert function
 function alertMe(senderId) {
     //only for 
-    console.log(senderId);
-    console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
+    //console.log(senderId);
+    //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
     client.hmset(senderId, {'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
         'beds' : beds });
-    client.get(senderId, function(err, reply) {
+    console.log("set alert, what is alert:");
+    client.hmget(senderId, function(err, reply) {
         console.log(reply);
     });
     if (apartmentType === "Share"){
