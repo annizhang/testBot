@@ -503,11 +503,11 @@ function alertMe(senderId) {
     //only for 
     //console.log(senderId);
     //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-    client.set({'type':apartmentType,
+    client.set(JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
-        'beds' : beds });
+        'beds' : beds }));
     console.log("set alert, what is alert:");
     client.get(senderId, function(err, reply) {
         console.log(reply.toString());
