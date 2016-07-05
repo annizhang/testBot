@@ -503,6 +503,7 @@ function alertMe(senderId) {
     //only for 
     //console.log(senderId);
     //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
+    client.del(senderId);
     client.sadd(senderId, JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
