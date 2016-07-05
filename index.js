@@ -93,7 +93,9 @@ function sendMessage(recipientId, message) {
 /*$.getJSON('https://joinery.nyc/api/v1/listings/available', function(data) {
     console.log(data);
 });*/
-function score(id){
+
+//priority function
+/*function score(id){
     id = id.toString();
     var val1 = sortpriceDiff.indexOf(id);
     var val2 = sortviews.indexOf(id);
@@ -162,7 +164,7 @@ function topFive(listings){
         }
         return message;
 }
-
+*/
 
 //listings in json form
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
@@ -182,9 +184,9 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                 "elements": []}
         }
     };
-    var matchedListings = [];
+    //var matchedListings = [];
     for (var i = 0; i < listings.length; i++){
-        //if (count === 10) {break;}
+        if (count === 10) {break;}
         listing = listings[i];
         console.log("SEARCHING LOOP!");
         //listingJson = JSON.stringify(listing);
@@ -195,7 +197,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
              (listing.parent_neighborhood != null && neighborhood === listing.parent_neighborhood.name.toLowerCase())) &&
             listing.listing_type_text === type){
             count++;
-            matchedListings.push(listing);
+            //matchedListings.push(listing);
             newMessage.attachment.payload.elements.push(
                 {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
                  "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/955/500"),
@@ -243,9 +245,9 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         sendMessage(sender, testMessage);
     }
     else {
-        if (count > 5){
+        /*if (count > 5){
             newMessage = topFive(matchedListings);
-        }
+        }*/
         var verb = " are ";
         if (apartmentType === "Entire Apartment"){
             var results = " apartments ";
