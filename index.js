@@ -508,6 +508,9 @@ function alertMe(senderId) {
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
         'beds' : beds });
+    client.get(senderId, function(err, reply) {
+        console.log(reply);
+    });
     if (apartmentType === "Share"){
         message = "Cool! I will alert you when a room listing in " + place +" between " + "$" + minPrice.toString() + " and " + "$" + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
