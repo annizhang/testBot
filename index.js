@@ -93,6 +93,15 @@ function sendMessage(recipientId, message) {
 /*$.getJSON('https://joinery.nyc/api/v1/listings/available', function(data) {
     console.log(data);
 });*/
+function score(id){
+    id = id.toString();
+    var val1 = sortpriceDiff.indexOf(id);
+    var val2 = sortviews.indexOf(id);
+    var val3 = sortimages.indexOf(id);
+    var val4 = sortmessages.indexOf(id);
+    total = val1 + val2 + val3 + val4;
+    return total
+}
 
 function topFive(listings){
     var priceDiffs = {};
