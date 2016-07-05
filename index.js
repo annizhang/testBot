@@ -503,13 +503,14 @@ function alertMe(senderId) {
     //only for 
     //console.log(senderId);
     //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-    client.hmset(senderId, {'type':apartmentType,
+    client.set({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
         'beds' : beds });
     console.log("set alert, what is alert:");
     client.get(senderId, function(err, reply) {
+        if (err) then throw err;
         console.log(reply.toString());
     });
     if (apartmentType === "Share"){
