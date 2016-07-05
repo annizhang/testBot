@@ -141,7 +141,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         };
     };
     if (count === 0) {
-        console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
+        //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
         testMessage = {
             "attachment":{
                 "type": "template",
@@ -553,7 +553,7 @@ function onButton(senderId, postback){
         fromButton = false;
         sendMessage(senderId,{"text":"Aw okay. Type 'joinery' when you want to search again!"});
     } else if (choice === "\"alert\""){
-        console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
+        //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
         alertMe(senderId);
     } else if (choice === "\"keepsearch\""){
         modifySearch(senderId);
