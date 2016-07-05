@@ -503,7 +503,7 @@ function alertMe(senderId) {
     //only for 
     //console.log(senderId);
     //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-    client.del(senderId);
+    //client.del(senderId);
     client.sadd(senderId, JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
@@ -535,6 +535,7 @@ function onButton(senderId, postback){
     minPrice = Number.MIN_VALUE;
     maxPrice = Number.MAX_VALUE;*/
     if (choice === "\"Entire Apartment\""){
+        resetGlobals();
         fromButton = false;
         apartmentType = "Entire Apartment";
         //console.log("it is search!");
@@ -542,12 +543,14 @@ function onButton(senderId, postback){
         //console.log("location choesn");
         sendMessage(senderId, message);
     } else if (choice === "\"Share\""){
+        resetGlobals();
         fromButton = false;
         apartmentType = "Share";
         //console.log("it is search!");
         message = {"text":"I can help you search for rooms! Where would you like to live?"};
         sendMessage(senderId, message);
     } else if (choice === "\"search\""){
+        resetGlobals();
         fromButton = true;
         joineryGreeting(senderId, "joinery");
     } else if (choice === "\"done\""){
