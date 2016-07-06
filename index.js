@@ -133,6 +133,7 @@ function priority(matched){
         L_ID = matched[i]['id'];
         scoring[L_ID] = score(L_ID);
     }
+    console.log(scoring);
     ranking = sorter(scoring);
     console.log(ranking);
     var count = 0;
