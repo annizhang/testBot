@@ -136,7 +136,7 @@ function priority(matched){
     ranking = sorter(scoring);
     var count = 0;
     for (var i in ranking){
-        if (count === 5) {break;}
+        if (count === 7) {break;}
         for (var j in matched){
             if (matched[j]['id'].toString() == ranking[i].toString()){
                 actualRanking.push(matched[j]);
