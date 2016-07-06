@@ -5,6 +5,7 @@ var app = express();
 var http = require('http');
 var https = require('https');
 var redis = require('redis');
+var cron = require('node-schedule');
 
 //connecting to the server
 var client = redis.createClient(process.env.REDIS_URL);
@@ -69,6 +70,14 @@ function resetGlobals(){
     criteriaFound = false;
     searchOn = false;
 }
+
+//scheduling for alerts
+
+var rule = new cron.ReccurenceRule();
+var date = new Date(2016, 6,6, 6,10,0);
+var j = cron.scheduleJob(date, function(){
+    console.log("Time to search for alerts that expire NOWW");
+})
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
