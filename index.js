@@ -94,6 +94,14 @@ function sendMessage(recipientId, message) {
     console.log(data);
 });*/
 
+/* lists */
+var priceDiffs = {};
+var views = {};
+var messages = {};
+var images = {};
+var scoring = {};
+var actualRanking = [];
+
 function priority(matched){
     for (var i in matched){
         L_ID = matched[i]['id'];
