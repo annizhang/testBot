@@ -260,8 +260,8 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         sendMessage(sender, testMessage);
     }
     else {
-        if (count > 5){
-            count = 5
+        if (count > 7){
+            count = 7
             newMessage = priority(matchedListings);
         }
         var verb = " are ";
