@@ -141,6 +141,7 @@ function priority(matched){
             if (matched[j]['id'].toString() == ranking[i].toString()){
                 actualRanking.push(matched[j]);
                 count++;
+                console.log("image url: " + matched.image_url);
                 newMessage.attachment.payload.elements.push(
                     {"title": matched.listing_type_text + " " + matched.title + " " + matched.price_string,
                      "image_url": "https://joinery.nyc/" + matched.image_url.replace("fit/250/120", "fill/955/500"),
