@@ -140,6 +140,7 @@ function priority(matched){
         for (var j in matched){
             if (matched[j]['id'].toString() == ranking[i].toString()){
                 actualRanking.push(matched[j]);
+                console.log(matched[j]);
                 count++;
                 console.log("image url: " + matched[j].image_url);
                 newMessage.attachment.payload.elements.push(
