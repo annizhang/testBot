@@ -261,6 +261,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
     }
     else {
         if (count > 5){
+            count = 5
             newMessage = priority(matchedListings);
         }
         var verb = " are ";
