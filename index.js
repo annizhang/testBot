@@ -104,6 +104,7 @@ var actualRanking = [];
 
 function priority(matched){
     for (var i in matched){
+        console.log(matched[i]);
         L_ID = matched[i]['id'];
         L_priceDiffs = matched[i]['price'] - minPrice;
         L_views = matched[i]['views'];
