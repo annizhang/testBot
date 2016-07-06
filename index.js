@@ -134,6 +134,7 @@ function priority(matched){
         scoring[L_ID] = score(L_ID);
     }
     ranking = sorter(scoring);
+    console.log(ranking);
     var count = 0;
     for (var i in ranking){
         if (count === 7) {break;}
