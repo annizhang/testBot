@@ -73,11 +73,18 @@ function resetGlobals(){
 
 //scheduling for alerts
 //using node-schedule
-var rule = new schedule.RecurrenceRule();
-rule.minute = new schedule.Range(0, 59, 5);
-var j = schedule.scheduleJob(rule, function(){
-    console.log(rule);
+//var rule = new schedule.RecurrenceRule();
+//rule.minute = new schedule.Range(0, 59, 1);
+var j = schedule.scheduleJob('*/10 * * * * *', function(){
     console.log("Time to search for alerts that expire NOWW");
+    client.keys('*', function (err, keys) {
+        if (err) return console.log(err);
+        for(var i = 0, len = keys.length; i < len; i++) {
+            client.smembers(keys[i], function(err, reply) {
+                console.log(reply);
+            });
+        }
+    });
 });
 
 // generic function sending messages to user
