@@ -74,9 +74,9 @@ function resetGlobals(){
 //scheduling for alerts
 //using node-schedule
 var rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [0, new schedule.Range(1,6)];
-rule.hour = 11;
+rule.minute = new schedule.Range(0, 59, 5);
 var j = schedule.scheduleJob(rule, function(){
+    console.log(rule);
     console.log("Time to search for alerts that expire NOWW");
 });
 
