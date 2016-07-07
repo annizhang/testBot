@@ -5,7 +5,7 @@ var app = express();
 var http = require('http');
 var https = require('https');
 var redis = require('redis');
-var schedule = require('node-schedule');
+//var schedule = require('node-schedule');
 
 //connecting to the server
 var client = redis.createClient(process.env.REDIS_URL);
