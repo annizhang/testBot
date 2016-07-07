@@ -41,6 +41,8 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
+//listings in json form
+var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 var modify = false;
 var modifyloc = false;
 var modifyprice = false;
@@ -71,21 +73,42 @@ function resetGlobals(){
     searchOn = false;
 }
 
+//finding new listings that match saved for alerts
+/*function findNewMathches(saved, listings){
+    for 
+    
+}
+*/
+
 //scheduling for alerts
 //using node-schedule
-//var rule = new schedule.RecurrenceRule();
-//rule.minute = new schedule.Range(0, 59, 1);
-var j = schedule.scheduleJob( '*/5 * * * *', function(){
-    console.log("Time to search for alerts that expire NOWW");
+
+//var j = schedule.scheduleJob( '*/5 * * * *', function(){
+    /*console.log("Time to search for alerts that expire NOWW");
     client.keys('*', function (err, keys) {
         if (err) return console.log(err);
         for(var i = 0, len = keys.length; i < len; i++) {
             client.smembers(keys[i], function(err, reply) {
                 console.log(reply);
+                https.get(fetchListingUrl, function(res){
+                           var body = '';
+                           res.on('data', function(chunk){
+                           body += chunk;
+                           });
+                           res.on('end', function(){
+                               var listings = JSON.parse(body);
+                               //sendMessage(event.sender.id, {"text":"I'm searching!"});
+                               findNewMatches(keys[i], listings);
+                               console.log("alert found?");
+                           });
+                       }).on('error', function(e){
+                           console.log("Got an error: ", e);
+                       });
+                
             });
         }
     });
-});
+});*/
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
@@ -202,8 +225,7 @@ function score(id){
     return total
 }
 
-//listings in json form
-var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
+
 //http://stackoverflow.com/questions/11826384/calling-a-json-api-with-node-js
 function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,type){
     //console.log("SEARCHING!!!");
