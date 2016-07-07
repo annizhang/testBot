@@ -694,6 +694,7 @@ app.post('/webhook', function (req, res) {
         var event = events[i];
         var sender = event.sender.id;
         if (event.message && event.message.text){
+            console.log("listening");
             //if user sends a text message
            if (!greetingMessage(sender, event.message.text) &&
               !joineryGreeting(sender, event.message.text) && !fromButton){
