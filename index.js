@@ -72,7 +72,7 @@ function resetGlobals(){
 }
 
 //scheduling for alerts
-
+//using node-schedule
 var rule = new cron.ReccurenceRule();
 var date = new Date(2016, 6,6, 6,10,0);
 var j = cron.scheduleJob(date, function(){
@@ -147,7 +147,7 @@ function priority(matched){
     console.log(ranking);
     var count = 0;
     for (var i in ranking){
-        if (count === 7) {break;}
+        if (count === 5) {break;}
         for (var j in matched){
             if (matched[j]['id'].toString() == ranking[i].toString()){
                 actualRanking.push(matched[j]);
@@ -272,8 +272,8 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
         sendMessage(sender, testMessage);
     }
     else {
-        if (count > 7){
-            count = 7
+        if (count > 5){
+            count = 5
             newMessage = priority(matchedListings);
         }
         var verb = " are ";
