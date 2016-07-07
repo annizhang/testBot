@@ -73,9 +73,10 @@ function resetGlobals(){
 
 //scheduling for alerts
 //using node-schedule
-var rule = new cron.ReccurenceRule();
-var date = new Date(2016, 6,6, 6,10,0);
-var j = cron.scheduleJob(date, function(){
+var rule = new schedule.ReccurenceRule();
+rule.dayOfWeek = [0, new schedule.Range(1,6)];
+rule.hour = 11;
+var j = schedule.scheduleJob(date, function(){
     console.log("Time to search for alerts that expire NOWW");
 })
 
