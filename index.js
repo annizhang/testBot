@@ -76,7 +76,7 @@ function resetGlobals(){
 var rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0, new schedule.Range(1,6)];
 rule.hour = 11;
-var j = schedule.scheduleJob(date, function(){
+var j = schedule.scheduleJob(rule, function(){
     console.log("Time to search for alerts that expire NOWW");
 })
 
