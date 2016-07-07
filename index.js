@@ -5,7 +5,7 @@ var app = express();
 var http = require('http');
 var https = require('https');
 var redis = require('redis');
-//var schedule = require('node-schedule');
+var schedule = require('node-schedule');
 
 //connecting to the server
 var client = redis.createClient(process.env.REDIS_URL);
@@ -73,12 +73,12 @@ function resetGlobals(){
 
 //scheduling for alerts
 //using node-schedule
-/*var rule = new schedule.RecurrenceRule();
+var rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0, new schedule.Range(1,6)];
 rule.hour = 11;
 var j = schedule.scheduleJob(rule, function(){
     console.log("Time to search for alerts that expire NOWW");
-});*/
+});
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
