@@ -705,6 +705,8 @@ function onButton(senderId, postback){
         modifyprice = true;
         sendMessage(senderId, {"text":"What is your price range? For example, '1500 to 3000'"});
         return;
+    } else if (choice === "\"help\""){
+        sendMessage(senderId, {"text": "Hey there! Please type 'joinery' to start finding a home :) "});
     }
     else {
         //backup for when button does not work
