@@ -130,10 +130,7 @@ function findNewMatches(saved, listings){
 function fetchAlerts(findNewMatches){
     client.keys('*', function (err, keys) {
         if (err) return console.log(err);
-        for(var i = 0, len = keys.length; i < len; i++) {
-            client.smembers(keys[i], function(err, reply) {
-                //console.log(reply);
-                https.get(fetchListingUrl, function(res){
+        https.get(fetchListingUrl, function(res){
                            var body = '';
                            res.on('data', function(chunk){
                            body += chunk;
@@ -141,16 +138,19 @@ function fetchAlerts(findNewMatches){
                            res.on('end', function(){
                                var listings = JSON.parse(body);
                                //sendMessage(event.sender.id, {"text":"I'm searching!"});
-                               var alertMessage = findNewMatches(reply, listings);
-                               console.log(alertMessage + "user id is : " + keys[i]);
+                                for(var i = 0, len = keys.length; i < len; i++) {
+                                    client.smembers(keys[i], function(err, reply) {
+                                        //console.log(reply);
+                                        console.log(alertMessage + "user id is : " + keys[i]);
+                                        var alertMessage = findNewMatches(reply, listings);
+                                    });
+                                }
                                console.log("alert found?");
                            });
                        }).on('error', function(e){
                            console.log("Got an error: ", e);
                        });
-                
-            });
-        }
+       
     });
 }
 
