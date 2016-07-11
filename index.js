@@ -146,7 +146,7 @@ var j = schedule.scheduleJob( '*/5 * * * * *', function(){
                                var listings = JSON.parse(body);
                                //sendMessage(event.sender.id, {"text":"I'm searching!"});
                                var alertMessage = findNewMatches(reply, listings);
-                               sendMessage(keys[i], alertMessage);
+                               console.log(alertMessage + "user id is : " + keys[i]);
                                console.log("alert found?");
                            });
                        }).on('error', function(e){
