@@ -127,11 +127,7 @@ function findNewMatches(saved, listings){
     
 }
 
-
-//scheduling for alerts
-//using node-schedule
-var j = schedule.scheduleJob( '*/5 * *', function(){
-    console.log("Time to search for alerts that expire NOWW");
+function fetchAlerts(findNewMatches){
     client.keys('*', function (err, keys) {
         if (err) return console.log(err);
         for(var i = 0, len = keys.length; i < len; i++) {
@@ -156,6 +152,14 @@ var j = schedule.scheduleJob( '*/5 * *', function(){
             });
         }
     });
+}
+
+//scheduling for alerts
+//using node-schedule
+var j = schedule.scheduleJob( '*/5 * * * *', function(){
+    fetchAlerts(findNewMatches);
+    console.log("Time to search for alerts that expire NOWW");
+   
 });
 
 // generic function sending messages to user
