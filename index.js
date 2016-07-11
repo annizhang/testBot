@@ -76,7 +76,7 @@ function resetGlobals(){
 }
 
 //finding new listings that match saved for alerts
-function findNewMathches(saved, listings){
+function findNewMatches(saved, listings){
     //time stored for each alert
     var count = 0;
     var newMessage = {
