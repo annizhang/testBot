@@ -6,6 +6,8 @@ var http = require('http');
 var https = require('https');
 var redis = require('redis');
 var schedule = require('node-schedule');
+/*var moment = require('moment');
+moment().format();*/
 
 //connecting to the server
 var client = redis.createClient(process.env.REDIS_URL);
@@ -74,17 +76,62 @@ function resetGlobals(){
 }
 
 //finding new listings that match saved for alerts
-/*function findNewMathches(saved, listings){
-    for 
+function findNewMathches(saved, listings){
+    //time stored for each alert
+    var count = 0;
+    var newMessage = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"generic",
+                "elements": []}
+        }
+    }; 
+    for (var i in saved){
+        //each saved listing
+        var savedListing = saved[i];
+        for (var j in listings) {
+            var listing = listings[j];
+            //go through each listing
+            //check if listing time is afte saved time and then compare search criteria
+            if ((Date.parse(listing.created_at) > savedListing.time) &&
+                (listing.listing_type_text === savedListing.type) &&
+                (listing.neighborhood === savedListing.location  || listing.neighborhood.parent_neighborhood.name === savedListing.location) &&
+                (listing.bedrooms === savedListing.beds) && 
+                (listing.price >= savedListing.minPrice) &&
+                (listing.price <= savedListing.maxPrice)) {
+                count++;
+                newMessage.attachment.payload.elements.push(
+                {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
+                 "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/955/500"),
+                 "subtitle": listing.full_address,
+                 "buttons": [
+                     {"type": "web_url",
+                      "url": "https://joinery.nyc/listing/" + listing.slug,
+                      "title": "View Apartment"},
+                     {"type": "postback",
+                      "title": "Keep Searching",
+                      "payload": "keepsearch" //need to fix this to go back to joinery welcome message
+                     }
+                 ]
+                });
+            }
+        }
+        if (count !== 0){
+            return newMessage;
+        } else {
+            return {"text": "no alerts"};
+
+        }
+    }
     
 }
-*/
+
 
 //scheduling for alerts
 //using node-schedule
-
-//var j = schedule.scheduleJob( '*/5 * * * *', function(){
-    /*console.log("Time to search for alerts that expire NOWW");
+var j = schedule.scheduleJob( '*/5 * * * * *', function(){
+    console.log("Time to search for alerts that expire NOWW");
     client.keys('*', function (err, keys) {
         if (err) return console.log(err);
         for(var i = 0, len = keys.length; i < len; i++) {
@@ -98,7 +145,8 @@ function resetGlobals(){
                            res.on('end', function(){
                                var listings = JSON.parse(body);
                                //sendMessage(event.sender.id, {"text":"I'm searching!"});
-                               findNewMatches(keys[i], listings);
+                               var alertMessage = findNewMatches(reply, listings);
+                               sendMessage(keys[i], alertMessage);
                                console.log("alert found?");
                            });
                        }).on('error', function(e){
@@ -108,7 +156,7 @@ function resetGlobals(){
             });
         }
     });
-});*/
+});
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
@@ -635,7 +683,7 @@ function joineryGreeting(recipientId, message) {
 }
 
 //alert function
-function alertMe(senderId) {
+function alertMe(senderId, time) {
     //only for 
     //console.log(senderId);
     //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
@@ -644,7 +692,8 @@ function alertMe(senderId) {
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
-        'beds' : beds }));
+        'beds' : beds,
+        'time' : time,}));
     console.log("set alert, what is alert:");
     client.smembers(senderId, function(err, reply) {
         console.log(reply);
@@ -661,7 +710,7 @@ function alertMe(senderId) {
     //bedrooms, location, price range, move out date (tentative)
 }
 
-function onButton(senderId, postback){
+function onButton(senderId, postback, time){
     //if user clicked a button
     var choice = JSON.stringify(postback.payload);
     /*console.log(choice);
@@ -694,7 +743,7 @@ function onButton(senderId, postback){
         sendMessage(senderId,{"text":"Aw okay. Type 'joinery' when you want to search again!"});
     } else if (choice === "\"alert\""){
         //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-        alertMe(senderId);
+        alertMe(senderId, time);
     } else if (choice === "\"keepsearch\""){
         modifySearch(senderId);
     } else if (choice === "\"newloc\""){
@@ -727,7 +776,7 @@ app.post('/webhook', function (req, res) {
         var time = event.timestamp;
         console.log(time);
         if (event.message && event.message.text){
-            console.log("listening");
+            console.log("saw a message, listening");
             //if user sends a text message
            if (!greetingMessage(sender, event.message.text) &&
               !joineryGreeting(sender, event.message.text) && !fromButton){
@@ -828,7 +877,7 @@ app.post('/webhook', function (req, res) {
         }if (event.postback) {
             isBeginning = false;
             //if user clicked a button
-            onButton(event.sender.id, event.postback);
+            onButton(event.sender.id, event.postback, time);
     }
     res.sendStatus(200);
     }
