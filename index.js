@@ -136,7 +136,7 @@ var j = schedule.scheduleJob( '*/5 * * * * *', function(){
         if (err) return console.log(err);
         for(var i = 0, len = keys.length; i < len; i++) {
             client.smembers(keys[i], function(err, reply) {
-                console.log(reply);
+                //console.log(reply);
                 https.get(fetchListingUrl, function(res){
                            var body = '';
                            res.on('data', function(chunk){
