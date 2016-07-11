@@ -127,6 +127,11 @@ function findNewMatches(saved, listings){
     
 }
 
+function do_something(reply){
+    console.log(alertMessage + "user id is : " + keys[i]);
+    var alertMessage = findNewMatches(reply, listings);
+}
+
 function fetchAlerts(findNewMatches){
     client.keys('*', function (err, keys) {
         if (err) return console.log(err);
@@ -141,8 +146,7 @@ function fetchAlerts(findNewMatches){
                                 for(var i = 0, len = keys.length; i < len; i++) {
                                     client.smembers(keys[i], function(err, reply) {
                                         //console.log(reply);
-                                        console.log(alertMessage + "user id is : " + keys[i]);
-                                        var alertMessage = findNewMatches(reply, listings);
+                                        do_something(reply);
                                     });
                                 }
                                console.log("alert found?");
