@@ -142,17 +142,24 @@ function fetchAlerts(findNewMatches){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
             client.keys('*', function (err, keys, listings) {
-                if (err) return console.log(err);
+                if (err) {
+                    return console.log(err);
+                } else {
                 for(var i = 0, len = keys.length; i < len; i++) {
-                    client.smembers(keys[i], function(err, reply) {
+                    client.smembers(keys[i], function(err, reply, listings) {
                         //console.log(reply);
+                        if (err) {
+                            return console.log(err);
+                        } else {
                         do_something(reply, keys[i], listings);
+                        }
                     });
                 }
                 console.log("alert found?");
             });
         }).on('error', function(e){
             console.log("Got an error: ", e);
+            }
         });
     });
 }
