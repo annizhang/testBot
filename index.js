@@ -156,10 +156,10 @@ function fetchAlerts(findNewMatches){
                     });
                 }
                 console.log("alert found?");
+                }
             });
         }).on('error', function(e){
             console.log("Got an error: ", e);
-            }
         });
     });
 }
