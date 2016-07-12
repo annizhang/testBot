@@ -128,8 +128,8 @@ function findNewMatches(saved, listings){
 }
 
 function do_something(reply, key, listings){
-    console.log(alertMessage + "user id is : " + key);
     var alertMessage = findNewMatches(reply, listings)
+    console.log(alertMessage + "user id is : " + key);
 }
 
 function fetchAlerts(findNewMatches){
