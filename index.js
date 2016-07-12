@@ -155,7 +155,7 @@ function fetchAlerts(findNewMatches){
          }
      });
 }
-    https.get(fetchListingUrl, function(res){
+    https.get(fetchListingUrl, function(res, getKeys){
         var body = '';
         res.on('data', function(chunk){
             body += chunk;
