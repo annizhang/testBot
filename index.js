@@ -151,7 +151,8 @@ function fetchAlerts(findNewMatches){
                         if (err) {
                             return console.log(err);
                         } else {
-                        do_something(reply, keys[i], listings);
+                            console.log("got members: " + keys[i]);
+                            do_something(reply, keys[i], listings);
                         }
                     });
                 }
