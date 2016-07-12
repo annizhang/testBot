@@ -135,36 +135,35 @@ function do_something(reply, key, listings){
 
 
 function fetchAlerts(findNewMatches){
-    function getKeys(listings){
-     client.keys('*', function (err, keys, listings) {
-         if (err) {
-             return console.log(err);
-         } else {
-             for(var i = 0, len = keys.length; i < len; i++) {
-                 client.smembers(keys[i], function(err, reply, listings) {
-                     //console.log(reply);
-                     if (err) {
-                         return console.log(err);
-                     } else {
-                         console.log("got members: " + keys[i]);
-                         do_something(reply, keys[i], listings);
-                     }
-                 });
-             }
-             console.log("alert found?");
-         }
-     });
-}
-    https.get(fetchListingUrl, function(res, getKeys){
+    https.get(fetchListingUrl, function(res){
         var body = '';
         res.on('data', function(chunk){
             body += chunk;
         });
-        res.on('end', function(getKeys){
+        res.on('end', function(){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
+            function getKeys(listings){
+                client.keys('*', function (err, keys, listings) {
+                    if (err) {
+                        return console.log(err);
+                    } else {
+                        for(var i = 0, len = keys.length; i < len; i++) {
+                            client.smembers(keys[i], function(err, reply, listings) {
+                                //console.log(reply);
+                                if (err) {
+                                    return console.log(err);
+                                } else {
+                                    console.log("got members: " + keys[i]);
+                                    do_something(reply, keys[i], listings);
+                                }
+                            });
+                        }
+                        console.log("alert found?");
+                    }
+                });
+            }
             getKeys(listings);
-           
         }).on('error', function(e){
             console.log("Got an error: ", e);
         });
