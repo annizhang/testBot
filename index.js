@@ -133,28 +133,27 @@ function do_something(reply, key, listings){
 }
 
 function fetchAlerts(findNewMatches){
-    client.keys('*', function (err, keys) {
-        if (err) return console.log(err);
-        https.get(fetchListingUrl, function(res){
-                           var body = '';
-                           res.on('data', function(chunk){
-                           body += chunk;
-                           });
-                           res.on('end', function(){
-                               var listings = JSON.parse(body);
-                               //sendMessage(event.sender.id, {"text":"I'm searching!"});
-                                for(var i = 0, len = keys.length; i < len; i++) {
-                                    client.smembers(keys[i], function(err, reply) {
-                                        //console.log(reply);
-                                        do_something(reply, keys[i], listings);
-                                    });
-                                }
-                               console.log("alert found?");
-                           });
-                       }).on('error', function(e){
-                           console.log("Got an error: ", e);
-                       });
-       
+    https.get(fetchListingUrl, function(res){
+        var body = '';
+        res.on('data', function(chunk){
+            body += chunk;
+        });
+        res.on('end', function(){
+            var listings = JSON.parse(body);
+            //sendMessage(event.sender.id, {"text":"I'm searching!"});
+            client.keys('*', function (err, keys, listings) {
+                if (err) return console.log(err);
+                for(var i = 0, len = keys.length; i < len; i++) {
+                    client.smembers(keys[i], function(err, reply) {
+                        //console.log(reply);
+                        do_something(reply, keys[i], listings);
+                    });
+                }
+                console.log("alert found?");
+            });
+        }).on('error', function(e){
+            console.log("Got an error: ", e);
+        });
     });
 }
 
