@@ -132,8 +132,6 @@ function do_something(reply, key, listings){
     var alertMessage = findNewMatches(reply, listings)
 }
 
-
-
 function fetchAlerts(findNewMatches){
     https.get(fetchListingUrl, function(res){
         var body = '';
