@@ -132,7 +132,10 @@ function do_something(reply, key, listings){
     var alertMessage = findNewMatches(reply, listings)
 }
 
-function getKeys(listings){
+
+
+function fetchAlerts(findNewMatches){
+    function getKeys(listings){
      client.keys('*', function (err, keys, listings) {
          if (err) {
              return console.log(err);
@@ -152,8 +155,6 @@ function getKeys(listings){
          }
      });
 }
-
-function fetchAlerts(findNewMatches){
     https.get(fetchListingUrl, function(res){
         var body = '';
         res.on('data', function(chunk){
