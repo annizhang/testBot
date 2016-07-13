@@ -145,7 +145,7 @@ function fetchAlerts(findNewMatches){
                     var alertMessage = findNewMatches(reply, listings);
                     console.log(alertMessage + "user id is : " + key);
                 }
-                client.keys('*', function (err, keys, listings) {
+                client.keys('*', function (err, keys, listings, do_something) {
                     if (err) {
                         return console.log(err);
                     } else {
