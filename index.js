@@ -130,26 +130,26 @@ function findNewMatches(saved, listings){
 }
 
  function getKeys(listings){
-                client.keys('*', function (err, keys, listings) {
-                    if (err) {
-                        return console.log(err);
-                    } else {
-                        keys.forEach(function(key, listings) {
-                            client.smembers(key, function(err, reply, listings, findNewMatches) {
-                                //console.log(reply);
-                                if (err) {
-                                    return console.log(err);
-                                } else {
-                                    console.log("got members: " + key);
-                                    var alertMessage = findNewMatches(reply, listings);
-                                    console.log(alertMessage + "user id is : " + key);
-                                }
-                            });
-                        });
-                        console.log("alert found?");
-                    }
-                });
-            }
+     client.keys('*', function (err, keys, listings) {
+         if (err) {
+             return console.log(err);
+         } else {
+             keys.forEach(function(key) {
+                 client.smembers(key, function(err, reply, listings, findNewMatches) {
+                     //console.log(reply);
+                     if (err) {
+                         return console.log(err);
+                     } else {
+                         console.log("got members: " + key);
+                         var alertMessage = findNewMatches(reply, listings);
+                         console.log(alertMessage + "user id is : " + key);
+                     }
+                 });
+             });
+             console.log("alert found?");
+         }
+     });
+ }
 
 function fetchAlerts(){
     //first get all the listings then get keys and then get 
