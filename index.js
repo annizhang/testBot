@@ -171,7 +171,7 @@ function fetchAlerts(findNewMatches){
             console.log("Got an error: ", e);
         });
     });
-}*/
+}
 
 //scheduling for alerts
 //using node-schedule
