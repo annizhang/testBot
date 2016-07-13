@@ -149,7 +149,7 @@ function fetchAlerts(findNewMatches){
                     if (err) {
                         return console.log(err);
                     } else {
-                        keys.forEach() {
+                        keys.forEach(function(key) {
                             client.smembers(keys[i], function(err, reply, listings, do_something) {
                                 //console.log(reply);
                                 if (err) {
@@ -159,7 +159,7 @@ function fetchAlerts(findNewMatches){
                                     do_something(reply, keys[i], listings);
                                 }
                             });
-                        }
+                        });
                         console.log("alert found?");
                     }
                 });
