@@ -130,7 +130,7 @@ function findNewMatches(saved, listings){
 }
 
 
-function fetchAlerts(findNewMatches){
+function fetchAlerts(){
     //first get all the listings then get keys and then get 
     https.get(fetchListingUrl, function(res){
         var body = '';
@@ -147,7 +147,7 @@ function fetchAlerts(findNewMatches){
                         return console.log(err);
                     } else {
                         keys.forEach(function(key, listings) {
-                            client.smembers(key, function(err, reply, listings) {
+                            client.smembers(key, function(err, reply, listings, findNewMatches) {
                                 //console.log(reply);
                                 if (err) {
                                     return console.log(err);
