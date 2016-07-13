@@ -130,7 +130,7 @@ function findNewMatches(saved, listings){
 }
 
  function getKeys(listings){
-     client.keys('*', function (err, keys, listings) {
+     client.keys('*', function (err, keys, listings, findNewMatches) {
          if (err) {
              return console.log(err);
          } else {
