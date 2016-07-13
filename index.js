@@ -129,6 +129,9 @@ function findNewMatches(saved, listings){
     
 }
 
+function do_something(reply, key, listings){
+                    var alertMessage = findNewMatches(reply, listings);
+                    console.log(alertMessage + "user id is : " + key);
 
 function fetchAlerts(findNewMatches){
     //first get all the listings then get keys and then get 
@@ -142,16 +145,14 @@ function fetchAlerts(findNewMatches){
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
             var asyncTasks = [];
             var getKeys = function(listings){
-                var do_something = function(reply, key, listings){
-                    var alertMessage = findNewMatches(reply, listings);
-                    console.log(alertMessage + "user id is : " + key);
                 };
-                client.keys('*', function (err, keys, listings, do_something) {
+                client.keys('*', function (err, keys, listings) {
                     if (err) {
                         return console.log(err);
                     } else {
-                        keys.forEach(function(key, listings, do_something) {
+                        keys.forEach(function(key, listings) {
                             client.smembers(key, function(err, reply, listings, do_something) {
+                                
                                 //console.log(reply);
                                 if (err) {
                                     return console.log(err);
