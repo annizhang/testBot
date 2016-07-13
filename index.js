@@ -155,8 +155,8 @@ function fetchAlerts(findNewMatches){
                                 if (err) {
                                     return console.log(err);
                                 } else {
-                                    console.log("got members: " + keys[i]);
-                                    do_something(reply, keys[i], listings);
+                                    console.log("got members: " + key);
+                                    do_something(reply, key, listings);
                                 }
                             });
                         });
