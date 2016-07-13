@@ -32,7 +32,7 @@ app.get('/', function (req, res) {
 
 // Facebook Webhook
 app.get('/webhook', function (req, res) {
-    console.log(res);
+    //console.log(res);
     if (req.query['hub.verify_token'] === 'joinery_verify_token') {
         res.send(req.query['hub.challenge']);
     } else {
@@ -129,28 +129,28 @@ function findNewMatches(saved, listings){
     
 }
 
-/*function do_something(reply, key, listings){
+function do_something(reply, key, listings){
                     var alertMessage = findNewMatches(reply, listings);
                     console.log(alertMessage + "user id is : " + key);
 }
 
 function fetchAlerts(findNewMatches){
     //first get all the listings then get keys and then get 
-    https.get(fetchListingUrl, function(res){
+    https.get(fetchListingUrl, function(res, do_something){
         var body = '';
         res.on('data', function(chunk){
             body += chunk;
         });
-        res.on('end', function(){
+        res.on('end', function(do_something){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
             var asyncTasks = [];
-            var getKeys = function(listings){
-                client.keys('*', function (err, keys, listings) {
+            var getKeys = function(listings, do_something){
+                client.keys('*', function (err, keys, listings, do_something) {
                     if (err) {
                         return console.log(err);
                     } else {
-                        keys.forEach(function(key, listings) {
+                        keys.forEach(function(key, listings, do_something) {
                             client.smembers(key, function(err, reply, listings, do_something) {
                                 
                                 //console.log(reply);
