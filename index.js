@@ -129,13 +129,13 @@ function findNewMatches(saved, listings){
     
 }
 
- function getKeys(listings, findNewMatches){
-     client.keys('*', function (err, keys, listings, findNewMatches) {
+ function getKeys(listings){
+     client.keys('*', function (err, keys, listings) {
          if (err) {
              return console.log(err);
          } else {
-             keys.forEach(function(key, findNewMatches) {
-                 client.smembers(key, function(err, reply, listings, findNewMatches) {
+             keys.forEach(function(key) {
+                 client.smembers(key, function(err, reply, listings) {
                      //console.log(reply);
                      if (err) {
                          return console.log(err);
@@ -162,7 +162,7 @@ function fetchAlerts(){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
             var asyncTasks = [];
-            getKeys(listings, findNewMatches);
+            getKeys(listings);
         }).on('error', function(e){
             console.log("Got an error: ", e);
         });
