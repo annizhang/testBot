@@ -129,7 +129,7 @@ function findNewMatches(saved, listings){
     
 }
 
-function do_something(reply, key, listings){
+/*function do_something(reply, key, listings){
                     var alertMessage = findNewMatches(reply, listings);
                     console.log(alertMessage + "user id is : " + key);
 }
@@ -171,15 +171,15 @@ function fetchAlerts(findNewMatches){
             console.log("Got an error: ", e);
         });
     });
-}
+}*/
 
 //scheduling for alerts
 //using node-schedule
-var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-    fetchAlerts(findNewMatches);
+//var j = schedule.scheduleJob( '*/10 * * * * *', function(){
+    /*fetchAlerts(findNewMatches);
     console.log("Time to search for alerts that expire NOWW");
    
-});
+});*/
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
