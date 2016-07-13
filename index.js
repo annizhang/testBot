@@ -150,7 +150,7 @@ function fetchAlerts(findNewMatches){
                         return console.log(err);
                     } else {
                         keys.forEach(function(key) {
-                            client.smembers(keys[i], function(err, reply, listings, do_something) {
+                            client.smembers(key, function(err, reply, listings, do_something) {
                                 //console.log(reply);
                                 if (err) {
                                     return console.log(err);
