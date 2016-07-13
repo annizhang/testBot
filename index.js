@@ -129,7 +129,7 @@ function findNewMatches(saved, listings){
 }
 
 
-function fetchAlerts(findNewMatches){
+/*function fetchAlerts(findNewMatches){
     //first get all the listings then get keys and then get 
     https.get(fetchListingUrl, function(res){
         var body = '';
@@ -169,15 +169,15 @@ function fetchAlerts(findNewMatches){
             console.log("Got an error: ", e);
         });
     });
-}
+}*/
 
 //scheduling for alerts
 //using node-schedule
-var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-    fetchAlerts(findNewMatches);
+//var j = schedule.scheduleJob( '*/10 * * * * *', function(){
+    /*fetchAlerts(findNewMatches);
     console.log("Time to search for alerts that expire NOWW");
    
-});
+});*/
 
 // generic function sending messages to user
 function sendMessage(recipientId, message) {
