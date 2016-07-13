@@ -6,6 +6,7 @@ var http = require('http');
 var https = require('https');
 var redis = require('redis');
 var schedule = require('node-schedule');
+var async = require('async');
 /*var moment = require('moment');
 moment().format();*/
 
@@ -127,12 +128,9 @@ function findNewMatches(saved, listings){
     
 }
 
-function do_something(reply, key, listings){
-    var alertMessage = findNewMatches(reply, listings)
-    console.log(alertMessage + "user id is : " + key);
-}
 
 function fetchAlerts(findNewMatches){
+    //first get all the listings then get keys and then get 
     https.get(fetchListingUrl, function(res){
         var body = '';
         res.on('data', function(chunk){
@@ -141,13 +139,18 @@ function fetchAlerts(findNewMatches){
         res.on('end', function(){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
+            var asyncTasks = [];
             function getKeys(listings){
+                function do_something(reply, key, listings){
+                    var alertMessage = findNewMatches(reply, listings);
+                    console.log(alertMessage + "user id is : " + key);
+                }
                 client.keys('*', function (err, keys, listings) {
                     if (err) {
                         return console.log(err);
                     } else {
-                        for(var i = 0, len = keys.length; i < len; i++) {
-                            client.smembers(keys[i], function(err, reply, listings) {
+                        keys.forEach() {
+                            client.smembers(keys[i], function(err, reply, listings, do_something) {
                                 //console.log(reply);
                                 if (err) {
                                     return console.log(err);

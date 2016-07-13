@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/annizhang/testBot#readme",
   "dependencies": {
+    "async": "^2.0.0",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "node-schedule": "^1.1.1",
