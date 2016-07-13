@@ -134,7 +134,7 @@ function do_something(reply, key, listings){
                     console.log(alertMessage + "user id is : " + key);
 }
 
-function fetchAlerts(findNewMatches){
+function fetchAlerts(findNewMatches, do_something){
     //first get all the listings then get keys and then get 
     https.get(fetchListingUrl, function(res, do_something){
         var body = '';
@@ -176,7 +176,7 @@ function fetchAlerts(findNewMatches){
 //scheduling for alerts
 //using node-schedule
 var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-    fetchAlerts(findNewMatches);
+    fetchAlerts(findNewMatches, do_something);
     console.log("Time to search for alerts that expire NOWW");
    
 });
