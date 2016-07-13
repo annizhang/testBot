@@ -129,19 +129,7 @@ function findNewMatches(saved, listings){
     
 }
 
-
-function fetchAlerts(){
-    //first get all the listings then get keys and then get 
-    https.get(fetchListingUrl, function(res){
-        var body = '';
-        res.on('data', function(chunk){
-            body += chunk;
-        });
-        res.on('end', function(){
-            var listings = JSON.parse(body);
-            //sendMessage(event.sender.id, {"text":"I'm searching!"});
-            var asyncTasks = [];
-            var getKeys = function(listings){
+ function getKeys(listings){
                 client.keys('*', function (err, keys, listings) {
                     if (err) {
                         return console.log(err);
@@ -162,6 +150,18 @@ function fetchAlerts(){
                     }
                 });
             }
+
+function fetchAlerts(){
+    //first get all the listings then get keys and then get 
+    https.get(fetchListingUrl, function(res){
+        var body = '';
+        res.on('data', function(chunk){
+            body += chunk;
+        });
+        res.on('end', function(){
+            var listings = JSON.parse(body);
+            //sendMessage(event.sender.id, {"text":"I'm searching!"});
+            var asyncTasks = [];
             getKeys(listings);
         }).on('error', function(e){
             console.log("Got an error: ", e);
