@@ -140,11 +140,11 @@ function fetchAlerts(findNewMatches){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
             var asyncTasks = [];
-            function getKeys(listings){
-                function do_something(reply, key, listings){
+            var getKeys = function(listings){
+                var do_something = function(reply, key, listings){
                     var alertMessage = findNewMatches(reply, listings);
                     console.log(alertMessage + "user id is : " + key);
-                }
+                };
                 client.keys('*', function (err, keys, listings, do_something) {
                     if (err) {
                         return console.log(err);
