@@ -129,36 +129,32 @@ function findNewMatches(saved, listings){
     
 }
 
-function do_something(reply, key, listings){
-                    var alertMessage = findNewMatches(reply, listings);
-                    console.log(alertMessage + "user id is : " + key);
-}
 
-function fetchAlerts(findNewMatches, do_something){
+function fetchAlerts(findNewMatches){
     //first get all the listings then get keys and then get 
-    https.get(fetchListingUrl, function(res, do_something){
+    https.get(fetchListingUrl, function(res){
         var body = '';
         res.on('data', function(chunk){
             body += chunk;
         });
-        res.on('end', function(do_something){
+        res.on('end', function(){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
             var asyncTasks = [];
-            var getKeys = function(listings, do_something){
-                client.keys('*', function (err, keys, listings, do_something) {
+            var getKeys = function(listings){
+                client.keys('*', function (err, keys, listings) {
                     if (err) {
                         return console.log(err);
                     } else {
-                        keys.forEach(function(key, listings, do_something) {
-                            client.smembers(key, function(err, reply, listings, do_something) {
-                                
+                        keys.forEach(function(key, listings) {
+                            client.smembers(key, function(err, reply, listings) {
                                 //console.log(reply);
                                 if (err) {
                                     return console.log(err);
                                 } else {
                                     console.log("got members: " + key);
-                                    do_something(reply, key, listings);
+                                    var alertMessage = findNewMatches(reply, listings);
+                                    console.log(alertMessage + "user id is : " + key);
                                 }
                             });
                         });
@@ -176,7 +172,7 @@ function fetchAlerts(findNewMatches, do_something){
 //scheduling for alerts
 //using node-schedule
 var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-    fetchAlerts(findNewMatches, do_something);
+    fetchAlerts(findNewMatches);
     console.log("Time to search for alerts that expire NOWW");
    
 });
