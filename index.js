@@ -172,7 +172,7 @@ function fetchAlerts(){
 //scheduling for alerts
 //using node-schedule
 var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-    fetchAlerts(findNewMatches);
+    fetchAlerts();
     console.log("Time to search for alerts that expire NOWW");
    
 });
