@@ -32,6 +32,7 @@ app.get('/', function (req, res) {
 
 // Facebook Webhook
 app.get('/webhook', function (req, res) {
+    console.log(req);
     if (req.query['hub.verify_token'] === 'joinery_verify_token') {
         res.send(req.query['hub.challenge']);
     } else {
