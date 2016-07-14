@@ -148,7 +148,7 @@ function findNewMatches(saved, listings, callback){
              return console.log(err);
          } else {
              keys.forEach(function(key) {
-                 client.smembers(key, function(err, reply, listings) {
+                 client.smembers(key, function(err, reply, listings, findNewMatches) {
                      //console.log(reply);
                      if (err) {
                          return console.log(err);
@@ -820,6 +820,7 @@ function searchScrape(place, beds, minPrice, maxPrice, apartmentType) {
         }
     });
 }
+
 // handler receiving messages, sending messages
 // conversation flow
 app.post('/webhook', function (req, res) {
