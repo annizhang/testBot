@@ -30,19 +30,6 @@ app.get('/', function (req, res) {
     res.send("This is TestBot Server");
 });
 
-request({
-        url: 'https://elegant-chaise-69014.herokuapp.com/search/',
-        //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-        method: 'POST',
-        json: {'bathroom': 1, 'neighborhood': 'inwood', 'maxprice': 30000, 'listing_type_text': '', 'bedroom': 2, 'minprice': 1}
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending message: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        }
-    });
-
 /*var xhr = new XMLHttpRequest();
    xhr.open('POST', 'https://elegant-chaise-69014.herokuapp.com/search/');
    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -807,6 +794,21 @@ function onButton(senderId, postback, time){
     }
 }
 
+
+function searchScrape(place, beds, minPrice, maxPrice, apartmentType) {
+    request({
+        url: 'https://elegant-chaise-69014.herokuapp.com/search/',
+        //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: 'POST',
+        json: {'neighborhood': place, 'maxprice': maxPrice, 'bedroom': beds, 'minprice': minPrice}
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    });
+}
 // handler receiving messages, sending messages
 // conversation flow
 app.post('/webhook', function (req, res) {
@@ -900,6 +902,7 @@ app.post('/webhook', function (req, res) {
                                var listings = JSON.parse(body);
                                //sendMessage(event.sender.id, {"text":"I'm searching!"});
                                searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
+                               searchScrape(place, beds, minPrice, maxPrice, apartmentType);
                                console.log("Got listings" + listings.length);
                            });
                        }).on('error', function(e){
