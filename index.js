@@ -30,6 +30,7 @@ app.get('/', function (req, res) {
     res.send("This is TestBot Server");
 });
 
+var test = schedule.scheduleJob( '*/10 * * * * *', function(){
 request({
         url: 'https://elegant-chaise-69014.herokuapp.com/search/',
         //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
@@ -42,6 +43,7 @@ request({
             console.log('Error: ', response.body.error);
         }
     });
+});
 
 /*var xhr = new XMLHttpRequest();
    xhr.open('POST', 'https://elegant-chaise-69014.herokuapp.com/search/');
