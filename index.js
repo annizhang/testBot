@@ -78,7 +78,7 @@ function resetGlobals(){
 }
 
 //finding new listings that match saved for alerts
-function findNewMatches(saved, listings){
+function findNewMatches(saved, listings, callback){
     console.log("In findNewMatches");
     //time stored for each alert
     var count = 0;
@@ -121,13 +121,7 @@ function findNewMatches(saved, listings){
             }
         }
     }
-    if (count !== 0){
-            return newMessage;
-        } else {
-            return {"text": "no alerts"};
-
-        }
-    
+    callback();
 }
 
  function getKeys(listings){
@@ -142,13 +136,19 @@ function findNewMatches(saved, listings){
                          return console.log(err);
                      } else {
                          console.log("got members: " + key);
-                         var alertMessage = findNewMatches(reply, listings);
-                         console.log(alertMessage + "user id is : " + key);
+                         var alertMessage = findNewMatches(reply, listings, function(count, newMessage){
+                             if (count !== 0){
+                                 return newMessage;
+                             } else {
+                                 return {"text": "no alerts"};
+                             }
+                         });
                      }
+                     console.log(alertMessage + "user id is : " + key);
                  });
              });
-             console.log("alert found?");
          }
+         console.log("alert found?");
      });
  }
 
