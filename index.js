@@ -153,7 +153,7 @@ function findNewMatches(saved, listings, callback){
                          return console.log(err);
                      } else {
                          console.log("got members: " + key);
-                         var alertMessage = findNewMatches(reply, listings){
+                         var alertMessage = findNewMatches(reply, listings, function(count, Message)){
                              if (count !== 0){
                                  console.log(newMessage);
                                  return newMessage;
