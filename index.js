@@ -30,10 +30,23 @@ app.get('/', function (req, res) {
     res.send("This is TestBot Server");
 });
 
-var xhr = new XMLHttpRequest();
+request({
+        url: 'https://elegant-chaise-69014.herokuapp.com/search/',
+        //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: 'POST',
+        json: {'bathroom': 1, 'neighborhood': u'soho', 'maxprice': 30000, 'listing_type_text': u'', 'bedroom': 2, 'minprice': 1}
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    });
+
+/*var xhr = new XMLHttpRequest();
    xhr.open('POST', 'https://elegant-chaise-69014.herokuapp.com/search/');
    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-   xhr.send(JSON.stringify(req.body));
+   xhr.send(JSON.stringify(req.body));*/
 
 // Facebook Webhook
 app.get('/webhook', function (req, res) {
