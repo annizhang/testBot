@@ -121,7 +121,7 @@ function findNewMatches(saved, listings, callback){
             }
         }
     }
-    callback();
+    callback(count, newMessage);
 }
 
  function getKeys(listings){
