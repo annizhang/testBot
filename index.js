@@ -127,10 +127,20 @@ function findNewMatches(saved, listings, callback){
         }
     }
     if (i === saved.length){
+        console.log("here it's saved length");
         callback(count, newMessage);
     }
 }
 
+
+ function printMessage(count, newMessage){
+     if (count !== 0){
+         console.log(newMessage);
+         return newMessage;
+     } else {
+         return {"text": "no alerts"};
+     }
+     
  function getKeys(listings){
      client.keys('*', function (err, keys, listings) {
          if (err) {
@@ -143,7 +153,7 @@ function findNewMatches(saved, listings, callback){
                          return console.log(err);
                      } else {
                          console.log("got members: " + key);
-                         var alertMessage = findNewMatches(reply, listings, function(count, newMessage){
+                         var alertMessage = findNewMatches(reply, listings){
                              if (count !== 0){
                                  console.log(newMessage);
                                  return newMessage;
@@ -170,7 +180,7 @@ function fetchAlerts(){
         res.on('end', function(){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
-            var asyncTasks = [];
+            //var asyncTasks = [];
             getKeys(listings);
         }).on('error', function(e){
             console.log("Got an error: ", e);
