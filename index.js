@@ -120,13 +120,13 @@ function findNewMatches(saved, listings){
                 });
             }
         }
-        if (count !== 0){
+    }
+    if (count !== 0){
             return newMessage;
         } else {
             return {"text": "no alerts"};
 
         }
-    }
     
 }
 
