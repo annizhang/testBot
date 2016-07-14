@@ -121,7 +121,9 @@ function findNewMatches(saved, listings, callback){
             }
         }
     }
-    callback(count, newMessage);
+    if (i === saved.length){
+        callback(count, newMessage);
+    }
 }
 
  function getKeys(listings){
