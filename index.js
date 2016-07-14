@@ -30,6 +30,11 @@ app.get('/', function (req, res) {
     res.send("This is TestBot Server");
 });
 
+var xhr = new XMLHttpRequest();
+   xhr.open('POST', 'https://elegant-chaise-69014.herokuapp.com/search/');
+   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+   xhr.send(JSON.stringify(req.body));
+
 // Facebook Webhook
 app.get('/webhook', function (req, res) {
     //console.log(res);
