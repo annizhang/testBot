@@ -34,7 +34,7 @@ request({
         url: 'https://elegant-chaise-69014.herokuapp.com/search/',
         //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
         method: 'POST',
-        json: {'bathroom': 1, 'neighborhood': 'soho', 'maxprice': 30000, 'listing_type_text': '', 'bedroom': 2, 'minprice': 1}
+        json: {'bathroom': 1, 'neighborhood': 'inwood', 'maxprice': 30000, 'listing_type_text': '', 'bedroom': 2, 'minprice': 1}
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending message: ', error);
