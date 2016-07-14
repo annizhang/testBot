@@ -7,7 +7,7 @@ var https = require('https');
 var redis = require('redis');
 var schedule = require('node-schedule');
 var async = require('async');
-var moment = require('moment');
+//var moment = require('moment');
 //moment().format();*/
 
 //connecting to the server
