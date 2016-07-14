@@ -140,6 +140,7 @@ function findNewMatches(saved, listings, callback){
      } else {
          return {"text": "no alerts"};
      }
+ }
      
  function getKeys(listings){
      client.keys('*', function (err, keys, listings) {
