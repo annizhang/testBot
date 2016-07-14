@@ -140,6 +140,7 @@ function findNewMatches(saved, listings, callback){
                          console.log("got members: " + key);
                          var alertMessage = findNewMatches(reply, listings, function(count, newMessage){
                              if (count !== 0){
+                                 console.log(newMessage);
                                  return newMessage;
                              } else {
                                  return {"text": "no alerts"};
