@@ -810,11 +810,11 @@ function searchScrape(place, beds, minPrice, maxPrice, apartmentType) {
     request({
         url: 'https://elegant-chaise-69014.herokuapp.com/search/',
         headers: {
-            "Content-Type":"application/json"
+            "Content-Type":"application/json;charset=UTF-8"
         },
         //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
         method: 'POST',
-        body: JSON.stringify({'neighborhood': place, 'maxprice': maxPrice, 'bedroom': beds, 'minprice': minPrice})
+        json: JSON.stringify({'neighborhood': place, 'maxprice': maxPrice, 'bedroom': beds, 'minprice': minPrice})
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending message: ', error);
