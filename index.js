@@ -84,7 +84,8 @@ function resetGlobals(){
 
 //finding new listings that match saved for alerts
 function findNewMatches(saved, listings, callback){
-    console.log("In findNewMatches");
+    console.log("In findNewMatches: " + saved);
+    
     //time stored for each alert
     var count = 0;
     var newMessage = {
