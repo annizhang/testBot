@@ -96,6 +96,7 @@ function findNewMatches(saved, listings, callback){
         }
     }; 
     for (var i in saved){
+        console.log("searching alerts");
         //each saved listing
         var savedListing = saved[i];
         for (var j in listings) {
@@ -109,6 +110,7 @@ function findNewMatches(saved, listings, callback){
                 (listing.price >= savedListing.minPrice) &&
                 (listing.price <= savedListing.maxPrice)) {
                 count++;
+                console.log("found some");
                 newMessage.attachment.payload.elements.push(
                 {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
                  "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/955/500"),
@@ -154,6 +156,7 @@ function findNewMatches(saved, listings, callback){
                          return console.log(err);
                      } else {
                          console.log("got members: " + key);
+                         console.log("reply:" + reply);
                          var alertMessage = findNewMatches(reply, listings, function(count, Message){
                              if (count !== 0){
                                  console.log(newMessage);
