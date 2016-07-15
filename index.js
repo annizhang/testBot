@@ -442,6 +442,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
 
 function locationExists(text,locations,validLoc, sender) {
     console.log("in LocationExists");
+    console.log("locationExists: " + locations);
     //to do: check for valid address input
     text = text || "";
     //console.log(text);
