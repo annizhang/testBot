@@ -148,6 +148,7 @@ function findNewMatches(saved, listings, callback){
  }
      
  function getKeys(listings){
+     console.log("getKeys listings: " + listings);
      client.keys('*', function (err, keys, listings) {
          if (err) {
              return console.log(err);
