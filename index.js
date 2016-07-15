@@ -159,6 +159,7 @@ function findNewMatches(saved, listings, callback){
                                  console.log(newMessage);
                                  return newMessage;
                              } else {
+                                 console.log("no messages!");
                                  return {"text": "no alerts"};
                              }
                          });
