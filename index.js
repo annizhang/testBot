@@ -814,7 +814,7 @@ function searchScrape(place, beds, minPrice, maxPrice, apartmentType) {
         },
         //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
         method: 'POST',
-        json: {'neighborhood': place, 'maxprice': maxPrice, 'bedroom': beds, 'minprice': minPrice}
+        json: JSON.stringify({'neighborhood': place, 'maxprice': maxPrice, 'bedroom': beds, 'minprice': minPrice})
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending message: ', error);
