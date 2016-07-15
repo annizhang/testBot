@@ -100,6 +100,7 @@ function findNewMatches(saved, listings, callback){
         console.log("searching alerts");
         //each saved listing
         var savedListing = saved[i];
+        console.log("savedListing: " + savedListing);
         for (var j in listings) {
             var listing = listings[j];
             //go through each listing
