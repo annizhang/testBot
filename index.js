@@ -148,7 +148,7 @@ function findNewMatches(saved, listings, callback){
              return console.log(err);
          } else {
              keys.forEach(function(key) {
-                 client.smembers(key, function(err, reply, listings, findNewMatches) {
+                 client.smembers(key, function(err, reply, listings) {
                      //console.log(reply);
                      if (err) {
                          return console.log(err);
