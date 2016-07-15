@@ -806,11 +806,11 @@ function onButton(senderId, postback, time){
 }
 
 
-function searchScrape(place, beds, minPrice, maxPrice, apartmentType) {
+function searchScrape(place, beds, minPrice, maxPrice) {
     request({
         url: 'https://elegant-chaise-69014.herokuapp.com/search/',
         headers: {
-            "Content-Type":"application/json"
+            "Content-Type":"application/JSON"
         },
         //qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
         method: 'POST',
@@ -917,7 +917,7 @@ app.post('/webhook', function (req, res) {
                                var listings = JSON.parse(body);
                                //sendMessage(event.sender.id, {"text":"I'm searching!"});
                                searchListings(place, beds, minPrice, maxPrice, event.sender.id, listings, apartmentType);
-                               searchScrape(place, beds, minPrice, maxPrice, apartmentType);
+                               searchScrape(place, beds, minPrice, maxPrice);
                                console.log("Got listings" + listings.length);
                            });
                        }).on('error', function(e){
