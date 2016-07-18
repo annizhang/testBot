@@ -132,9 +132,10 @@ function findNewMatches(saved, listings){
             }
         }
     }
-    console.log("DONE WIHT LOOP i is " + i);
+    i = i +1
+    console.log("DONE WIHT LOOP i  is " + i);
     console.log("saved length is " + saved.length);
-    if ((i+1) === saved.length){
+    if (i === saved.length){
         console.log("here it's saved length");
         console.log(newMessage + "user id is : " + key);
     }
