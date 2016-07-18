@@ -156,7 +156,7 @@ function getMembers(keys, listings){
             } else {
                 console.log("got members: " + key);
                 console.log("reply:" + reply);
-                findNewMatches(reply, listings);
+                var alertMessage = findNewMatches(reply, listings);
                 console.log(alertMessage + "user id is : " + key);
             }
         });
