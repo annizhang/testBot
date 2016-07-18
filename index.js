@@ -146,34 +146,30 @@ function findNewMatches(saved, listings, callback){
          return {"text": "no alerts"};
      }
  }
-     
- function getKeys(listings){
+
+function getMembers(keys){
+    keys.forEach(function(key) {
+        client.smembers(key, function(err, reply, listings) {
+            //console.log(reply);
+            if (err) {
+                return console.log(err);
+            } else {
+                console.log("got members: " + key);
+                console.log("reply:" + reply);
+                findNewMatches(reply, listings);
+                console.log(alertMessage + "user id is : " + key);
+            }
+        });
+    });
+
+function getKeys(listings){
      //console.log("getKeys listings: " + listings);
+     console.log("in getKeys");
      client.keys('*', function (err, keys, listings) {
          if (err) {
              return console.log(err);
          } else {
-             keys.forEach(function(key) {
-                 client.smembers(key, function(err, reply, listings) {
-                     //console.log(reply);
-                     if (err) {
-                         return console.log(err);
-                     } else {
-                         console.log("got members: " + key);
-                         console.log("reply:" + reply);
-                         var alertMessage = findNewMatches(reply, listings, function(count, Message){
-                             if (count !== 0){
-                                 console.log("GETKEYS MESSAGE: " + newMessage);
-                                 return newMessage;
-                             } else {
-                                 console.log("no messages!");
-                                 return {"text": "no alerts"};
-                             }
-                         });
-                     }
-                     console.log(alertMessage + "user id is : " + key);
-                 });
-             });
+             getMembers(keys);
          }
          console.log("alert found?");
      });
@@ -358,10 +354,15 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
                  "buttons": [
                      {"type": "web_url",
                       "url": "https://joinery.nyc/listing/" + listing.slug,
-                      "title": "View Apartment"},
+                      "title": "View Apartment"
+                     },
                      {"type": "postback",
                       "title": "Keep Searching",
                       "payload": "keepsearch" //need to fix this to go back to joinery welcome message
+                     },
+                     {"type": "postback",
+                      "title": "Save Apartment",
+                      "payload": "save" //need to fix this to go back to joinery welcome message
                      }
                  ]
                 });
