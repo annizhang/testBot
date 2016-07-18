@@ -83,7 +83,7 @@ function resetGlobals(){
 }
 
 //finding new listings that match saved for alerts
-function findNewMatches(saved, listings, callback){
+function findNewMatches(saved, listings){
     console.log("In findNewMatches: " + saved);
     console.log("findNewmatches listings: " + listings);
     
@@ -133,7 +133,7 @@ function findNewMatches(saved, listings, callback){
     }
     if (i === saved.length){
         console.log("here it's saved length");
-        callback(count, newMessage);
+        console.log(newMessage + "user id is : " + key);
     }
 }
 
@@ -156,8 +156,7 @@ function getMembers(keys, listings){
             } else {
                 console.log("got members: " + key);
                 console.log("reply:" + reply);
-                var alertMessage = findNewMatches(reply, listings);
-                console.log(alertMessage + "user id is : " + key);
+                findNewMatches(reply, listings);
             }
         });
     });
