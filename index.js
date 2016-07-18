@@ -179,7 +179,7 @@ function findNewMatches(saved, listings, callback){
      });
  }
 
-function fetchAlerts(){
+function fetchAlerts(callback){
     //first get all the listings then get keys and then get 
     https.get(fetchListingUrl, function(res){
         var body = '';
@@ -190,7 +190,7 @@ function fetchAlerts(){
             var listings = JSON.parse(body);
             //sendMessage(event.sender.id, {"text":"I'm searching!"});
             //var asyncTasks = [];
-            getKeys(listings);
+            callback(listings);
         }).on('error', function(e){
             console.log("Got an error: ", e);
         });
@@ -200,7 +200,7 @@ function fetchAlerts(){
 //scheduling for alerts
 //using node-schedule
 var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-    fetchAlerts();
+    fetchAlerts(getKeys);
     console.log("Time to search for alerts that expire NOWW");
    
 });
