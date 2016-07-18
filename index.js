@@ -97,7 +97,8 @@ function findNewMatches(saved, listings){
                 "elements": []}
         }
     }; 
-    for (var i in saved){
+    var i = 0;
+    for (i in saved){
         console.log("searching alerts");
         //each saved listing
         var savedListing = saved[i];
