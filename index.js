@@ -148,7 +148,7 @@ function findNewMatches(saved, listings, callback){
  }
      
  function getKeys(listings){
-     console.log("getKeys listings: " + listings);
+     //console.log("getKeys listings: " + listings);
      client.keys('*', function (err, keys, listings) {
          if (err) {
              return console.log(err);
@@ -163,7 +163,7 @@ function findNewMatches(saved, listings, callback){
                          console.log("reply:" + reply);
                          var alertMessage = findNewMatches(reply, listings, function(count, Message){
                              if (count !== 0){
-                                 console.log(newMessage);
+                                 console.log("GETKEYS MESSAGE: " + newMessage);
                                  return newMessage;
                              } else {
                                  console.log("no messages!");
@@ -442,7 +442,7 @@ function searchListings(neighborhood,beds,minPrice, maxPrice,sender,listings,typ
 
 function locationExists(text,locations,validLoc, sender) {
     console.log("in LocationExists");
-    console.log("locationExists: " + locations);
+    //console.log("locationExists: " + locations);
     //to do: check for valid address input
     text = text || "";
     //console.log(text);
