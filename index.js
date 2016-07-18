@@ -147,7 +147,7 @@ function findNewMatches(saved, listings, callback){
      }
  }
 
-function getMembers(keys){
+function getMembers(keys, listings){
     keys.forEach(function(key) {
         client.smembers(key, function(err, reply, listings) {
             //console.log(reply);
@@ -161,6 +161,7 @@ function getMembers(keys){
             }
         });
     });
+}
 
 function getKeys(listings){
      //console.log("getKeys listings: " + listings);
@@ -169,7 +170,7 @@ function getKeys(listings){
          if (err) {
              return console.log(err);
          } else {
-             getMembers(keys);
+             getMembers(keys, listings);
          }
          console.log("alert found?");
      });
