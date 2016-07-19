@@ -7,7 +7,7 @@ var https = require('https');
 var redis = require('redis');
 var schedule = require('node-schedule');
 var async = require('async');
-var alertSystem = require('./alert.js');
+var alertSystem = require('./alert');
 //var moment = require('moment');
 //moment().format();*/
 
