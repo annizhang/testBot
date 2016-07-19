@@ -88,7 +88,7 @@ function findNewMatches(saved, listings){
     console.log("findNewmatches listings: " + listings);
     
     //time stored for each alert
-    var count = 0;
+    var foundcount = 0;
     var newMessage = {
         "attachment":{
             "type":"template",
@@ -97,7 +97,7 @@ function findNewMatches(saved, listings){
                 "elements": []}
         }
     }; 
-    var count = 0;
+    var loopcount = 0;
     for (i in saved){
         count++;
         console.log("searching alerts");
@@ -134,11 +134,15 @@ function findNewMatches(saved, listings){
         }
     }
     //i = i +1
-    console.log("DONE WITH LOOP count is " + count);
+    console.log("DONE WITH LOOP count is " + loopcount);
     console.log("saved length is " + saved.length);
-    if (count === saved.length){
-        console.log("here it's saved length");
-        console.log(newMessage);
+    if (loopcount === saved.length){
+        if (foundcount > 0){
+            console.log("here it's saved length");
+            console.log(newMessage);
+        } else {
+            console.log("none matches alert");
+        }
     }
 }
 
