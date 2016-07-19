@@ -99,7 +99,7 @@ function findNewMatches(saved, listings){
     }; 
     var loopcount = 0;
     for (i in saved){
-        count++;
+        loopcount++;
         console.log("searching alerts");
         //each saved listing
         var savedListing = saved[i];
@@ -114,7 +114,7 @@ function findNewMatches(saved, listings){
                 (listing.bedrooms === savedListing.beds) && 
                 (listing.price >= savedListing.minPrice) &&
                 (listing.price <= savedListing.maxPrice)) {
-                count++;
+                foundcount++;
                 console.log("found some");
                 newMessage.attachment.payload.elements.push(
                 {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
