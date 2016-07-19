@@ -138,7 +138,7 @@ function findNewMatches(saved, listings){
     console.log("saved length is " + saved.length);
     if (count === saved.length){
         console.log("here it's saved length");
-        console.log(newMessage + "user id is : " + key);
+        console.log(newMessage);
     }
 }
 
