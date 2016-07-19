@@ -7,6 +7,7 @@ var https = require('https');
 var redis = require('redis');
 var schedule = require('node-schedule');
 var async = require('async');
+var alertSystem = require('alert.js');
 //var moment = require('moment');
 //moment().format();*/
 
@@ -50,6 +51,7 @@ var ascii = /^[ -~\t\n\r]+$/;
 var letters = /^[ a-zA-Z]+$/;
 
 //global vars:
+//globals are evil but for now there is no other choice
 //listings in json form
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
 var modify = false;
@@ -69,6 +71,10 @@ var criteriaFound = false;
 var fromButton = true;
 var result = ["none", ""];
 
+//alert system (for now)
+var alertSystemInstance = new alertSystem();
+alertSystemInstance.setAlert;
+
 function resetGlobals(){
     isJoinery = false;
     isGreeting = false;
@@ -82,136 +88,17 @@ function resetGlobals(){
     searchOn = false;
 }
 
-//finding new listings that match saved for alerts
-function findNewMatches(saved, listings){
-    console.log("In findNewMatches: " + saved);
-    console.log("findNewmatches listings: " + listings);
-    
-    //time stored for each alert
-    var foundcount = 0;
-    var newMessage = {
-        "attachment":{
-            "type":"template",
-            "payload":{
-                "template_type":"generic",
-                "elements": []}
-        }
-    }; 
-    var loopcount = 0;
-    for (i in saved){
-        loopcount++;
-        console.log("searching alerts");
-        //each saved listing
-        var savedListing = saved[i];
-        console.log("savedListing: " + savedListing);
-        for (var j in listings) {
-            var listing = listings[j];
-            //go through each listing
-            //check if listing time is afte saved time and then compare search criteria
-            if ((Date.parse(listing.created_at) > savedListing.time) &&
-                (listing.listing_type_text === savedListing.type) &&
-                (listing.neighborhood === savedListing.location  || listing.neighborhood.parent_neighborhood.name === savedListing.location) &&
-                (listing.bedrooms === savedListing.beds) && 
-                (listing.price >= savedListing.minPrice) &&
-                (listing.price <= savedListing.maxPrice)) {
-                foundcount++;
-                console.log("found some");
-                newMessage.attachment.payload.elements.push(
-                {"title": listing.listing_type_text + " " + listing.title + " " + listing.price_string,
-                 "image_url": "https://joinery.nyc/" + listing.image_url.replace("fit/250/120", "fill/955/500"),
-                 "subtitle": listing.full_address,
-                 "buttons": [
-                     {"type": "web_url",
-                      "url": "https://joinery.nyc/listing/" + listing.slug,
-                      "title": "View Apartment"},
-                     {"type": "postback",
-                      "title": "Keep Searching",
-                      "payload": "keepsearch" //need to fix this to go back to joinery welcome message
-                     }
-                 ]
-                });
-            }
-        }
-    }
-    //i = i +1
-    console.log("DONE WITH LOOP count is " + loopcount);
-    console.log("saved length is " + saved.length);
-    if (loopcount === saved.length){
-        if (foundcount > 0){
-            console.log("here it's saved length");
-            console.log(newMessage);
-        } else {
-            console.log("none matches alert");
-        }
+function printMessage(count, newMessage){
+    if (count !== 0){
+        console.log(newMessage);
+        return newMessage;
+    } else {
+        return {"text": "no alerts"};
     }
 }
-
-
- function printMessage(count, newMessage){
-     if (count !== 0){
-         console.log(newMessage);
-         return newMessage;
-     } else {
-         return {"text": "no alerts"};
-     }
- }
-
-function getMembers(keys, listings){
-    keys.forEach(function(key) {
-        client.smembers(key, function(err, reply, listings) {
-            //console.log(reply);
-            if (err) {
-                return console.log(err);
-            } else {
-                console.log("got members: " + key);
-                console.log("reply:" + reply);
-                findNewMatches(reply, listings);
-            }
-        });
-    });
-}
-
-function getKeys(listings){
-     //console.log("getKeys listings: " + listings);
-     console.log("in getKeys");
-     client.keys('*', function (err, keys, listings) {
-         if (err) {
-             return console.log(err);
-         } else {
-             getMembers(keys, listings);
-         }
-         console.log("alert found?");
-     });
- }
-
-function fetchAlerts(callback){
-    //first get all the listings then get keys and then get 
-    https.get(fetchListingUrl, function(res){
-        var body = '';
-        res.on('data', function(chunk){
-            body += chunk;
-        });
-        res.on('end', function(){
-            var listings = JSON.parse(body);
-            //sendMessage(event.sender.id, {"text":"I'm searching!"});
-            //var asyncTasks = [];
-            callback(listings);
-        }).on('error', function(e){
-            console.log("Got an error: ", e);
-        });
-    });
-}
-
-//scheduling for alerts
-//using node-schedule
-var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-    fetchAlerts(getKeys);
-    console.log("Time to search for alerts that expire NOWW");
-   
-});
 
 // generic function sending messages to user
-function sendMessage(recipientId, message) {
+function sendMessage(recipiencId, message) {
     //console.log(process.env);
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -742,20 +629,18 @@ function joineryGreeting(recipientId, message) {
 
 //alert function
 function alertMe(senderId, time) {
-    //only for 
-    //console.log(senderId);
-    //console.log(place + " " + minPrice + " " + maxPrice + " " + beds);
-    //client.del(senderId);
+    //adds adds listing to set matching senderId
     client.sadd(senderId, JSON.stringify({'type':apartmentType,
         'location' : place,
         'minPrice' : minPrice,
         'maxPrice' : maxPrice,
         'beds' : beds,
         'time' : time,}));
-    console.log("set alert, what is alert:");
-    client.smembers(senderId, function(err, reply) {
+    //console.log("set alert, what is alert:");
+    //make sure alert is set
+    /*client.smembers(senderId, function(err, reply) {
         console.log(reply);
-    });
+    });*/
     if (apartmentType === "Share"){
         message = "Cool! I will alert you when a room listing in " + place +" between " + "$" + minPrice.toString() + " and " + "$" + maxPrice.toString() +  " pops up!";
         sendMessage(senderId, {"text": message});
@@ -771,12 +656,6 @@ function alertMe(senderId, time) {
 function onButton(senderId, postback, time){
     //if user clicked a button
     var choice = JSON.stringify(postback.payload);
-    /*console.log(choice);
-    locationFound = false;
-    place = "";
-    beds = Number.MAX_VALUE;
-    minPrice = Number.MIN_VALUE;
-    maxPrice = Number.MAX_VALUE;*/
     if (choice === "\"Entire Apartment\""){
         resetGlobals();
         fromButton = false;
