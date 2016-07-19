@@ -93,7 +93,7 @@ function printMessage(count, newMessage){
 }
 
 // generic function sending messages to user
-function sendMessage(recipiencId, message) {
+function sendMessage(recipientId, message) {
     //console.log(process.env);
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
