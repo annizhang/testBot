@@ -31,11 +31,6 @@ app.get('/', function (req, res) {
     res.send("This is TestBot Server");
 });
 
-/*var xhr = new XMLHttpRequest();
-   xhr.open('POST', 'https://elegant-chaise-69014.herokuapp.com/search/');
-   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-   xhr.send(JSON.stringify(req.body));*/
-
 // Facebook Webhook
 app.get('/webhook', function (req, res) {
     //console.log(res);
@@ -72,8 +67,8 @@ var fromButton = true;
 var result = ["none", ""];
 
 //alert system (for now)
-var alertSystemInstance = new alertSystem();
-alertSystemInstance.setAlert;
+/*var alertSystemInstance = new alertSystem();
+alertSystemInstance.setAlert;*/
 
 function resetGlobals(){
     isJoinery = false;
