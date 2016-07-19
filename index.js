@@ -7,7 +7,7 @@ var https = require('https');
 var redis = require('redis');
 var schedule = require('node-schedule');
 var async = require('async');
-//var alertSystem = require('./alert');
+var alertSystem = require('./alert');
 //var moment = require('moment');
 //moment().format();*/
 
@@ -67,8 +67,8 @@ var fromButton = true;
 var result = ["none", ""];
 
 //alert system (for now)
-/*var alertSystemInstance = new alertSystem();
-alertSystemInstance.setAlert;*/
+var alertSystemInstance = new alertSystem();
+alertSystemInstance.setAlert;
 
 function resetGlobals(){
     isJoinery = false;
