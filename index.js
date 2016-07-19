@@ -97,8 +97,9 @@ function findNewMatches(saved, listings){
                 "elements": []}
         }
     }; 
-    var i = 0;
+    var count = 0;
     for (i in saved){
+        count++;
         console.log("searching alerts");
         //each saved listing
         var savedListing = saved[i];
@@ -133,9 +134,9 @@ function findNewMatches(saved, listings){
         }
     }
     i = i +1
-    console.log("DONE WIHT LOOP i  is " + i);
+    console.log("DONE WITH LOOP count is " + count);
     console.log("saved length is " + saved.length);
-    if (i === saved.length){
+    if (count+1 === saved.length){
         console.log("here it's saved length");
         console.log(newMessage + "user id is : " + key);
     }
