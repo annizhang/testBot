@@ -723,7 +723,7 @@ app.post('/webhook', function (req, res) {
     var events = req.body.entry[0].messaging;
     for (var i = 0; i < events.length; i++) {
         var event = events[i];
-        var sender = event.recipient_id;
+        var sender = event.sender.id;
         var time = event.timestamp;
         console.log(time);
         if (event.message && event.message.text){
