@@ -1,3 +1,12 @@
+var express = require('express');
+var bodyParser = require('body-parser');
+var request = require('request');
+var app = express();
+var http = require('http');
+var https = require('https');
+var redis = require('redis');
+var schedule = require('node-schedule');
+
 var alertSystem = function (){  
    var self = this;
     self.findNewMatches = function (saved, listings){
