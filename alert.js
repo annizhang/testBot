@@ -7,6 +7,8 @@ var https = require('https');
 var redis = require('redis');
 var schedule = require('node-schedule');
 
+var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
+
 var alertSystem = function (){  
    var self = this;
     self.findNewMatches = function (saved, listings){
