@@ -68,7 +68,7 @@ var result = ["none", ""];
 
 //alert system (for now)
 var alertSystemInstance = new alertSystem();
-alertSystemInstance.setAlert;
+alertSystemInstance.setAlert();
 
 function resetGlobals(){
     isJoinery = false;
@@ -724,7 +724,7 @@ app.post('/webhook', function (req, res) {
     for (var i = 0; i < events.length; i++) {
         var event = events[i];
         var sender = event.sender.id;
-        console.log("sender is " + sender);
+        //console.log("sender is " + sender);
         var time = event.timestamp;
         console.log(time);
         if (event.message && event.message.text){
