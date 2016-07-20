@@ -4,7 +4,8 @@ var request = require('request');
 var app = express();
 var http = require('http');
 var https = require('https');
-var redis = require('redis');
+//var redis = require('redis');
+var client = require('./redis');
 var schedule = require('node-schedule');
 var async = require('async');
 var alertSystem = require('./alert');
@@ -12,6 +13,8 @@ var alertSystem = require('./alert');
 //moment().format();*/
 
 //connecting to the server
+
+/*
 var client = redis.createClient(process.env.REDIS_URL);
 
 client.on('error', function(err){
@@ -21,6 +24,10 @@ client.on('error', function(err){
 client.on('connect', function() {
     console.log("redis connected!");
 });
+
+module.exports = client;
+*/
+
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
