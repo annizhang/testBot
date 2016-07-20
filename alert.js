@@ -82,7 +82,7 @@ var alertSystem = function (){
                 } else {
                     console.log("got members: " + key);
                     console.log("reply:" + reply);
-                    findNewMatches(reply, listings);
+                    self.findNewMatches(reply, listings);
                 }
             });
         });
@@ -94,7 +94,7 @@ var alertSystem = function (){
             if (err) {
              return console.log(err);
          } else {
-             getMembers(keys, listings);
+             self.getMembers(keys, listings);
          }
          console.log("alert found?");
      });
@@ -120,7 +120,7 @@ var alertSystem = function (){
         //scheduling for alerts
         //using node-schedule
         var j = schedule.scheduleJob( '*/10 * * * * *', function(){
-            fetchAlerts(getKeys);
+            self.fetchAlerts(self.getKeys);
             console.log("Time to search for alerts that expire NOWW");
         });
     };
