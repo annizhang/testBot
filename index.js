@@ -68,7 +68,7 @@ var result = ["none", ""];
 
 //alert system (for now)
 var alertSystemInstance = new alertSystem();
-alertSystemInstance.setAlert;
+alertSystemInstance.setAlert();
 
 function resetGlobals(){
     isJoinery = false;
