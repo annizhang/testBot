@@ -4,7 +4,7 @@ var request = require('request');
 var app = express();
 var http = require('http');
 var https = require('https');
-var redis = require('redis');
+var client = require('./redis');
 var schedule = require('node-schedule');
 
 var fetchListingUrl = 'https://joinery.nyc/api/v1/listings/available';
